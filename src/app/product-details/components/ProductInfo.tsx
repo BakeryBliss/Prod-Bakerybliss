@@ -59,11 +59,11 @@ const ProductInfo = ({
 
       {/* Price */}
       <div className="flex items-baseline gap-3">
-        <span className="text-3xl font-bold text-primary">${price.toFixed(2)}</span>
+        <span className="text-3xl font-bold text-primary">₹{price.toFixed(2)}</span>
         {originalPrice && (
           <>
             <span className="text-xl text-muted-foreground line-through">
-              ${originalPrice.toFixed(2)}
+            ₹{originalPrice.toFixed(2)}
             </span>
             <span className="px-2 py-1 bg-success/10 text-success rounded caption font-bold">
               {discount}% OFF
@@ -83,7 +83,7 @@ const ProductInfo = ({
           <Icon name="TruckIcon" size={24} className="text-primary" />
           <div>
             <p className="font-medium text-foreground">Free Delivery</p>
-            <p className="caption text-muted-foreground">On orders over $50</p>
+            <p className="caption text-muted-foreground">On orders over ₹500</p>
           </div>
         </div>
         <div className="flex items-center gap-3 p-3 bg-card rounded-md">

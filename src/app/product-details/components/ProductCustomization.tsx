@@ -83,7 +83,7 @@ const ProductCustomization = ({
               <p className="font-medium">{size.label}</p>
               {size.priceModifier !== 0 && (
                 <p className="caption text-muted-foreground mt-1">
-                  {size.priceModifier > 0 ? '+' : ''}${size.priceModifier.toFixed(2)}
+                  {size.priceModifier > 0 ? '+' : ''}₹{size.priceModifier.toFixed(2)}
                 </p>
               )}
             </button>
@@ -109,7 +109,7 @@ const ProductCustomization = ({
               <p className="font-medium">{flavor.label}</p>
               {flavor.priceModifier !== 0 && (
                 <p className="caption text-muted-foreground mt-1">
-                  {flavor.priceModifier > 0 ? '+' : ''}${flavor.priceModifier.toFixed(2)}
+                  {flavor.priceModifier > 0 ? '+' : ''}₹{flavor.priceModifier.toFixed(2)}
                 </p>
               )}
             </button>
@@ -174,7 +174,7 @@ const ProductCustomization = ({
         <div className="flex items-center justify-between mb-4">
           <span className="text-lg font-medium text-foreground">Total Price:</span>
           <span className="text-2xl font-bold text-primary">
-            ${calculateTotalPrice().toFixed(2)}
+          ₹{calculateTotalPrice().toFixed(2)}
           </span>
         </div>
 

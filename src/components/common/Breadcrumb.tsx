@@ -6,6 +6,7 @@ import Icon from '@/components/ui/AppIcon';
 
 interface BreadcrumbProps {
   className?: string;
+  customBreadcrumbs?: Array<{ label: string; href: string }>;
 }
 
 interface BreadcrumbItem {
@@ -13,7 +14,7 @@ interface BreadcrumbItem {
   href: string;
 }
 
-const Breadcrumb = ({ className = '' }: BreadcrumbProps) => {
+const Breadcrumb = ({ className = '', customBreadcrumbs }: BreadcrumbProps) => {
   const pathname = usePathname();
 
   const routeLabels: Record<string, string> = {
@@ -38,10 +39,12 @@ const Breadcrumb = ({ className = '' }: BreadcrumbProps) => {
 
     return breadcrumbs;
   };
+  
+  const breadcrumbs = customBreadcrumbs && customBreadcrumbs.length > 0
+    ? customBreadcrumbs
+    : generateBreadcrumbs();
 
-  const breadcrumbs = generateBreadcrumbs();
-
-  if (breadcrumbs.length <= 1) {
+  if (!breadcrumbs || breadcrumbs.length <= 1) {
     return null;
   }
 

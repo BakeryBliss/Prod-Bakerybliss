@@ -10,32 +10,7 @@ import CustomerReviews from './CustomerReviews';
 import RelatedProducts from './RelatedProducts';
 import SocialShare from './SocialShare';
 import Icon from '@/components/ui/AppIcon';
-
-interface ProductImage {
-  id: string;
-  url: string;
-  alt: string;
-}
-
-interface CustomizationOption {
-  id: string;
-  label: string;
-  priceModifier: number;
-}
-
-interface Ingredient {
-  name: string;
-  allergen: boolean;
-}
-
-interface NutritionInfo {
-  servingSize: string;
-  calories: number;
-  fat: string;
-  carbs: string;
-  protein: string;
-  sugar: string;
-}
+import { products } from '@/data/products';
 
 interface Review {
   id: string;
@@ -47,24 +22,6 @@ interface Review {
   comment: string;
   verified: boolean;
   helpful: number;
-}
-
-interface Product {
-  id: string;
-  name: string;
-  price: number;
-  originalPrice?: number;
-  rating: number;
-  reviewCount: number;
-  description: string;
-  category: string;
-  inStock: boolean;
-  images: ProductImage[];
-  sizes: CustomizationOption[];
-  flavors: CustomizationOption[];
-  ingredients: Ingredient[];
-  nutrition: NutritionInfo;
-  detailedDescription: string;
 }
 
 interface RelatedProduct {
@@ -83,70 +40,13 @@ const ProductDetailsInteractive = () => {
   const searchParams = useSearchParams();
   const [isHydrated, setIsHydrated] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  
 
   useEffect(() => {
     setIsHydrated(true);
   }, []);
 
-  const mockProducts: Product[] = [
-  {
-    id: '1',
-    name: 'Classic Chocolate Croissant',
-    price: 4.99,
-    originalPrice: 6.99,
-    rating: 4.8,
-    reviewCount: 127,
-    description:
-    'Indulge in our buttery, flaky croissant filled with rich Belgian chocolate. Baked fresh every morning using traditional French techniques and premium ingredients.',
-    category: 'Pastries',
-    inStock: true,
-    images: [
-    {
-      id: 'img1',
-      url: "https://images.unsplash.com/photo-1600930496627-33491158a923",
-      alt: 'Golden brown chocolate croissant with visible flaky layers on white ceramic plate'
-    },
-    {
-      id: 'img2',
-      url: "https://images.unsplash.com/photo-1688978503769-2e6875d29dfc",
-      alt: 'Close-up of chocolate croissant cross-section showing chocolate filling'
-    },
-    {
-      id: 'img3',
-      url: "https://images.unsplash.com/photo-1626079451079-3e59d75aebbc",
-      alt: 'Multiple chocolate croissants arranged on wooden serving board'
-    }],
-
-    sizes: [
-    { id: 'regular', label: 'Regular', priceModifier: 0 },
-    { id: 'large', label: 'Large', priceModifier: 2.0 }],
-
-    flavors: [
-    { id: 'dark', label: 'Dark Chocolate', priceModifier: 0 },
-    { id: 'milk', label: 'Milk Chocolate', priceModifier: 0 },
-    { id: 'white', label: 'White Chocolate', priceModifier: 0.5 }],
-
-    ingredients: [
-    { name: 'Wheat Flour', allergen: true },
-    { name: 'Butter', allergen: true },
-    { name: 'Belgian Chocolate', allergen: false },
-    { name: 'Eggs', allergen: true },
-    { name: 'Sugar', allergen: false },
-    { name: 'Yeast', allergen: false },
-    { name: 'Salt', allergen: false },
-    { name: 'Milk', allergen: true }],
-
-    nutrition: {
-      servingSize: '1 croissant (85g)',
-      calories: 320,
-      fat: '18g',
-      carbs: '35g',
-      protein: '6g',
-      sugar: '12g'
-    },
-    detailedDescription:
-    'Our Classic Chocolate Croissant is a testament to traditional French baking artistry. Each croissant begins with carefully laminated dough, folded multiple times to create those signature flaky layers. We use only premium European butter for richness and Belgian chocolate for an indulgent filling. The croissants are proofed overnight and baked fresh each morning at precisely 375°F to achieve the perfect golden-brown exterior while maintaining a soft, buttery interior. The chocolate filling melts slightly during baking, creating pockets of rich, velvety chocolate throughout. Best enjoyed warm with your morning coffee or as an afternoon treat.'
-  }];
+  const allProducts = products;
 
 
   const mockReviews: Review[] = [
@@ -199,48 +99,6 @@ const ProductDetailsInteractive = () => {
     helpful: 9
   }];
 
-
-  const mockRelatedProducts: RelatedProduct[] = [
-  {
-    id: '2',
-    name: 'Almond Croissant',
-    price: 5.49,
-    originalPrice: 7.49,
-    image: "https://images.unsplash.com/photo-1616784947569-5e692df96144",
-    imageAlt: 'Golden almond croissant topped with sliced almonds and powdered sugar',
-    rating: 4.7,
-    category: 'Pastries'
-  },
-  {
-    id: '3',
-    name: 'Blueberry Muffin',
-    price: 3.99,
-    image: "https://images.unsplash.com/photo-1593395676686-10a61bbc004b",
-    imageAlt: 'Fresh blueberry muffin with visible blueberries on top in paper liner',
-    rating: 4.6,
-    category: 'Muffins'
-  },
-  {
-    id: '4',
-    name: 'Cinnamon Roll',
-    price: 4.49,
-    originalPrice: 5.99,
-    image: "https://images.unsplash.com/photo-1673117269657-6ce2137d94f2",
-    imageAlt: 'Large cinnamon roll with cream cheese frosting drizzled on top',
-    rating: 4.9,
-    category: 'Pastries'
-  },
-  {
-    id: '5',
-    name: 'Pain au Chocolat',
-    price: 4.29,
-    image: "https://img.rocket.new/generatedImages/rocket_gen_img_1ea00606a-1765220911509.png",
-    imageAlt: 'Traditional French pain au chocolat with chocolate batons visible',
-    rating: 4.8,
-    category: 'Pastries'
-  }];
-
-
   const ratingDistribution = [
   { stars: 5, count: 89, percentage: 70 },
   { stars: 4, count: 28, percentage: 22 },
@@ -250,10 +108,24 @@ const ProductDetailsInteractive = () => {
 
 
   const productId = isHydrated ? searchParams.get('id') || '1' : '1';
-  const currentProduct = mockProducts.find((p) => p.id === productId) || mockProducts[0];
+  const currentProduct = allProducts.find((p) => p.id === productId) || allProducts[0];
   const currentUrl = isHydrated ?
   `${window.location.origin}/product-details?id=${productId}` :
   '';
+
+  const mockRelatedProducts: RelatedProduct[] = allProducts
+    .filter(p => p.id !== productId)
+    .slice(0, 4)
+    .map(p => ({
+      id: p.id,
+      name: p.name,
+      price: p.price,
+      originalPrice: p.originalPrice,
+      image: p.images[0].url,
+      imageAlt: p.images[0].alt,
+      rating: p.rating,
+      category: p.category
+    }));
 
   const handleAddToCart = (customization: any) => {
     const cartItem = {
@@ -273,7 +145,7 @@ const ProductDetailsInteractive = () => {
     setShowSuccessModal(true);
     setTimeout(() => setShowSuccessModal(false), 3000);
   };
-
+  
   if (!isHydrated) {
     return (
       <div className="min-h-screen flex items-center justify-center">

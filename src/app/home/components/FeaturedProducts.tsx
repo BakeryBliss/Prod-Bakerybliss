@@ -4,6 +4,7 @@ import { useState } from 'react';
 import AppImage from '@/components/ui/AppImage';
 import Icon from '@/components/ui/AppIcon';
 import Link from 'next/link';
+import { products as allProducts } from '@/data/products';
 
 interface Product {
   id: string;
@@ -23,68 +24,16 @@ interface FeaturedProductsProps {
 const FeaturedProducts = ({ className = '' }: FeaturedProductsProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const products: Product[] = [
-  {
-    id: '1',
-    name: 'Chocolate Croissant',
-    category: 'Pastries',
-    price: 4.99,
-    image: "https://images.unsplash.com/photo-1600930496627-33491158a923",
-    alt: 'Golden flaky chocolate croissant with visible layers on white plate',
-    rating: 4.8,
-    reviews: 124
-  },
-  {
-    id: '2',
-    name: 'Sourdough Bread',
-    category: 'Breads',
-    price: 6.99,
-    image: "https://images.unsplash.com/photo-1597388778288-8ae51973e2a3",
-    alt: 'Rustic sourdough bread loaf with crispy golden crust and flour dusting',
-    rating: 4.9,
-    reviews: 98
-  },
-  {
-    id: '3',
-    name: 'Blueberry Muffin',
-    category: 'Muffins',
-    price: 3.99,
-    image: "https://images.unsplash.com/photo-1593395676686-10a61bbc004b",
-    alt: 'Fresh blueberry muffin with golden top and visible blueberries',
-    rating: 4.7,
-    reviews: 156
-  },
-  {
-    id: '4',
-    name: 'Red Velvet Cake',
-    category: 'Cakes',
-    price: 24.99,
-    image: "https://images.unsplash.com/photo-1508258040961-db03b65a51f0",
-    alt: 'Layered red velvet cake with white cream cheese frosting',
-    rating: 5.0,
-    reviews: 203
-  },
-  {
-    id: '5',
-    name: 'Cinnamon Roll',
-    category: 'Pastries',
-    price: 4.49,
-    image: "https://images.unsplash.com/photo-1696861263620-8587f904b4e1",
-    alt: 'Freshly baked cinnamon roll with white icing drizzle on top',
-    rating: 4.8,
-    reviews: 187
-  },
-  {
-    id: '6',
-    name: 'French Baguette',
-    category: 'Breads',
-    price: 3.99,
-    image: "https://img.rocket.new/generatedImages/rocket_gen_img_1139db42a-1765292626595.png",
-    alt: 'Traditional French baguette with crispy golden crust',
-    rating: 4.6,
-    reviews: 142
-  }];
-
+  const products: Product[] = allProducts.slice(0, 6).map(product => ({
+    id: product.id,
+    name: product.name,
+    category: product.category,
+    price: product.price,
+    image: product.images[0]?.url || '',
+    alt: product.name,
+    rating: product.rating,
+    reviews: product.reviewCount
+  }));
 
   const itemsPerPage = 3;
   const totalPages = Math.ceil(products.length / itemsPerPage);
@@ -131,9 +80,12 @@ const FeaturedProducts = ({ className = '' }: FeaturedProductsProps) => {
         <div className="relative">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {visibleProducts.map((product) =>
-            <div
+            <Link
               key={product.id}
-              className="group bg-card rounded-lg overflow-hidden shadow-warm hover:shadow-warm-lg transition-smooth border border-border">
+              href={`/product-details?id=${product.name}`}
+              target="_blank"
+              rel = "noopener noreferrer"
+              className="group bg-card rounded-lg overflow-hidden shadow-warm hover:shadow-warm-lg transition-smooth border border-border block">
 
                 <div className="relative h-64 overflow-hidden">
                   <AppImage
@@ -177,7 +129,7 @@ const FeaturedProducts = ({ className = '' }: FeaturedProductsProps) => {
 
                   <div className="flex items-center justify-between pt-2">
                     <span className="data-text text-2xl font-bold text-primary">
-                      ${product.price.toFixed(2)}
+                      ₹{product.price.toFixed(2)}
                     </span>
                     <button
                     onClick={() => handleAddToCart(product)}
@@ -188,7 +140,7 @@ const FeaturedProducts = ({ className = '' }: FeaturedProductsProps) => {
                     </button>
                   </div>
                 </div>
-              </div>
+              </Link>
             )}
           </div>
 
@@ -227,7 +179,7 @@ const FeaturedProducts = ({ className = '' }: FeaturedProductsProps) => {
 
         <div className="text-center mt-12">
           <Link
-            href="/product-details"
+            href="/products"
             className="inline-flex items-center gap-2 px-8 py-4 bg-card text-foreground border-2 border-border rounded-md font-medium text-lg hover:bg-primary/10 hover:border-primary transition-smooth focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2">
 
             <span>View All Products</span>

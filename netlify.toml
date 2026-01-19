@@ -12,10 +12,6 @@
   # Node.js version for builds
   NODE_VERSION = "18"
   
-[build.environment]
-  # Exclude these email environment variables from secrets scanning
-  SECRETS_SCAN_OMIT_KEYS = "EMAIL_APP_PASSWORD,EMAIL_USER"
-  
   # Next.js specific environment variables
   NEXT_TELEMETRY_DISABLED = "1"
   

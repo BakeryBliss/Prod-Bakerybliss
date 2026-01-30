@@ -79,18 +79,11 @@ export const products: Product[] = [
     description: 'Delicious chocolate cake with rich truffle filling and choco chip toppings. Perfect for chocolate lovers seeking indulgence.',
     category: 'Cakes',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/choco-chip-truffle-cake.jpg',
         alt: 'Choco Chip Truffle Cake with rich chocolate layers'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/choco-chip-truffle-cake.jpg',
-        alt: 'Close-up of Choco Chip Truffle Cake showing chocolate chips'
-      }
-    ],
+      }],
     sizes: [
       { id: 'small', label: 'Small (6 inch)', priceModifier: 0 },
       { id: 'medium', label: 'Medium (8 inch)', priceModifier: 100 },
@@ -131,18 +124,11 @@ export const products: Product[] = [
     description: 'Traditional German Black Forest Cake with layers of chocolate sponge, cherries, and whipped cream.',
     category: 'Cakes',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Class-black-forest-cake.jpg',
         alt: 'Classic Black Forest Cake with chocolate and cherries'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Class-black-forest-cake.jpg',
-        alt: 'Traditional Black Forest Cake cross-section'
-      }
-    ],
+      }],
     sizes: [
       { id: 'small', label: 'Small (6 inch)', priceModifier: 0 },
       { id: 'medium', label: 'Medium (8 inch)', priceModifier: 150 },
@@ -184,18 +170,11 @@ export const products: Product[] = [
     description: 'Stunning birthday cake with Ferrero Rocher chocolates and chocolate drip decoration.',
     category: 'Cakes',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Choco-Ferrero-Birthday-Drip-Cake.jpg',
         alt: 'Choco Ferrero Birthday Drip Cake with Ferrero Rocher decorations'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Choco-Ferrero-Birthday-Drip-Cake.jpg',
-        alt: 'Birthday drip cake with chocolate ganache'
-      }
-    ],
+      }],
     sizes: [
       { id: 'small', label: 'Small (6 inch)', priceModifier: 0 },
       { id: 'medium', label: 'Medium (8 inch)', priceModifier: 120 },
@@ -232,18 +211,11 @@ export const products: Product[] = [
     description: 'Light and fluffy cake with fresh pineapple chunks and whipped cream frosting.',
     category: 'Cakes',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Whipped-Cream-Pineapple-Cake.jpg',
         alt: 'Whipped Cream Pineapple Cake with fresh pineapple toppings'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Whipped-Cream-Pineapple-Cake.jpg',
-        alt: 'Pineapple cake with whipped cream layers'
-      }
-    ],
+      }],
     sizes: [
       { id: 'small', label: 'Small (6 inch)', priceModifier: 0 },
       { id: 'medium', label: 'Medium (8 inch)', priceModifier: 500 },
@@ -280,18 +252,11 @@ export const products: Product[] = [
     description: 'Romantic cake filled with fresh strawberries and cream cheese frosting.',
     category: 'Cakes',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Strawberry-Affair-Cake.jpg',
         alt: 'Strawberry Affair Cake with fresh strawberry decorations'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Strawberry-Affair-Cake.jpg',
-        alt: 'Strawberry cake with cream cheese layers'
-      }
-    ],
+      }],
     sizes: [
       { id: 'small', label: 'Small (6 inch)', priceModifier: 0 },
       { id: 'medium', label: 'Medium (8 inch)', priceModifier: 120 },
@@ -328,18 +293,11 @@ export const products: Product[] = [
     description: 'Fun and crunchy cake made with KitKat bars and chocolate wafer pieces.',
     category: 'Cakes',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Crunchy-Choco-KitKat-Cake.jpg',
         alt: 'Crunchy Choco KitKat Cake with KitKat bar decorations'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Crunchy-Choco-KitKat-Cake.jpg',
-        alt: 'KitKat cake with chocolate wafer layers'
-      }
-    ],
+      }],
     sizes: [
       { id: 'small', label: 'Small (6 inch)', priceModifier: 0 },
       { id: 'medium', label: 'Medium (8 inch)', priceModifier: 150 },
@@ -376,18 +334,11 @@ export const products: Product[] = [
     description: 'Massive cake covered with KitKat bars arranged in a decorative pattern.',
     category: 'Cakes',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/KitKat-Bars-Cake.jpg',
         alt: 'KitKat Bars Cake covered with KitKat chocolate bars'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/KitKat-Bars-Cake.jpg',
-        alt: 'Large KitKat cake with decorative bar arrangement'
-      }
-    ],
+      }],
     sizes: [
       { id: 'medium', label: 'Medium (8 inch)', priceModifier: 0 },
       { id: 'large', label: 'Large (10 inch)', priceModifier: 400 },
@@ -424,18 +375,11 @@ export const products: Product[] = [
     description: 'Authentic German-style Black Forest Cake with cherry glaze and chocolate shavings.',
     category: 'Cakes',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Glazed-German-Black-Forest-Cake.jpg',
         alt: 'Glazed German Black Forest Cake with cherry glaze'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Glazed-German-Black-Forest-Cake.jpg',
-        alt: 'Authentic Black Forest Cake with traditional decorations'
-      }
-    ],
+      }],
     sizes: [
       { id: 'small', label: 'Small (6 inch)', priceModifier: 0 },
       { id: 'medium', label: 'Medium (8 inch)', priceModifier: 200 },
@@ -473,18 +417,11 @@ export const products: Product[] = [
     description: 'Classic red velvet cake with smooth cream cheese frosting.',
     category: 'Cakes',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Red-Velvet-Cream-Cake.jpg',
         alt: 'Red Velvet Cream Cake with cream cheese frosting'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Red-Velvet-Cream-Cake.jpg',
-        alt: 'Classic red velvet cake slice'
-      }
-    ],
+      }],
     sizes: [
       { id: 'small', label: 'Small (6 inch)', priceModifier: 0 },
       { id: 'medium', label: 'Medium (8 inch)', priceModifier: 100 },
@@ -522,18 +459,11 @@ export const products: Product[] = [
     description: 'Traditional red velvet cake with classic cream cheese frosting and elegant decoration.',
     category: 'Cakes',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Classic-Red-Velvet-Cream-Cake.jpg',
         alt: 'Classic Red Velvet Cream Cake with elegant decoration'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Classic-Red-Velvet-Cream-Cake.jpg',
-        alt: 'Traditional red velvet cake with cream cheese'
-      }
-    ],
+      }],
     sizes: [
       { id: 'small', label: 'Small (6 inch)', priceModifier: 0 },
       { id: 'medium', label: 'Medium (8 inch)', priceModifier: 100 },
@@ -571,18 +501,11 @@ export const products: Product[] = [
     description: 'Exotic cake combining tropical fruits with crunchy almond topping.',
     category: 'Cakes',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Tropical-Fruit-n-Almond-Cake.jpg',
         alt: 'Tropical Fruit n Almond Cake with mixed fruits'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Tropical-Fruit-n-Almond-Cake.jpg',
-        alt: 'Cake with tropical fruits and almond crunch'
-      }
-    ],
+      }],
     sizes: [
       { id: 'small', label: 'Small (6 inch)', priceModifier: 0 },
       { id: 'medium', label: 'Medium (8 inch)', priceModifier: 100 },
@@ -619,18 +542,11 @@ export const products: Product[] = [
     description: 'Individual red velvet cake served in a decorative jar with cream cheese frosting.',
     category: 'Jar Cake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Red-Velvet-Jar-Cake.jpg',
         alt: 'Red Velvet Jar Cake in decorative glass jar'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Red-Velvet-Jar-Cake.jpg',
-        alt: 'Individual red velvet cake in jar'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Jar', priceModifier: 0 },
       { id: 'double', label: 'Double Jar', priceModifier: 300 },
@@ -667,18 +583,11 @@ export const products: Product[] = [
     description: 'Rich chocolate mud cake in a jar with chocolate ganache and fudge pieces.',
     category: 'Jar Cake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Chocolate-Mud-Jar-Cake.jpg',
         alt: 'Chocolate Mud Jar Cake with rich chocolate layers'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Chocolate-Mud-Jar-Cake.jpg',
-        alt: 'Mud cake in decorative jar with ganache'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Jar', priceModifier: 0 },
       { id: 'double', label: 'Double Jar', priceModifier: 300 },
@@ -715,18 +624,11 @@ export const products: Product[] = [
     description: 'Light and airy chocolate mousse layered with chocolate cake in a jar.',
     category: 'Jar Cake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Choco-Mousse-Jar-Cake.jpg',
         alt: 'Choco Mousse Jar Cake with mousse layers'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Choco-Mousse-Jar-Cake.jpg',
-        alt: 'Chocolate mousse and cake in jar'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Jar', priceModifier: 0 },
       { id: 'double', label: 'Double Jar', priceModifier: 300 },
@@ -763,18 +665,11 @@ export const products: Product[] = [
     description: 'Fresh blueberry cake with blueberry compote and cream cheese filling in a jar.',
     category: 'Jar Cake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Blueberry-Jar-Cake.jpg',
         alt: 'Blueberry Jar Cake with fresh blueberries'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Blueberry-Jar-Cake.jpg',
-        alt: 'Blueberry cake layers in decorative jar'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Jar', priceModifier: 0 },
       { id: 'double', label: 'Double Jar', priceModifier: 300 },
@@ -811,18 +706,11 @@ export const products: Product[] = [
     description: 'Traditional chocolate mud cake with dense, dense texture served in a jar.',
     category: 'Jar Cake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Classic-Choco-Mud-Jar-Cake.jpg',
         alt: 'Classic Choco Mud Jar Cake with dense chocolate'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Classic-Choco-Mud-Jar-Cake.jpg',
-        alt: 'Traditional mud cake in jar format'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Jar', priceModifier: 0 },
       { id: 'double', label: 'Double Jar', priceModifier: 300 },
@@ -859,18 +747,11 @@ export const products: Product[] = [
     description: 'Chocolate cake with crunchy chocolate pieces and wafer layers in a jar.',
     category: 'Jar Cake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Choco-Crunch-Jar-Cake.jpg',
         alt: 'Choco Crunch Jar Cake with crunchy toppings'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Choco-Crunch-Jar-Cake.jpg',
-        alt: 'Chocolate cake with crunch elements in jar'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Jar', priceModifier: 0 },
       { id: 'double', label: 'Double Jar', priceModifier: 300 },
@@ -907,18 +788,11 @@ export const products: Product[] = [
     description: 'Dense chocolate mud cake with fudge pieces served in a convenient jar.',
     category: 'Jar Cake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Choco-Mud-Jar-Cake.jpg',
         alt: 'Choco Mud Jar Cake with fudge pieces'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Choco-Mud-Jar-Cake.jpg',
-        alt: 'Mud cake in jar with chocolate toppings'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Jar', priceModifier: 0 },
       { id: 'double', label: 'Double Jar', priceModifier: 300 },
@@ -955,18 +829,11 @@ export const products: Product[] = [
     description: 'Customizable red velvet jar cakes perfect for birthday celebrations.',
     category: 'Jar Cake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Personalised-Bday-Red-Velvet-Jar-Cakes.jpg',
         alt: 'Personalised Bday Red Velvet Jar Cakes with personalization'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Personalised-Bday-Red-Velvet-Jar-Cakes.jpg',
-        alt: 'Custom birthday jar cakes'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Jar', priceModifier: 0 },
       { id: 'double', label: 'Double Jar', priceModifier: 300 },
@@ -1003,18 +870,11 @@ export const products: Product[] = [
     description: 'Delicious eggless cheesecake with Biscoff cookie crust and caramel sauce.',
     category: 'Jar Cake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Eggless-Biscoff-Cheesecake-Jar-Cake.jpg',
         alt: 'Eggless Biscoff Cheesecake Jar Cake with cookie crust'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Eggless-Biscoff-Cheesecake-Jar-Cake.jpg',
-        alt: 'Biscoff cheesecake in jar format'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Jar', priceModifier: 0 },
       { id: 'double', label: 'Double Jar', priceModifier: 300 },
@@ -1051,18 +911,11 @@ export const products: Product[] = [
     description: 'Elegant verrine cup with layers of caramel, cheese cream, and biscuit.',
     category: 'Jar Cake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Caramel-Cheese-Verrine-Jar-Cake.jpg',
         alt: 'Caramel Cheese Verrine Cup with layered dessert'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Caramel-Cheese-Verrine-Jar-Cake.jpg',
-        alt: 'French verrine cup dessert'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Cup', priceModifier: 0 },
       { id: 'double', label: 'Two Cups', priceModifier: 300 },
@@ -1099,18 +952,11 @@ export const products: Product[] = [
     description: 'Traditional red velvet cake in jar format with cream cheese frosting.',
     category: 'Jar Cake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Classic-Red-Velvet-Jar-Cake.jpg',
         alt: 'Classic Red Velvet Jar Cake with traditional appeal'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Classic-Red-Velvet-Jar-Cake.jpg',
-        alt: 'Red velvet cake in classic jar presentation'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Jar', priceModifier: 0 },
       { id: 'double', label: 'Double Jar', priceModifier: 300 },
@@ -1147,18 +993,11 @@ export const products: Product[] = [
     description: 'Decadent jar cake filled with Nutella and crunchy hazelnut pieces.',
     category: 'Jar Cake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Nutella-Hazelnut-Jar.jpg',
         alt: 'Nutella Hazelnut Jar Cake with hazelnut toppings'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Nutella-Hazelnut-Jar.jpg',
-        alt: 'Nutella and hazelnut layered cake in jar'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Jar', priceModifier: 0 },
       { id: 'double', label: 'Double Jar', priceModifier: 300 },
@@ -1195,18 +1034,11 @@ export const products: Product[] = [
     description: 'Fresh blueberry cakes in jars, perfect for individual servings.',
     category: 'Jar Cake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Blueberry-Jar-Cakes.jpg',
         alt: 'Blueberry Jar Cakes with fresh berry toppings'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Blueberry-Jar-Cakes.jpg',
-        alt: 'Multiple blueberry jar cakes'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Jar', priceModifier: 0 },
       { id: 'double', label: 'Double Jar', priceModifier: 300 },
@@ -1243,18 +1075,11 @@ export const products: Product[] = [
     description: 'Delicious combination of chocolate chip cake and fresh fruits in jar format.',
     category: 'Jar Cake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/choco-chips-Cruit-jar-cake-combo-jar.jpg',
         alt: 'Choco Chip N Fruit Jar Combo with mixed fruits and chocolate'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/choco-chips-Cruit-jar-cake-combo-jar.jpg',
-        alt: 'Chocolate chip and fruit combination in jar'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Jar', priceModifier: 0 },
       { id: 'double', label: 'Double Jar', priceModifier: 300 },
@@ -1291,18 +1116,11 @@ export const products: Product[] = [
     description: 'Traditional chocolate cake in jar format with rich chocolate frosting.',
     category: 'Jar Cake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Chocolate-Jar-Cake.jpg',
         alt: 'Classic Chocolate Jar with rich chocolate layers'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Chocolate-Jar-Cake.jpg',
-        alt: 'Traditional chocolate cake in jar'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Jar', priceModifier: 0 },
       { id: 'double', label: 'Double Jar', priceModifier: 300 },
@@ -1339,18 +1157,11 @@ export const products: Product[] = [
     description: 'Pair of customizable chocolate jar cakes with personalized decorations.',
     category: 'Jar Cake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/set-of-two-custom-chocolate-jar-cakes.jpg',
         alt: 'Set Of Two Custom Chocolate Jar Cakes with personalization'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/set-of-two-custom-chocolate-jar-cakes.jpg',
-        alt: 'Two custom chocolate jar cakes'
-      }
-    ],
+      }],
     sizes: [
       { id: 'double', label: 'Two Jars', priceModifier: 0 },
       { id: 'triple', label: 'Three Jars', priceModifier: 300 },
@@ -1387,18 +1198,11 @@ export const products: Product[] = [
     description: 'Irresistible combination of banana, toffee, and cream in jar format.',
     category: 'Jar Cake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/banoffee-jar-cake-jar.jpg',
         alt: 'Banoffee Jar Cake with banana and toffee layers'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/banoffee-jar-cake-jar.jpg',
-        alt: 'Banana toffee jar cake'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Jar', priceModifier: 0 },
       { id: 'double', label: 'Double Jar', priceModifier: 300 },
@@ -1435,18 +1239,11 @@ export const products: Product[] = [
     description: 'Two pieces of delicious red velvet jar cake with finger-licking goodness.',
     category: 'Jar Cake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/red-velvet-single-jar-cake-jar.jpg',
         alt: 'Finger Licking Red Velvet Jar Cake: 2pcs with tempting presentation'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/red-velvet-single-jar-cake-jar.jpg',
-        alt: 'Two red velvet jar cakes'
-      }
-    ],
+      }],
     sizes: [
       { id: 'double', label: 'Two Jars', priceModifier: 0 },
       { id: 'triple', label: 'Three Jars', priceModifier: 300 },
@@ -1483,18 +1280,11 @@ export const products: Product[] = [
     description: 'Romantic anniversary jar cakes with personalized photo decorations.',
     category: 'Jar Cake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/romantic-red-velvet-anniversary-jar-cakes-jar.jpg',
         alt: 'Romantic Red Velvet Anniversary Photo Jar Cakes with personalized touch'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/romantic-red-velvet-anniversary-jar-cakes-jar.jpg',
-        alt: 'Anniversary photo jar cakes'
-      }
-    ],
+      }],
     sizes: [
       { id: 'double', label: 'Two Jars', priceModifier: 0 },
       { id: 'triple', label: 'Three Jars', priceModifier: 300 },
@@ -1531,18 +1321,11 @@ export const products: Product[] = [
     description: 'Pair of luxurious chocolate mousse jars with rich, creamy texture.',
     category: 'Jar Cake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/chocolate-mousse-jar-cake-jar.jpg',
         alt: 'Twin Chocolate Mousse Jars with creamy chocolate layers'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/chocolate-mousse-jar-cake-jar.jpg',
-        alt: 'Two chocolate mousse jars'
-      }
-    ],
+      }],
     sizes: [
       { id: 'double', label: 'Two Jars', priceModifier: 0 },
       { id: 'triple', label: 'Three Jars', priceModifier: 300 },
@@ -1579,18 +1362,11 @@ export const products: Product[] = [
     description: 'Festive birthday jar cakes with chocolate decorations and celebratory flair.',
     category: 'Jar Cake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/two-birthday-personalised-chocolate-jar-cakes-jar.jpg',
         alt: 'Birthday Chocolate Jar Cakes with festive decorations'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/two-birthday-personalised-chocolate-jar-cakes-jar.jpg',
-        alt: 'Birthday themed jar cakes'
-      }
-    ],
+      }],
     sizes: [
       { id: 'double', label: 'Two Jars', priceModifier: 0 },
       { id: 'triple', label: 'Three Jars', priceModifier: 300 },
@@ -1627,18 +1403,11 @@ export const products: Product[] = [
     description: 'Luxurious pair of chocolate jar cakes with premium ingredients and presentation.',
     category: 'Jar Cake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/decadent-chocolate-jar-cake-duo-jar.jpg',
         alt: 'Decadent Chocolate Jar Cake Duo with premium presentation'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/decadent-chocolate-jar-cake-duo-jar.jpg',
-        alt: 'Two decadent chocolate jar cakes'
-      }
-    ],
+      }],
     sizes: [
       { id: 'double', label: 'Two Jars', priceModifier: 0 },
       { id: 'triple', label: 'Three Jars', priceModifier: 300 },
@@ -1675,18 +1444,11 @@ export const products: Product[] = [
     description: 'Delicious pair of red velvet jar cakes with sweet cream cheese frosting.',
     category: 'Jar Cake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/sweet-red-velvet-jar-cake-duo-jar.jpg',
         alt: 'Sweet Red Velvet Jar Cake Duo with sweet presentation'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/sweet-red-velvet-jar-cake-duo-jar.jpg',
-        alt: 'Two sweet red velvet jar cakes'
-      }
-    ],
+      }],
     sizes: [
       { id: 'double', label: 'Two Jars', priceModifier: 0 },
       { id: 'triple', label: 'Three Jars', priceModifier: 300 },
@@ -1723,18 +1485,11 @@ export const products: Product[] = [
     description: 'Luxurious Belgian chocolate mousse in jar format with premium quality.',
     category: 'Jar Cake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/belgian-chocolate-mousse-jar-cake-jar.jpg',
         alt: 'Belgian Chocolate Mousse Jar with premium chocolate'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/belgian-chocolate-mousse-jar-cake-jar.jpg',
-        alt: 'Belgian chocolate mousse in jar'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Jar', priceModifier: 0 },
       { id: 'double', label: 'Double Jar', priceModifier: 300 },
@@ -1771,18 +1526,11 @@ export const products: Product[] = [
     description: 'Creamy blueberry cheesecake with graham cracker crust and fresh berries.',
     category: 'Cheesecake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/viscous-blueberry-cheesecake-cake.jpg',
         alt: 'Blueberry Cheesecake with fresh blueberry toppings'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/viscous-blueberry-cheesecake-cake.jpg',
-        alt: 'Creamy blueberry cheesecake slice'
-      }
-    ],
+      }],
     sizes: [
       { id: 'slice', label: 'Single Slice', priceModifier: 0 },
       { id: 'half', label: 'Half Cake', priceModifier: 400 },
@@ -1819,18 +1567,11 @@ export const products: Product[] = [
     description: 'Rich Biscoff cheesecake with spiced cookie crust and caramel drizzle.',
     category: 'Cheesecake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/biscolicious-cheesecake-cake.jpg',
         alt: 'Biscoff Baked Cheesecake with Biscoff cookie crust'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/biscolicious-cheesecake-cake.jpg',
-        alt: 'Biscoff cheesecake with caramel'
-      }
-    ],
+      }],
     sizes: [
       { id: 'slice', label: 'Single Slice', priceModifier: 0 },
       { id: 'half', label: 'Half Cake', priceModifier: 400 },
@@ -1867,18 +1608,11 @@ export const products: Product[] = [
     description: 'Individual slice of blueberry cheesecake with fresh berry topping.',
     category: 'Cheesecake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/blueberry-cheese-pastry-past.jpg',
         alt: 'Blueberry Cheesecake Slice with fresh berries'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/blueberry-cheese-pastry-past.jpg',
-        alt: 'Individual blueberry cheesecake slice'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Slice', priceModifier: 0 },
       { id: 'double', label: 'Two Slices', priceModifier: 250 },
@@ -1915,18 +1649,11 @@ export const products: Product[] = [
     description: 'Creamy cheesecake slice with Oreo cookie crust and chocolate cookie pieces.',
     category: 'Cheesecake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/oreo-bake-cheesecake-slice-past.jpg',
         alt: 'Classic Oreo Cheesecake Slice with cookie pieces'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/oreo-bake-cheesecake-slice-past.jpg',
-        alt: 'Oreo cheesecake individual slice'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Slice', priceModifier: 0 },
       { id: 'double', label: 'Two Slices', priceModifier: 250 },
@@ -1963,18 +1690,11 @@ export const products: Product[] = [
     description: 'Individual slice of Biscoff cheesecake with spiced cookie crust.',
     category: 'Cheesecake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/biscoff-baked-cheesecake-slice-past.jpg',
         alt: 'Biscoff Baked Cheesecake Slice with cookie crust'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/biscoff-baked-cheesecake-slice-past.jpg',
-        alt: 'Individual Biscoff cheesecake slice'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Slice', priceModifier: 0 },
       { id: 'double', label: 'Two Slices', priceModifier: 250 },
@@ -2011,18 +1731,11 @@ export const products: Product[] = [
     description: 'Decadent cheesecake slice with Nutella filling and hazelnut crunch.',
     category: 'Cheesecake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/spongy-nutella-pastry-past.jpg',
         alt: 'Nutella Cheesecake Slice with hazelnut toppings'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/spongy-nutella-pastry-past.jpg',
-        alt: 'Individual Nutella cheesecake slice'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Slice', priceModifier: 0 },
       { id: 'double', label: 'Two Slices', priceModifier: 250 },
@@ -2059,18 +1772,11 @@ export const products: Product[] = [
     description: 'Egg-free Biscoff cheesecake in jar format with spiced cookie crust.',
     category: 'Cheesecake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/biscofflicious-cheese-jar-delight-jar.jpg',
         alt: 'Eggless Biscoff Cheesecake Jar with cookie crust'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/biscofflicious-cheese-jar-delight-jar.jpg',
-        alt: 'Eggless Biscoff cheesecake in jar'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Jar', priceModifier: 0 },
       { id: 'double', label: 'Double Jar', priceModifier: 300 },
@@ -2107,18 +1813,11 @@ export const products: Product[] = [
     description: 'Authentic New York-style cheesecake slice with rich, dense texture.',
     category: 'Cheesecake',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/new-york-bake-cheesecake-slice-past.jpg',
         alt: 'New York Baked Cheesecake Slice with classic style'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/new-york-bake-cheesecake-slice-past.jpg',
-        alt: 'Individual New York cheesecake slice'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Slice', priceModifier: 0 },
       { id: 'double', label: 'Two Slices', priceModifier: 250 },
@@ -2155,18 +1854,11 @@ export const products: Product[] = [
     description: 'Elegant chocolate truffle pastry with rich ganache filling.',
     category: 'Pastries',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Classic-Chocolate-Truffle-Pastry.jpg',
         alt: 'Classic Chocolate Truffle Pastry with elegant design'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Classic-Chocolate-Truffle-Pastry.jpg',
-        alt: 'Chocolate truffle pastry close-up'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Pastry', priceModifier: 0 },
       { id: 'double', label: 'Two Pastries', priceModifier: 250 },
@@ -2203,18 +1895,11 @@ export const products: Product[] = [
     description: 'Fresh pineapple pastry with tropical flavors and flaky crust.',
     category: 'Pastries',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Tropical-Pineapple-Pastry.jpg',
         alt: 'Tropical Pineapple Pastry with fresh pineapple'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Tropical-Pineapple-Pastry.jpg',
-        alt: 'Pineapple pastry with tropical presentation'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Pastry', priceModifier: 0 },
       { id: 'double', label: 'Two Pastries', priceModifier: 250 },
@@ -2251,18 +1936,11 @@ export const products: Product[] = [
     description: 'Festive chocolate pastries perfect for birthday celebrations.',
     category: 'Pastries',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Happy-Birthday-Chocolate-Pastries.jpg',
         alt: 'Happy Birthday Chocolate Pastries with festive decorations'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Happy-Birthday-Chocolate-Pastries.jpg',
-        alt: 'Birthday chocolate pastries'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Pastry', priceModifier: 0 },
       { id: 'double', label: 'Two Pastries', priceModifier: 250 },
@@ -2299,18 +1977,11 @@ export const products: Product[] = [
     description: 'Curated selection of assorted pastries in a beautiful gift box.',
     category: 'Pastries',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Assorted-Pastry-Box.jpg',
         alt: 'Assorted Pastry Box with variety of pastries'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Assorted-Pastry-Box.jpg',
-        alt: 'Beautiful pastry assortment box'
-      }
-    ],
+      }],
     sizes: [
       { id: 'small-box', label: 'Small Box (4 pieces)', priceModifier: 0 },
       { id: 'medium-box', label: 'Medium Box (6 pieces)', priceModifier: 400 },
@@ -2347,18 +2018,11 @@ export const products: Product[] = [
     description: 'Traditional butterscotch pastry with caramelized sugar and butter.',
     category: 'Pastries',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Classic-Butterscotch-Pastry.jpg',
         alt: 'Classic Butterscotch Pastry with golden caramel'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Classic-Butterscotch-Pastry.jpg',
-        alt: 'Butterscotch pastry close-up'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Pastry', priceModifier: 0 },
       { id: 'double', label: 'Two Pastries', priceModifier: 250 },
@@ -2395,18 +2059,11 @@ export const products: Product[] = [
     description: 'Red velvet pastry with cream cheese filling and chocolate notes.',
     category: 'Pastries',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Classic-Red-Velvet-Pastry.jpg',
         alt: 'Classic Red Velvet Pastry with cream cheese'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Classic-Red-Velvet-Pastry.jpg',
-        alt: 'Red velvet pastry presentation'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Pastry', priceModifier: 0 },
       { id: 'double', label: 'Two Pastries', priceModifier: 250 },
@@ -2443,18 +2100,11 @@ export const products: Product[] = [
     description: 'Cheesecake slice with blueberry topping, perfect individual portion.',
     category: 'Pastries',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Blueberry-Cheesecake-Slice.jpg',
         alt: 'Blueberry Cheesecake Slice with fresh berries'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Blueberry-Cheesecake-Slice.jpg',
-        alt: 'Cheesecake slice with blueberry topping'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Slice', priceModifier: 0 },
       { id: 'double', label: 'Two Slices', priceModifier: 250 },
@@ -2491,18 +2141,11 @@ export const products: Product[] = [
     description: 'Elegant tres leches cake with rose flavor and traditional soaking.',
     category: 'Pastries',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Rose-Tres-Leches.jpg',
         alt: 'Rose Tres Leches with elegant rose decoration'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Rose-Tres-Leches.jpg',
-        alt: 'Rose flavored tres leches cake'
-      }
-    ],
+      }],
     sizes: [
       { id: 'slice', label: 'Single Slice', priceModifier: 0 },
       { id: 'half', label: 'Half Cake', priceModifier: 400 },
@@ -2539,18 +2182,11 @@ export const products: Product[] = [
     description: 'Chocolate truffle pastry featuring KitKat bars and rich ganache.',
     category: 'Pastries',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Choco-Truffle-Pastry-Made-With-KitKat.jpg',
         alt: 'Choco Truffle Pastry Made With KitKat bars'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Choco-Truffle-Pastry-Made-With-KitKat.jpg',
-        alt: 'KitKat chocolate truffle pastry'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Pastry', priceModifier: 0 },
       { id: 'double', label: 'Two Pastries', priceModifier: 250 },
@@ -2587,18 +2223,11 @@ export const products: Product[] = [
     description: 'Cheesecake slice with Biscoff crust and spiced caramel filling.',
     category: 'Pastries',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Biscoff-Baked-Cheesecake-Slice.jpg',
         alt: 'Biscoff Baked Cheesecake Slice with cookie crust'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Biscoff-Baked-Cheesecake-Slice.jpg',
-        alt: 'Biscoff cheesecake individual slice'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Slice', priceModifier: 0 },
       { id: 'double', label: 'Two Slices', priceModifier: 250 },
@@ -2635,18 +2264,11 @@ export const products: Product[] = [
     description: 'Authentic New York cheesecake slice with dense, creamy texture.',
     category: 'Pastries',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/New-York-Baked-Cheesecake-Slice.jpg',
         alt: 'New York Baked Cheesecake Slice with classic style'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/New-York-Baked-Cheesecake-Slice.jpg',
-        alt: 'Individual New York cheesecake slice'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Slice', priceModifier: 0 },
       { id: 'double', label: 'Two Slices', priceModifier: 250 },
@@ -2683,18 +2305,11 @@ export const products: Product[] = [
     description: 'Cheesecake slice with Oreo crust and chocolate cookie pieces throughout.',
     category: 'Pastries',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Classic-Oreo-Cheesecake-Slice.jpg',
         alt: 'Classic Oreo Cheesecake Slice with cookie pieces'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Classic-Oreo-Cheesecake-Slice.jpg',
-        alt: 'Oreo cheesecake individual slice'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Slice', priceModifier: 0 },
       { id: 'double', label: 'Two Slices', priceModifier: 250 },
@@ -2731,18 +2346,11 @@ export const products: Product[] = [
     description: 'Traditional chocolate chip pastry with buttery dough and chocolate chunks.',
     category: 'Pastries',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Classic-Choco-Chip-Pastry.jpg',
         alt: 'Classic Choco Chip Pastry with chocolate chips'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Classic-Choco-Chip-Pastry.jpg',
-        alt: 'Chocolate chip pastry close-up'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Pastry', priceModifier: 0 },
       { id: 'double', label: 'Two Pastries', priceModifier: 250 },
@@ -2779,18 +2387,11 @@ export const products: Product[] = [
     description: 'German-inspired pastry with chocolate, cherries, and cream.',
     category: 'Pastries',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Black-Forest-Pastry.jpg',
         alt: 'Black Forest Pastry with chocolate and cherries'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Black-Forest-Pastry.jpg',
-        alt: 'Black Forest pastry presentation'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Pastry', priceModifier: 0 },
       { id: 'double', label: 'Two Pastries', priceModifier: 250 },
@@ -2827,18 +2428,11 @@ export const products: Product[] = [
     description: 'Cheesecake slice with Nutella filling and hazelnut crunch topping.',
     category: 'Pastries',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Nutella-Cheesecake-Slice.jpg',
         alt: 'Nutella Cheesecake Slice with hazelnut toppings'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Nutella-Cheesecake-Slice.jpg',
-        alt: 'Individual Nutella cheesecake slice'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Slice', priceModifier: 0 },
       { id: 'double', label: 'Two Slices', priceModifier: 250 },
@@ -2875,18 +2469,11 @@ export const products: Product[] = [
     description: 'Romantic red velvet pastries perfect for anniversary celebrations.',
     category: 'Pastries',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Red-Velvet-Anniversary-Pastries.jpg',
         alt: 'Red Velvet Anniversary Pastries with romantic design'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Red-Velvet-Anniversary-Pastries.jpg',
-        alt: 'Anniversary red velvet pastries'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Pastry', priceModifier: 0 },
       { id: 'double', label: 'Two Pastries', priceModifier: 250 },
@@ -2923,18 +2510,11 @@ export const products: Product[] = [
     description: 'Assortment of six anniversary pastries with pineapple, chocolate, and red velvet.',
     category: 'Pastries',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Six-Pineapple-Chocolate-and-Red-Velvet-Anniversary-Pastries.jpg',
         alt: 'Six Pineapple Chocolate and Red Velvet Anniversary Pastries assortment'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Six-Pineapple-Chocolate-and-Red-Velvet-Anniversary-Pastries.jpg',
-        alt: 'Assorted anniversary pastry collection'
-      }
-    ],
+      }],
     sizes: [
       { id: 'six-pack', label: 'Six Pack Assortment', priceModifier: 0 },
       { id: 'twelve-pack', label: 'Twelve Pack Assortment', priceModifier: 900 },
@@ -2971,18 +2551,11 @@ export const products: Product[] = [
     description: 'Elegant verrine cup with coffee mousse and biscuit layers.',
     category: 'Pastries',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Filter-Coffee-Mousse-Verrine-Cup.jpg',
         alt: 'Filter Coffee Mousse Verrine Cup with coffee layers'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Filter-Coffee-Mousse-Verrine-Cup.jpg',
-        alt: 'Coffee mousse verrine dessert'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Cup', priceModifier: 0 },
       { id: 'double', label: 'Two Cups', priceModifier: 250 },
@@ -3019,18 +2592,11 @@ export const products: Product[] = [
     description: 'Assortment of chocolate truffle and butterscotch pastries.',
     category: 'Pastries',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Choco-Truffle-N-Butterscotch-Pastries.jpg',
         alt: 'Choco Truffle N Butterscotch Pastries assortment'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Choco-Truffle-N-Butterscotch-Pastries.jpg',
-        alt: 'Chocolate and butterscotch pastry mix'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single-each', label: 'One of Each', priceModifier: 0 },
       { id: 'double-mix', label: 'Two Mixed', priceModifier: 250 },
@@ -3067,18 +2633,11 @@ export const products: Product[] = [
     description: 'Light mousse with candied caramel pieces and smooth texture.',
     category: 'Pastries',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Candied-Caramel-Mousse.jpg',
         alt: 'Candied Caramel Mousse with caramel pieces'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Candied-Caramel-Mousse.jpg',
-        alt: 'Caramel mousse dessert'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Serving', priceModifier: 0 },
       { id: 'double', label: 'Two Servings', priceModifier: 250 },
@@ -3115,18 +2674,11 @@ export const products: Product[] = [
     description: 'Square butterscotch pastry with rich caramel filling and buttery crust.',
     category: 'Pastries',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Square-Shaped-Delicious-Butterscotch-Pastry.jpg',
         alt: 'Square Shaped Delicious Butterscotch Pastry with caramel'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Square-Shaped-Delicious-Butterscotch-Pastry.jpg',
-        alt: 'Square butterscotch pastry'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Square', priceModifier: 0 },
       { id: 'double', label: 'Two Squares', priceModifier: 250 },
@@ -3163,18 +2715,11 @@ export const products: Product[] = [
     description: 'Curated selection of our signature pastries in elegant presentation.',
     category: 'Pastries',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Signature-Assorted-Pastries.jpg',
         alt: 'Signature Assorted Pastries with elegant arrangement'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Signature-Assorted-Pastries.jpg',
-        alt: 'Assorted signature pastry collection'
-      }
-    ],
+      }],
     sizes: [
       { id: 'small-assortment', label: 'Small Assortment (4 pieces)', priceModifier: 0 },
       { id: 'medium-assortment', label: 'Medium Assortment (6 pieces)', priceModifier: 500 },
@@ -3211,18 +2756,11 @@ export const products: Product[] = [
     description: 'Three-layer chocolate mousse with varying chocolate intensities.',
     category: 'Pastries',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Choco-Trio-Mousse.jpg',
         alt: 'Choco Trio Mousse with three chocolate layers'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Choco-Trio-Mousse.jpg',
-        alt: 'Three-layer chocolate mousse'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Serving', priceModifier: 0 },
       { id: 'double', label: 'Two Servings', priceModifier: 250 },
@@ -3259,18 +2797,11 @@ export const products: Product[] = [
     description: 'Italian-inspired pastry with coffee-soaked layers and mascarpone.',
     category: 'Pastries',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Tiramisu-Pastry.jpg',
         alt: 'Tiramisu Pastry with coffee and mascarpone'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Tiramisu-Pastry.jpg',
-        alt: 'Italian tiramisu pastry'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Pastry', priceModifier: 0 },
       { id: 'double', label: 'Two Pastries', priceModifier: 250 },
@@ -3307,18 +2838,11 @@ export const products: Product[] = [
     description: 'Traditional chocolate pastries with rich filling and flaky crust.',
     category: 'Pastries',
     inStock: true,
-    images: [
-      {
+    images: [{
         id: 'img1',
         url: '/assets/images/Classic-Chocolate-Pastries.jpg',
         alt: 'Classic Chocolate Pastries with rich chocolate'
-      },
-      {
-        id: 'img2',
-        url: '/assets/images/Classic-Chocolate-Pastries.jpg',
-        alt: 'Traditional chocolate pastry'
-      }
-    ],
+      }],
     sizes: [
       { id: 'single', label: 'Single Pastry', priceModifier: 0 },
       { id: 'double', label: 'Two Pastries', priceModifier: 250 },

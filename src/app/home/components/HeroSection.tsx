@@ -11,7 +11,7 @@ const HeroSection = ({ className = '' }: HeroSectionProps) => {
     <section className={`relative w-full h-[600px] lg:h-[700px] overflow-hidden ${className}`}>
       <div className="absolute inset-0">
         <AppImage
-          src="https://images.unsplash.com/photo-1713972327524-b74656c4c2bb"
+          src="/assets/images/homePage.jpeg"
           alt="Assorted freshly baked artisan breads and pastries displayed on rustic wooden table with flour dusting"
           className="w-full h-full object-cover"
           priority />

@@ -131,13 +131,13 @@ const FeaturedProducts = ({ className = '' }: FeaturedProductsProps) => {
                     <span className="data-text text-2xl font-bold text-primary">
                       ₹{product.price.toFixed(2)}
                     </span>
-                    <button
+                    {/* <button
                     onClick={() => handleAddToCart(product)}
                     className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 transition-smooth focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2">
 
                       <Icon name="ShoppingCartIcon" size={18} />
                       <span>Add</span>
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </Link>

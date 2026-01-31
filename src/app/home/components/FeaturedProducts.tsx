@@ -82,7 +82,7 @@ const FeaturedProducts = ({ className = '' }: FeaturedProductsProps) => {
             {visibleProducts.map((product) =>
             <Link
               key={product.id}
-              href={`/product-details?id=${product.name}`}
+              href={`/product-details?id=${product.id}`}
               target="_blank"
               rel = "noopener noreferrer"
               className="group bg-card rounded-lg overflow-hidden shadow-warm hover:shadow-warm-lg transition-smooth border border-border block">

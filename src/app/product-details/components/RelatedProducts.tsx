@@ -69,6 +69,8 @@ const RelatedProducts = ({ products }: RelatedProductsProps) => {
             <Link
               key={product.id}
               href={`/product-details?id=${product.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
               className="group bg-background rounded-lg overflow-hidden shadow-warm-sm hover:shadow-warm-md transition-smooth focus:outline-none focus:ring-3 focus:ring-ring"
             >
               <div className="relative aspect-square overflow-hidden">

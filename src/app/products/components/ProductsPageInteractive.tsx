@@ -71,6 +71,14 @@ export default function ProductsPageInteractive() {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [showFilters, setShowFilters] = useState(false);
 
+  // Update selectedCategory when URL parameter changes
+  useEffect(() => {
+    const categoryParam = searchParams.get('category');
+    if (categoryParam) {
+      setSelectedCategory(categoryParam);
+    }
+  }, [searchParams]);
+
   // Get all unique tags for filtering
   const allTags = useMemo(() => {
     const tags = new Set<string>();

@@ -66,6 +66,7 @@ const sortOptions = [
 export default function ProductsPageInteractive() {
   const searchParams = useSearchParams();
   const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || 'all');
+  const [searchTerm, setSearchTerm] = useState(searchParams.get('search') || '');
   const [sortBy, setSortBy] = useState('name');
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 4200]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -74,9 +75,12 @@ export default function ProductsPageInteractive() {
   // Update selectedCategory when URL parameter changes
   useEffect(() => {
     const categoryParam = searchParams.get('category');
-    if (categoryParam) {
-      setSelectedCategory(categoryParam);
-    }
+    setSelectedCategory(categoryParam || 'all');
+  }, [searchParams]);
+
+  useEffect(() => {
+    const searchParam = searchParams.get('search') || '';
+    setSearchTerm(searchParam);
   }, [searchParams]);
 
   // Get all unique tags for filtering
@@ -91,6 +95,17 @@ export default function ProductsPageInteractive() {
   // Filter and sort products
   const filteredAndSortedProducts = useMemo(() => {
     let filtered = products;
+    const normalizedSearch = searchTerm.trim().toLowerCase();
+
+    if (normalizedSearch) {
+      filtered = filtered.filter(product => {
+        const inName = product.name.toLowerCase().includes(normalizedSearch);
+        const inCategory = product.category.toLowerCase().includes(normalizedSearch);
+        const inSubcategory = product.subcategory?.toLowerCase().includes(normalizedSearch);
+        const inTags = product.tags.some(tag => tag.toLowerCase().includes(normalizedSearch));
+        return inName || inCategory || inSubcategory || inTags;
+      });
+    }
 
     // Category filter
     if (selectedCategory !== 'all') {
@@ -130,7 +145,7 @@ export default function ProductsPageInteractive() {
     });
 
     return filtered;
-  }, [selectedCategory, sortBy, priceRange, selectedTags]);
+  }, [selectedCategory, sortBy, priceRange, selectedTags, searchTerm]);
 
   const handleTagToggle = (tag: string) => {
     setSelectedTags(prev =>

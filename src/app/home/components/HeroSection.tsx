@@ -11,7 +11,7 @@ const HeroSection = ({ className = '' }: HeroSectionProps) => {
     <section className={`relative w-full h-[600px] lg:h-[700px] overflow-hidden group ${className}`}>
       <div className="absolute inset-0">
         <AppImage
-          src="/assets/images/homePage.jpeg"
+          src="/assets/images/pages/homePage.jpeg"
           alt="Assorted freshly baked artisan breads and pastries displayed on rustic wooden table with flour dusting"
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 animate-[zoom-in_1.2s_ease-out]"
           priority />

@@ -32,7 +32,7 @@ export interface Product {
   rating: number;
   reviewCount: number;
   description: string;
-  category: string;
+  category: string | string[];
   inStock: boolean;
   images: ProductImage[];
   sizes: CustomizationOption[];
@@ -81,7 +81,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/choco-chip-truffle-cake.jpg',
+        url: '/assets/images/cakes/choco-chip-truffle-cake.jpg',
         alt: 'Choco Chip Truffle Cake with rich chocolate layers'
       }],
     sizes: [
@@ -126,7 +126,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Class-black-forest-cake.jpg',
+        url: '/assets/images/cakes/Class-black-forest-cake.jpg',
         alt: 'Classic Black Forest Cake with chocolate and cherries'
       }],
     sizes: [
@@ -172,7 +172,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Choco-Ferrero-Birthday-Drip-Cake.jpg',
+        url: '/assets/images/cakes/Choco-Ferrero-Birthday-Drip-Cake.jpg',
         alt: 'Choco Ferrero Birthday Drip Cake with Ferrero Rocher decorations'
       }],
     sizes: [
@@ -213,7 +213,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Whipped-Cream-Pineapple-Cake.jpg',
+        url: '/assets/images/cakes/Whipped-Cream-Pineapple-Cake.jpg',
         alt: 'Whipped Cream Pineapple Cake with fresh pineapple toppings'
       }],
     sizes: [
@@ -254,7 +254,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Strawberry-Affair-Cake.jpg',
+        url: '/assets/images/cakes/Strawberry-Affair-Cake.jpg',
         alt: 'Strawberry Affair Cake with fresh strawberry decorations'
       }],
     sizes: [
@@ -295,7 +295,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Crunchy-Choco-KitKat-Cake.jpg',
+        url: '/assets/images/cakes/Crunchy-Choco-KitKat-Cake.jpg',
         alt: 'Crunchy Choco KitKat Cake with KitKat bar decorations'
       }],
     sizes: [
@@ -336,7 +336,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/KitKat-Bars-Cake.jpg',
+        url: '/assets/images/cakes/KitKat-Bars-Cake.jpg',
         alt: 'KitKat Bars Cake covered with KitKat chocolate bars'
       }],
     sizes: [
@@ -377,7 +377,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Glazed-German-Black-Forest-Cake.jpg',
+        url: '/assets/images/cakes/Glazed-German-Black-Forest-Cake.jpg',
         alt: 'Glazed German Black Forest Cake with cherry glaze'
       }],
     sizes: [
@@ -419,7 +419,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Red-Velvet-Cream-Cake.jpg',
+        url: '/assets/images/cakes/Red-Velvet-Cream-Cake.jpg',
         alt: 'Red Velvet Cream Cake with cream cheese frosting'
       }],
     sizes: [
@@ -461,7 +461,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Classic-Red-Velvet-Cream-Cake.jpg',
+        url: '/assets/images/cakes/Classic-Red-Velvet-Cream-Cake.jpg',
         alt: 'Classic Red Velvet Cream Cake with elegant decoration'
       }],
     sizes: [
@@ -503,7 +503,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Tropical-Fruit-n-Almond-Cake.jpg',
+        url: '/assets/images/cakes/Tropical-Fruit-n-Almond-Cake.jpg',
         alt: 'Tropical Fruit n Almond Cake with mixed fruits'
       }],
     sizes: [
@@ -544,7 +544,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Red-Velvet-Jar-Cake.jpg',
+        url: '/assets/images/jarcakes/Red-Velvet-Jar-Cake.jpg',
         alt: 'Red Velvet Jar Cake in decorative glass jar'
       }],
     sizes: [
@@ -585,7 +585,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Chocolate-Mud-Jar-Cake.jpg',
+        url: '/assets/images/jarcakes/Chocolate-Mud-Jar-Cake.jpg',
         alt: 'Chocolate Mud Jar Cake with rich chocolate layers'
       }],
     sizes: [
@@ -626,7 +626,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Choco-Mousse-Jar-Cake.jpg',
+        url: '/assets/images/jarcakes/Choco-Mousse-Jar-Cake.jpg',
         alt: 'Choco Mousse Jar Cake with mousse layers'
       }],
     sizes: [
@@ -667,7 +667,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Blueberry-Jar-Cake.jpg',
+        url: '/assets/images/jarcakes/Blueberry-Jar-Cake.jpg',
         alt: 'Blueberry Jar Cake with fresh blueberries'
       }],
     sizes: [
@@ -708,7 +708,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Classic-Choco-Mud-Jar-Cake.jpg',
+        url: '/assets/images/jarcakes/Classic-Choco-Mud-Jar-Cake.jpg',
         alt: 'Classic Choco Mud Jar Cake with dense chocolate'
       }],
     sizes: [
@@ -749,7 +749,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Choco-Crunch-Jar-Cake.jpg',
+        url: '/assets/images/jarcakes/Choco-Crunch-Jar-Cake.jpg',
         alt: 'Choco Crunch Jar Cake with crunchy toppings'
       }],
     sizes: [
@@ -790,7 +790,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Choco-Mud-Jar-Cake.jpg',
+        url: '/assets/images/jarcakes/Choco-Mud-Jar-Cake.jpg',
         alt: 'Choco Mud Jar Cake with fudge pieces'
       }],
     sizes: [
@@ -831,7 +831,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Personalised-Bday-Red-Velvet-Jar-Cakes.jpg',
+        url: '/assets/images/jarcakes/Personalised-Bday-Red-Velvet-Jar-Cakes.jpg',
         alt: 'Personalised Bday Red Velvet Jar Cakes with personalization'
       }],
     sizes: [
@@ -868,11 +868,11 @@ export const products: Product[] = [
     rating: 4.8,
     reviewCount: 112,
     description: 'Delicious eggless cheesecake with Biscoff cookie crust and caramel sauce.',
-    category: 'Jar Cake',
+    category: ['Jar Cake', 'Cheesecake'],
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Eggless-Biscoff-Cheesecake-Jar-Cake.jpg',
+        url: '/assets/images/jarcakes/Eggless-Biscoff-Cheesecake-Jar-Cake.jpg',
         alt: 'Eggless Biscoff Cheesecake Jar Cake with cookie crust'
       }],
     sizes: [
@@ -913,7 +913,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Caramel-Cheese-Verrine-Jar-Cake.jpg',
+        url: '/assets/images/jarcakes/Caramel-Cheese-Verrine-Jar-Cake.jpg',
         alt: 'Caramel Cheese Verrine Cup with layered dessert'
       }],
     sizes: [
@@ -954,7 +954,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Classic-Red-Velvet-Jar-Cake.jpg',
+        url: '/assets/images/jarcakes/Classic-Red-Velvet-Jar-Cake.jpg',
         alt: 'Classic Red Velvet Jar Cake with traditional appeal'
       }],
     sizes: [
@@ -995,7 +995,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Nutella-Hazelnut-Jar.jpg',
+        url: '/assets/images/jarcakes/Nutella-Hazelnut-Jar.jpg',
         alt: 'Nutella Hazelnut Jar Cake with hazelnut toppings'
       }],
     sizes: [
@@ -1036,7 +1036,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Blueberry-Jar-Cakes.jpg',
+        url: '/assets/images/jarcakes/Blueberry-Jar-Cakes.jpg',
         alt: 'Blueberry Jar Cakes with fresh berry toppings'
       }],
     sizes: [
@@ -1077,7 +1077,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/choco-chips-Cruit-jar-cake-combo-jar.jpg',
+        url: '/assets/images/jarcakes/choco-chips-Cruit-jar-cake-combo-jar.jpg',
         alt: 'Choco Chip N Fruit Jar Combo with mixed fruits and chocolate'
       }],
     sizes: [
@@ -1118,7 +1118,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Chocolate-Jar-Cake.jpg',
+        url: '/assets/images/jarcakes/Chocolate-Jar-Cake.jpg',
         alt: 'Classic Chocolate Jar with rich chocolate layers'
       }],
     sizes: [
@@ -1159,7 +1159,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/set-of-two-custom-chocolate-jar-cakes.jpg',
+        url: '/assets/images/jarcakes/set-of-two-custom-chocolate-jar-cakes.jpg',
         alt: 'Set Of Two Custom Chocolate Jar Cakes with personalization'
       }],
     sizes: [
@@ -1200,7 +1200,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/banoffee-jar-cake-jar.jpg',
+        url: '/assets/images/jarcakes/banoffee-jar-cake-jar.jpg',
         alt: 'Banoffee Jar Cake with banana and toffee layers'
       }],
     sizes: [
@@ -1241,7 +1241,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/red-velvet-single-jar-cake-jar.jpg',
+        url: '/assets/images/jarcakes/red-velvet-single-jar-cake-jar.jpg',
         alt: 'Finger Licking Red Velvet Jar Cake: 2pcs with tempting presentation'
       }],
     sizes: [
@@ -1282,7 +1282,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/romantic-red-velvet-anniversary-jar-cakes-jar.jpg',
+        url: '/assets/images/jarcakes/romantic-red-velvet-anniversary-jar-cakes-jar.jpg',
         alt: 'Romantic Red Velvet Anniversary Photo Jar Cakes with personalized touch'
       }],
     sizes: [
@@ -1323,7 +1323,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/chocolate-mousse-jar-cake-jar.jpg',
+        url: '/assets/images/jarcakes/chocolate-mousse-jar-cake-jar.jpg',
         alt: 'Twin Chocolate Mousse Jars with creamy chocolate layers'
       }],
     sizes: [
@@ -1364,7 +1364,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/two-birthday-personalised-chocolate-jar-cakes-jar.jpg',
+        url: '/assets/images/jarcakes/two-birthday-personalised-chocolate-jar-cakes-jar.jpg',
         alt: 'Birthday Chocolate Jar Cakes with festive decorations'
       }],
     sizes: [
@@ -1405,7 +1405,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/decadent-chocolate-jar-cake-duo-jar.jpg',
+        url: '/assets/images/jarcakes/decadent-chocolate-jar-cake-duo-jar.jpg',
         alt: 'Decadent Chocolate Jar Cake Duo with premium presentation'
       }],
     sizes: [
@@ -1446,7 +1446,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/sweet-red-velvet-jar-cake-duo-jar.jpg',
+        url: '/assets/images/jarcakes/sweet-red-velvet-jar-cake-duo-jar.jpg',
         alt: 'Sweet Red Velvet Jar Cake Duo with sweet presentation'
       }],
     sizes: [
@@ -1487,7 +1487,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/belgian-chocolate-mousse-jar-cake-jar.jpg',
+        url: '/assets/images/jarcakes/belgian-chocolate-mousse-jar-cake-jar.jpg',
         alt: 'Belgian Chocolate Mousse Jar with premium chocolate'
       }],
     sizes: [
@@ -1528,7 +1528,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/viscous-blueberry-cheesecake-cake.jpg',
+        url: '/assets/images/cheesecakes/viscous-blueberry-cheesecake-cake.jpg',
         alt: 'Blueberry Cheesecake with fresh blueberry toppings'
       }],
     sizes: [
@@ -1569,7 +1569,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/biscolicious-cheesecake-cake.jpg',
+        url: '/assets/images/cheesecakes/biscolicious-cheesecake-cake.jpg',
         alt: 'Biscoff Baked Cheesecake with Biscoff cookie crust'
       }],
     sizes: [
@@ -1606,11 +1606,11 @@ export const products: Product[] = [
     rating: 4.8,
     reviewCount: 112,
     description: 'Individual slice of blueberry cheesecake with fresh berry topping.',
-    category: 'Cheesecake',
+    category: ['Cheesecake', 'Pastries'],
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/blueberry-cheese-pastry-past.jpg',
+        url: '/assets/images/cheesecakes/Blueberry-Cheesecake-Slice.jpg',
         alt: 'Blueberry Cheesecake Slice with fresh berries'
       }],
     sizes: [
@@ -1647,11 +1647,11 @@ export const products: Product[] = [
     rating: 4.8,
     reviewCount: 112,
     description: 'Creamy cheesecake slice with Oreo cookie crust and chocolate cookie pieces.',
-    category: 'Cheesecake',
+    category: ['Cheesecake', 'Pastries'],
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/oreo-bake-cheesecake-slice-past.jpg',
+        url: '/assets/images/cheesecakes/oreo-bake-cheesecake-slice-past.jpg',
         alt: 'Classic Oreo Cheesecake Slice with cookie pieces'
       }],
     sizes: [
@@ -1688,11 +1688,11 @@ export const products: Product[] = [
     rating: 4.8,
     reviewCount: 112,
     description: 'Individual slice of Biscoff cheesecake with spiced cookie crust.',
-    category: 'Cheesecake',
+    category: ['Cheesecake', 'Pastries'],
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/biscoff-baked-cheesecake-slice-past.jpg',
+        url: '/assets/images/cheesecakes/biscoff-baked-cheesecake-slice-past.jpg',
         alt: 'Biscoff Baked Cheesecake Slice with cookie crust'
       }],
     sizes: [
@@ -1729,11 +1729,11 @@ export const products: Product[] = [
     rating: 4.8,
     reviewCount: 112,
     description: 'Decadent cheesecake slice with Nutella filling and hazelnut crunch.',
-    category: 'Cheesecake',
+    category: ['Cheesecake', 'Pastries'],
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/spongy-nutella-pastry-past.jpg',
+        url: '/assets/images/cheesecakes/spongy-nutella-pastry-past.jpg',
         alt: 'Nutella Cheesecake Slice with hazelnut toppings'
       }],
     sizes: [
@@ -1764,58 +1764,17 @@ export const products: Product[] = [
     detailedDescription: 'Indulge in hazelnut paradise with our Nutella Cheesecake Slice, where the world\'s favorite chocolate-hazelnut spread meets creamy cheesecake perfection. Each slice features a graham cracker crust topped with smooth cream cheese filling swirled with generous amounts of Nutella and finished with crunchy hazelnut pieces. The individual portion format ensures you get the perfect balance of crust, filling, and topping. Perfect for Nutella lovers who want their cheesecake experience transformed by the distinctive flavor and texture of roasted hazelnuts.'
   },
   {
-    id: '42',
-    name: 'Eggless Biscoff Cheesecake Jar',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Egg-free Biscoff cheesecake in jar format with spiced cookie crust.',
-    category: 'Cheesecake',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/biscofflicious-cheese-jar-delight-jar.jpg',
-        alt: 'Eggless Biscoff Cheesecake Jar with cookie crust'
-      }],
-    sizes: [
-      { id: 'single', label: 'Single Jar', priceModifier: 0 },
-      { id: 'double', label: 'Double Jar', priceModifier: 300 },
-      { id: 'triple', label: 'Triple Jar', priceModifier: 600 }
-    ],
-    flavors: [
-      { id: 'eggless-biscoff', label: 'Eggless Biscoff', priceModifier: 0 },
-      { id: 'caramel-biscoff', label: 'Caramel Biscoff', priceModifier: 70 }
-    ],
-    ingredients: [
-      { name: 'Biscoff Cookies', allergen: true },
-      { name: 'Cream Cheese', allergen: true },
-      { name: 'Biscoff Spread', allergen: true },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Cornstarch', allergen: false }
-    ],
-    nutrition: {
-      servingSize: '1 jar (180g)',
-      calories: 460,
-      fat: '30g',
-      carbs: '48g',
-      protein: '6g',
-      sugar: '34g'
-    },
-    detailedDescription: 'Enjoy guilt-free indulgence with our Eggless Biscoff Cheesecake Jar, where classic Biscoff flavor meets egg-free cheesecake perfection. Each jar features a thick Biscoff cookie crust topped with smooth, eggless cheesecake filling swirled with Biscoff spread and finished with caramel drizzle. The eggless recipe uses cornstarch and other stabilizers to achieve the same creamy texture without compromising on flavor. Perfect for those with egg allergies or anyone who prefers their cheesecake without eggs, while still enjoying the warm, spiced goodness of Biscoff.'
-  },
-  {
     id: '43',
     name: 'New York Baked Cheesecake Slice',
     price: 373,
     rating: 4.8,
     reviewCount: 112,
     description: 'Authentic New York-style cheesecake slice with rich, dense texture.',
-    category: 'Cheesecake',
+    category: ['Cheesecake', 'Pastries'],
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/new-york-bake-cheesecake-slice-past.jpg',
+        url: '/assets/images/cheesecakes/new-york-bake-cheesecake-slice-past.jpg',
         alt: 'New York Baked Cheesecake Slice with classic style'
       }],
     sizes: [
@@ -1856,7 +1815,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Classic-Chocolate-Truffle-Pastry.jpg',
+        url: '/assets/images/pastries/Classic-Chocolate-Truffle-Pastry.jpg',
         alt: 'Classic Chocolate Truffle Pastry with elegant design'
       }],
     sizes: [
@@ -1897,7 +1856,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Tropical-Pineapple-Pastry.jpg',
+        url: '/assets/images/pastries/Tropical-Pineapple-Pastry.jpg',
         alt: 'Tropical Pineapple Pastry with fresh pineapple'
       }],
     sizes: [
@@ -1938,7 +1897,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Happy-Birthday-Chocolate-Pastries.jpg',
+        url: '/assets/images/pastries/Happy-Birthday-Chocolate-Pastries.jpg',
         alt: 'Happy Birthday Chocolate Pastries with festive decorations'
       }],
     sizes: [
@@ -1979,7 +1938,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Assorted-Pastry-Box.jpg',
+        url: '/assets/images/pastries/Assorted-Pastry-Box.jpg',
         alt: 'Assorted Pastry Box with variety of pastries'
       }],
     sizes: [
@@ -2020,7 +1979,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Classic-Butterscotch-Pastry.jpg',
+        url: '/assets/images/pastries/Classic-Butterscotch-Pastry.jpg',
         alt: 'Classic Butterscotch Pastry with golden caramel'
       }],
     sizes: [
@@ -2061,7 +2020,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Classic-Red-Velvet-Pastry.jpg',
+        url: '/assets/images/pastries/Classic-Red-Velvet-Pastry.jpg',
         alt: 'Classic Red Velvet Pastry with cream cheese'
       }],
     sizes: [
@@ -2092,47 +2051,6 @@ export const products: Product[] = [
     detailedDescription: 'Celebrate Southern charm with our Classic Red Velvet Pastry, bringing the beloved red velvet flavor to flaky pastry perfection. Each pastry features tender red velvet dough filled with cream cheese and topped with a light glaze. The signature subtle chocolate flavor and tangy cream cheese create a sophisticated breakfast or dessert option. Perfect for those who love red velvet but want it in a different format. The natural red color comes from careful balance of cocoa and food coloring, resulting in that distinctive red velvet appearance and flavor.'
   },
   {
-    id: '50',
-    name: 'Blueberry Cheesecake Slice',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Cheesecake slice with blueberry topping, perfect individual portion.',
-    category: 'Pastries',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/Blueberry-Cheesecake-Slice.jpg',
-        alt: 'Blueberry Cheesecake Slice with fresh berries'
-      }],
-    sizes: [
-      { id: 'single', label: 'Single Slice', priceModifier: 0 },
-      { id: 'double', label: 'Two Slices', priceModifier: 250 },
-      { id: 'half-dozen', label: 'Half Dozen Slices', priceModifier: 1200 }
-    ],
-    flavors: [
-      { id: 'blueberry', label: 'Fresh Blueberry', priceModifier: 0 },
-      { id: 'mixed-berry', label: 'Mixed Berry', priceModifier: 70 }
-    ],
-    ingredients: [
-      { name: 'Graham Crackers', allergen: true },
-      { name: 'Cream Cheese', allergen: true },
-      { name: 'Blueberries', allergen: false },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Eggs', allergen: true }
-    ],
-    nutrition: {
-      servingSize: '1 slice (140g)',
-      calories: 420,
-      fat: '28g',
-      carbs: '42g',
-      protein: '8g',
-      sugar: '32g'
-    },
-    detailedDescription: 'Enjoy the best of both worlds with our Blueberry Cheesecake Slice, where classic cheesecake meets fresh berry delight in individual portion perfection. Each slice features a buttery graham cracker crust topped with smooth cream cheese filling and generous fresh blueberry topping. The individual slice format ensures you get the perfect ratio of crust, filling, and topping. Perfect for those who want cheesecake without committing to a whole cake, or for portion control. The fresh blueberries add natural sweetness and vibrant color, creating a beautiful and delicious dessert experience.'
-  },
-  {
     id: '51',
     name: 'Rose Tres Leches',
     price: 373,
@@ -2143,7 +2061,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Rose-Tres-Leches.jpg',
+        url: '/assets/images/pastries/Rose-Tres-Leches.jpg',
         alt: 'Rose Tres Leches with elegant rose decoration'
       }],
     sizes: [
@@ -2184,7 +2102,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Choco-Truffle-Pastry-Made-With-KitKat.jpg',
+        url: '/assets/images/pastries/Choco-Truffle-Pastry-Made-With-KitKat.jpg',
         alt: 'Choco Truffle Pastry Made With KitKat bars'
       }],
     sizes: [
@@ -2215,129 +2133,6 @@ export const products: Product[] = [
     detailedDescription: 'Combine beloved chocolate treats with pastry perfection in our Choco Truffle Pastry Made With KitKat, where the iconic wafer crunch meets rich truffle filling. Each pastry features flaky puff pastry filled with chocolate ganache and pieces of KitKat bars, topped with more KitKat pieces for that satisfying crunch. The combination of smooth chocolate truffle and crispy wafer creates an irresistible texture experience. Perfect for KitKat lovers who want their favorite chocolate bar elevated to pastry status. Each bite delivers the perfect balance of creamy truffle and crunchy wafer chocolate.'
   },
   {
-    id: '53',
-    name: 'Biscoff Baked Cheesecake Slice',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Cheesecake slice with Biscoff crust and spiced caramel filling.',
-    category: 'Pastries',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/Biscoff-Baked-Cheesecake-Slice.jpg',
-        alt: 'Biscoff Baked Cheesecake Slice with cookie crust'
-      }],
-    sizes: [
-      { id: 'single', label: 'Single Slice', priceModifier: 0 },
-      { id: 'double', label: 'Two Slices', priceModifier: 250 },
-      { id: 'half-dozen', label: 'Half Dozen Slices', priceModifier: 1200 }
-    ],
-    flavors: [
-      { id: 'biscoff', label: 'Classic Biscoff', priceModifier: 0 },
-      { id: 'salted', label: 'Salted Caramel Biscoff', priceModifier: 80 }
-    ],
-    ingredients: [
-      { name: 'Biscoff Cookies', allergen: true },
-      { name: 'Cream Cheese', allergen: true },
-      { name: 'Biscoff Spread', allergen: true },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Eggs', allergen: true }
-    ],
-    nutrition: {
-      servingSize: '1 slice (150g)',
-      calories: 480,
-      fat: '32g',
-      carbs: '48g',
-      protein: '8g',
-      sugar: '36g'
-    },
-    detailedDescription: 'Satisfy your spice craving with our Biscoff Baked Cheesecake Slice, where the beloved spiced cookie meets creamy cheesecake in individual slice format. Each slice features a thick Biscoff cookie crust topped with smooth cream cheese filling swirled with Biscoff spread and finished with caramel drizzle. The individual portion format ensures you get the perfect ratio of spiced crust to creamy filling without waste. Perfect for spice lovers who want their cheesecake with a distinctive, caramelized cookie crunch.'
-  },
-  {
-    id: '54',
-    name: 'New York Baked Cheesecake Slice',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Authentic New York cheesecake slice with dense, creamy texture.',
-    category: 'Pastries',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/New-York-Baked-Cheesecake-Slice.jpg',
-        alt: 'New York Baked Cheesecake Slice with classic style'
-      }],
-    sizes: [
-      { id: 'single', label: 'Single Slice', priceModifier: 0 },
-      { id: 'double', label: 'Two Slices', priceModifier: 250 },
-      { id: 'half-dozen', label: 'Half Dozen Slices', priceModifier: 1200 }
-    ],
-    flavors: [
-      { id: 'classic-ny', label: 'Classic New York', priceModifier: 0 },
-      { id: 'premium-ny', label: 'Premium New York', priceModifier: 90 }
-    ],
-    ingredients: [
-      { name: 'Graham Crackers', allergen: true },
-      { name: 'Cream Cheese', allergen: true },
-      { name: 'Sour Cream', allergen: true },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Eggs', allergen: true }
-    ],
-    nutrition: {
-      servingSize: '1 slice (160g)',
-      calories: 480,
-      fat: '35g',
-      carbs: '40g',
-      protein: '9g',
-      sugar: '30g'
-    },
-    detailedDescription: 'Master the classic with our New York Baked Cheesecake Slice, bringing the Big Apple\'s most famous dessert to individual portion perfection. Each slice features a thick graham cracker crust topped with rich, dense cream cheese filling made with extra cream cheese for that signature New York texture. The individual portion format ensures you get the perfect portion of this iconic dessert. Known for its creamy richness and slight tang from sour cream, this cheesecake represents the gold standard that has made New York cheesecake famous worldwide.'
-  },
-  {
-    id: '55',
-    name: 'Classic Oreo Cheesecake Slice',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Cheesecake slice with Oreo crust and chocolate cookie pieces throughout.',
-    category: 'Pastries',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/Classic-Oreo-Cheesecake-Slice.jpg',
-        alt: 'Classic Oreo Cheesecake Slice with cookie pieces'
-      }],
-    sizes: [
-      { id: 'single', label: 'Single Slice', priceModifier: 0 },
-      { id: 'double', label: 'Two Slices', priceModifier: 250 },
-      { id: 'half-dozen', label: 'Half Dozen Slices', priceModifier: 1200 }
-    ],
-    flavors: [
-      { id: 'oreo', label: 'Classic Oreo', priceModifier: 0 },
-      { id: 'double-stuf', label: 'Double Stuf Oreo', priceModifier: 80 }
-    ],
-    ingredients: [
-      { name: 'Oreo Cookies', allergen: true },
-      { name: 'Cream Cheese', allergen: true },
-      { name: 'Chocolate', allergen: false },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Eggs', allergen: true }
-    ],
-    nutrition: {
-      servingSize: '1 slice (145g)',
-      calories: 460,
-      fat: '30g',
-      carbs: '46g',
-      protein: '8g',
-      sugar: '34g'
-    },
-    detailedDescription: 'Create cookie magic with our Classic Oreo Cheesecake Slice, where America\'s favorite cookie transforms cheesecake into an irresistible treat. Each slice features a thick Oreo cookie crust topped with smooth cream cheese filling studded with crushed Oreo pieces and finished with whole Oreo cookies. The individual portion format ensures you get the perfect ratio of cookie crust to creamy filling. Perfect for Oreo fans who want their cheesecake experience elevated with that distinctive chocolate cookie crunch.'
-  },
-  {
     id: '56',
     name: 'Classic Choco Chip Pastry',
     price: 373,
@@ -2348,7 +2143,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Classic-Choco-Chip-Pastry.jpg',
+        url: '/assets/images/pastries/Classic-Choco-Chip-Pastry.jpg',
         alt: 'Classic Choco Chip Pastry with chocolate chips'
       }],
     sizes: [
@@ -2389,7 +2184,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Black-Forest-Pastry.jpg',
+        url: '/assets/images/pastries/Black-Forest-Pastry.jpg',
         alt: 'Black Forest Pastry with chocolate and cherries'
       }],
     sizes: [
@@ -2420,47 +2215,6 @@ export const products: Product[] = [
     detailedDescription: 'Experience German tradition with our Black Forest Pastry, bringing the iconic Schwarzwälder Kirschtorte flavors to elegant pastry form. Each pastry features flaky puff pastry filled with chocolate ganache, tart cherries, and whipped cream, finished with chocolate shavings. The combination of rich chocolate, juicy cherries, and light cream creates a sophisticated dessert experience. Perfect for special occasions or when you want something classically European. The kirsch liqueur adds authentic depth, while fresh cherries provide natural sweetness and vibrant color. A timeless combination that has delighted dessert lovers for generations.'
   },
   {
-    id: '58',
-    name: 'Nutella Cheesecake Slice',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Cheesecake slice with Nutella filling and hazelnut crunch topping.',
-    category: 'Pastries',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/Nutella-Cheesecake-Slice.jpg',
-        alt: 'Nutella Cheesecake Slice with hazelnut toppings'
-      }],
-    sizes: [
-      { id: 'single', label: 'Single Slice', priceModifier: 0 },
-      { id: 'double', label: 'Two Slices', priceModifier: 250 },
-      { id: 'half-dozen', label: 'Half Dozen Slices', priceModifier: 1200 }
-    ],
-    flavors: [
-      { id: 'nutella', label: 'Classic Nutella', priceModifier: 0 },
-      { id: 'gianduja', label: 'Gianduja Nutella', priceModifier: 100 }
-    ],
-    ingredients: [
-      { name: 'Graham Crackers', allergen: true },
-      { name: 'Cream Cheese', allergen: true },
-      { name: 'Nutella', allergen: true },
-      { name: 'Hazelnuts', allergen: true },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false }
-    ],
-    nutrition: {
-      servingSize: '1 slice (155g)',
-      calories: 500,
-      fat: '34g',
-      carbs: '50g',
-      protein: '9g',
-      sugar: '38g'
-    },
-    detailedDescription: 'Indulge in hazelnut paradise with our Nutella Cheesecake Slice, where the world\'s favorite chocolate-hazelnut spread meets creamy cheesecake perfection. Each slice features a graham cracker crust topped with smooth cream cheese filling swirled with generous amounts of Nutella and finished with crunchy hazelnut pieces. The individual portion format ensures you get the perfect balance of crust, filling, and topping. Perfect for Nutella lovers who want their cheesecake experience transformed by the distinctive flavor and texture of roasted hazelnuts.'
-  },
-  {
     id: '59',
     name: 'Red Velvet Anniversary Pastries',
     price: 373,
@@ -2471,7 +2225,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Red-Velvet-Anniversary-Pastries.jpg',
+        url: '/assets/images/pastries/Red-Velvet-Anniversary-Pastries.jpg',
         alt: 'Red Velvet Anniversary Pastries with romantic design'
       }],
     sizes: [
@@ -2512,7 +2266,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Six-Pineapple-Chocolate-and-Red-Velvet-Anniversary-Pastries.jpg',
+        url: '/assets/images/pastries/Six-Pineapple-Chocolate-and-Red-Velvet-Anniversary-Pastries.jpg',
         alt: 'Six Pineapple Chocolate and Red Velvet Anniversary Pastries assortment'
       }],
     sizes: [
@@ -2553,7 +2307,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Filter-Coffee-Mousse-Verrine-Cup.jpg',
+        url: '/assets/images/pastries/Filter-Coffee-Mousse-Verrine-Cup.jpg',
         alt: 'Filter Coffee Mousse Verrine Cup with coffee layers'
       }],
     sizes: [
@@ -2594,7 +2348,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Choco-Truffle-N-Butterscotch-Pastries.jpg',
+        url: '/assets/images/pastries/Choco-Truffle-N-Butterscotch-Pastries.jpg',
         alt: 'Choco Truffle N Butterscotch Pastries assortment'
       }],
     sizes: [
@@ -2635,7 +2389,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Candied-Caramel-Mousse.jpg',
+        url: '/assets/images/pastries/Candied-Caramel-Mousse.jpg',
         alt: 'Candied Caramel Mousse with caramel pieces'
       }],
     sizes: [
@@ -2676,7 +2430,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Square-Shaped-Delicious-Butterscotch-Pastry.jpg',
+        url: '/assets/images/pastries/Square-Shaped-Delicious-Butterscotch-Pastry.jpg',
         alt: 'Square Shaped Delicious Butterscotch Pastry with caramel'
       }],
     sizes: [
@@ -2717,7 +2471,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Signature-Assorted-Pastries.jpg',
+        url: '/assets/images/pastries/Signature-Assorted-Pastries.jpg',
         alt: 'Signature Assorted Pastries with elegant arrangement'
       }],
     sizes: [
@@ -2758,7 +2512,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Choco-Trio-Mousse.jpg',
+        url: '/assets/images/pastries/Choco-Trio-Mousse.jpg',
         alt: 'Choco Trio Mousse with three chocolate layers'
       }],
     sizes: [
@@ -2799,7 +2553,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Tiramisu-Pastry.jpg',
+        url: '/assets/images/pastries/Tiramisu-Pastry.jpg',
         alt: 'Tiramisu Pastry with coffee and mascarpone'
       }],
     sizes: [
@@ -2840,7 +2594,7 @@ export const products: Product[] = [
     inStock: true,
     images: [{
         id: 'img1',
-        url: '/assets/images/Classic-Chocolate-Pastries.jpg',
+        url: '/assets/images/pastries/Classic-Chocolate-Pastries.jpg',
         alt: 'Classic Chocolate Pastries with rich chocolate'
       }],
     sizes: [

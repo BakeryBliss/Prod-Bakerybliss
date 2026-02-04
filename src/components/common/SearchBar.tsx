@@ -12,7 +12,7 @@ interface SearchBarProps {
 interface SearchSuggestion {
   id: string;
   name: string;
-  category: string;
+  category: string | string[];
 }
 
 const SearchBar = ({ className = '' }: SearchBarProps) => {
@@ -64,9 +64,12 @@ const SearchBar = ({ className = '' }: SearchBarProps) => {
     const normalizedQuery = searchQuery.trim().toLowerCase();
     if (normalizedQuery.length > 0) {
       const filtered = allProducts.filter(
-        (item) =>
-          item.name.toLowerCase().includes(normalizedQuery) ||
-          item.category.toLowerCase().includes(normalizedQuery)
+        (item) => {
+          const matchesName = item.name.toLowerCase().includes(normalizedQuery);
+          const categories = Array.isArray(item.category) ? item.category : [item.category];
+          const matchesCategory = categories.some(cat => cat.toLowerCase().includes(normalizedQuery));
+          return matchesName || matchesCategory;
+        }
       );
       setSuggestions(filtered.slice(0, 8));
       setShowSuggestions(true);

@@ -1,3 +1,22 @@
+/**
+ * Product Data Module
+ * 
+ * This module provides product data interfaces and static fallback data.
+ * 
+ * SUPABASE INTEGRATION:
+ * - For server-side fetching, use: import { fetchAllProducts } from '@/services/products'
+ * - For client-side fetching, use: import { useProducts } from '@/hooks/useProducts'
+ * - The API routes at /api/products automatically fetch from Supabase when configured
+ * 
+ * FALLBACK BEHAVIOR:
+ * - If Supabase is not configured (missing env vars), static data is used
+ * - If database fetch fails, components fall back to static data
+ * 
+ * ENVIRONMENT VARIABLES REQUIRED:
+ * - NEXT_PUBLIC_SUPABASE_URL
+ * - NEXT_PUBLIC_SUPABASE_ANON_KEY
+ */
+
 export interface ProductImage {
   id: string;
   url: string;
@@ -48,25 +67,16 @@ export interface Product {
   allergens?: string[];
 }
 
-export interface CustomizationOption {
-  id: string;
-  label: string;
-  priceModifier: number;
-}
-
-export interface Ingredient {
-  name: string;
-  allergen: boolean;
-}
-
-export interface NutritionInfo {
-  servingSize: string;
-  calories: number;
-  fat: string;
-  carbs: string;
-  protein: string;
-  sugar: string;
-}
+// Re-export server-side fetch functions for convenience
+// Use these in Server Components or API routes
+export {
+  fetchAllProducts,
+  fetchProductById,
+  fetchProductsByCategory,
+  fetchPopularProducts,
+  fetchCategories,
+  searchProducts as searchProductsFromDB,
+} from '@/services/products';
 
 export const products: Product[] = [
   {
@@ -1353,1277 +1363,1277 @@ export const products: Product[] = [
     },
     detailedDescription: 'Experience pure decadence with our Twin Chocolate Mousse Jars, where silky smooth chocolate mousse reaches new heights of luxury. Each jar contains layers of rich, airy chocolate mousse made with premium chocolate and fresh cream, stabilized to perfection for the ultimate light-yet-rich experience. The twin format makes them ideal for sharing romantic moments or special occasions. Topped with chocolate shavings and fresh berries, these mousse jars offer an elegant, sophisticated dessert experience that\'s both light and intensely chocolatey.'
   },
-  {
-    id: '32',
-    name: 'Birthday Chocolate Jar Cakes',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Festive birthday jar cakes with chocolate decorations and celebratory flair.',
-    category: 'Jar Cake',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/jarcakes/two-birthday-personalised-chocolate-jar-cakes-jar.jpg',
-        alt: 'Birthday Chocolate Jar Cakes with festive decorations'
-      }],
-    sizes: [
-      { id: 'double', label: 'Two Jars', priceModifier: 0 },
-      { id: 'triple', label: 'Three Jars', priceModifier: 300 },
-      { id: 'four', label: 'Four Jars', priceModifier: 500 }
-    ],
-    flavors: [
-      { id: 'birthday-choco', label: 'Birthday Chocolate', priceModifier: 0 },
-      { id: 'celebration', label: 'Celebration Mix', priceModifier: 70 }
-    ],
-    ingredients: [
-      { name: 'Wheat Flour', allergen: true },
-      { name: 'Chocolate', allergen: false },
-      { name: 'Chocolate Frosting', allergen: true },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Eggs', allergen: true }
-    ],
-    nutrition: {
-      servingSize: '1 jar (200g)',
-      calories: 470,
-      fat: '26g',
-      carbs: '58g',
-      protein: '7g',
-      sugar: '42g'
-    },
-    detailedDescription: 'Make birthdays magical with our Birthday Chocolate Jar Cakes, where festive celebration meets delicious chocolate indulgence. Each jar contains moist chocolate cake with chocolate frosting, decorated with colorful sprinkles, edible glitter, and birthday-themed toppings. The jar format makes them perfect for birthday parties, allowing guests to enjoy individual portions of celebratory goodness. Available in various birthday themes and customizations for truly special celebrations.'
-  },
-  {
-    id: '33',
-    name: 'Decadent Chocolate Jar Cake Duo',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Luxurious pair of chocolate jar cakes with premium ingredients and presentation.',
-    category: 'Jar Cake',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/jarcakes/decadent-chocolate-jar-cake-duo-jar.jpg',
-        alt: 'Decadent Chocolate Jar Cake Duo with premium presentation'
-      }],
-    sizes: [
-      { id: 'double', label: 'Two Jars', priceModifier: 0 },
-      { id: 'triple', label: 'Three Jars', priceModifier: 300 },
-      { id: 'four', label: 'Four Jars', priceModifier: 500 }
-    ],
-    flavors: [
-      { id: 'decadent', label: 'Decadent Chocolate', priceModifier: 0 },
-      { id: 'premium', label: 'Premium Belgian', priceModifier: 100 }
-    ],
-    ingredients: [
-      { name: 'Wheat Flour', allergen: true },
-      { name: 'Belgian Chocolate', allergen: false },
-      { name: 'Chocolate Ganache', allergen: true },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Eggs', allergen: true }
-    ],
-    nutrition: {
-      servingSize: '1 jar (210g)',
-      calories: 500,
-      fat: '30g',
-      carbs: '56g',
-      protein: '8g',
-      sugar: '44g'
-    },
-    detailedDescription: 'Elevate your chocolate experience with our Decadent Chocolate Jar Cake Duo, where premium ingredients meet masterful presentation. Each jar features rich chocolate cake layered with Belgian chocolate ganache and premium chocolate fillings, topped with gold-dusted chocolate shavings and fresh berries. The duo format makes them perfect for sharing special moments with someone special. Crafted with the finest Belgian chocolate and fresh cream, these jar cakes represent the pinnacle of chocolate indulgence and elegant dessert presentation.'
-  },
-  {
-    id: '34',
-    name: 'Sweet Red Velvet Jar Cake Duo',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Delicious pair of red velvet jar cakes with sweet cream cheese frosting.',
-    category: 'Jar Cake',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/jarcakes/sweet-red-velvet-jar-cake-duo-jar.jpg',
-        alt: 'Sweet Red Velvet Jar Cake Duo with sweet presentation'
-      }],
-    sizes: [
-      { id: 'double', label: 'Two Jars', priceModifier: 0 },
-      { id: 'triple', label: 'Three Jars', priceModifier: 300 },
-      { id: 'four', label: 'Four Jars', priceModifier: 500 }
-    ],
-    flavors: [
-      { id: 'sweet-red', label: 'Sweet Red Velvet', priceModifier: 0 },
-      { id: 'berry-red', label: 'Berry Red Velvet', priceModifier: 60 }
-    ],
-    ingredients: [
-      { name: 'Wheat Flour', allergen: true },
-      { name: 'Cocoa Powder', allergen: false },
-      { name: 'Cream Cheese', allergen: true },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Eggs', allergen: true }
-    ],
-    nutrition: {
-      servingSize: '1 jar (200g)',
-      calories: 460,
-      fat: '22g',
-      carbs: '64g',
-      protein: '7g',
-      sugar: '46g'
-    },
-    detailedDescription: 'Share the sweetness with our Sweet Red Velvet Jar Cake Duo, where the classic Southern favorite comes in perfectly portioned jars for two. Each jar contains moist red velvet cake with extra sweet cream cheese frosting, topped with red velvet crumbs and fresh berries. The duo format makes them ideal for couples, friends, or anyone who wants to enjoy red velvet without leftovers. With their sweet flavor profile and charming presentation, these jar cakes bring joy and indulgence to any occasion.'
-  },
-  {
-    id: '35',
-    name: 'Belgian Chocolate Mousse Jar',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Luxurious Belgian chocolate mousse in jar format with premium quality.',
-    category: 'Jar Cake',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/jarcakes/belgian-chocolate-mousse-jar-cake-jar.jpg',
-        alt: 'Belgian Chocolate Mousse Jar with premium chocolate'
-      }],
-    sizes: [
-      { id: 'single', label: 'Single Jar', priceModifier: 0 },
-      { id: 'double', label: 'Double Jar', priceModifier: 300 },
-      { id: 'triple', label: 'Triple Jar', priceModifier: 600 }
-    ],
-    flavors: [
-      { id: 'belgian-dark', label: 'Belgian Dark', priceModifier: 0 },
-      { id: 'belgian-milk', label: 'Belgian Milk', priceModifier: 60 }
-    ],
-    ingredients: [
-      { name: 'Belgian Chocolate', allergen: false },
-      { name: 'Heavy Cream', allergen: true },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Eggs', allergen: true },
-      { name: 'Vanilla', allergen: false }
-    ],
-    nutrition: {
-      servingSize: '1 jar (150g)',
-      calories: 380,
-      fat: '30g',
-      carbs: '28g',
-      protein: '4g',
-      sugar: '24g'
-    },
-    detailedDescription: 'Indulge in Belgian luxury with our Belgian Chocolate Mousse Jar, where the world\'s finest chocolate meets ethereal mousse texture. Each jar contains silky smooth mousse made with premium Belgian chocolate and fresh cream, stabilized to perfection for the ultimate light-yet-rich experience. The single jar format makes it perfect for personal indulgence or elegant entertaining. Topped with Belgian chocolate shavings and served in a decorative jar, this dessert represents the pinnacle of chocolate sophistication and European craftsmanship.'
-  },
-  {
-    id: '36',
-    name: 'Blueberry Cheesecake',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Creamy blueberry cheesecake with graham cracker crust and fresh berries.',
-    category: 'Cheesecake',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/cheesecakes/viscous-blueberry-cheesecake-cake.jpg',
-        alt: 'Blueberry Cheesecake with fresh blueberry toppings'
-      }],
-    sizes: [
-      { id: 'slice', label: 'Single Slice', priceModifier: 0 },
-      { id: 'half', label: 'Half Cake', priceModifier: 400 },
-      { id: 'whole', label: 'Whole Cake', priceModifier: 800 }
-    ],
-    flavors: [
-      { id: 'blueberry', label: 'Fresh Blueberry', priceModifier: 0 },
-      { id: 'wild-blueberry', label: 'Wild Blueberry', priceModifier: 60 }
-    ],
-    ingredients: [
-      { name: 'Graham Crackers', allergen: true },
-      { name: 'Cream Cheese', allergen: true },
-      { name: 'Blueberries', allergen: false },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Eggs', allergen: true }
-    ],
-    nutrition: {
-      servingSize: '1 slice (140g)',
-      calories: 420,
-      fat: '28g',
-      carbs: '42g',
-      protein: '8g',
-      sugar: '32g'
-    },
-    detailedDescription: 'Savor the perfect balance of tart and sweet with our Blueberry Cheesecake, where creamy cheesecake meets the vibrant flavor of fresh blueberries. Each slice features a buttery graham cracker crust topped with smooth cream cheese filling and fresh blueberry compote. The combination of tangy cream cheese, crunchy crust, and juicy blueberries creates a symphony of textures and flavors. Perfect for those who appreciate the classic cheesecake experience elevated by the natural sweetness and color of seasonal blueberries.'
-  },
-  {
-    id: '37',
-    name: 'Biscoff Baked Cheesecake',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Rich Biscoff cheesecake with spiced cookie crust and caramel drizzle.',
-    category: 'Cheesecake',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/cheesecakes/biscolicious-cheesecake-cake.jpg',
-        alt: 'Biscoff Baked Cheesecake with Biscoff cookie crust'
-      }],
-    sizes: [
-      { id: 'slice', label: 'Single Slice', priceModifier: 0 },
-      { id: 'half', label: 'Half Cake', priceModifier: 400 },
-      { id: 'whole', label: 'Whole Cake', priceModifier: 800 }
-    ],
-    flavors: [
-      { id: 'biscoff', label: 'Classic Biscoff', priceModifier: 0 },
-      { id: 'salted', label: 'Salted Caramel Biscoff', priceModifier: 70 }
-    ],
-    ingredients: [
-      { name: 'Biscoff Cookies', allergen: true },
-      { name: 'Cream Cheese', allergen: true },
-      { name: 'Biscoff Spread', allergen: true },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Eggs', allergen: true }
-    ],
-    nutrition: {
-      servingSize: '1 slice (150g)',
-      calories: 480,
-      fat: '32g',
-      carbs: '48g',
-      protein: '8g',
-      sugar: '36g'
-    },
-    detailedDescription: 'Satisfy your spice craving with our Biscoff Baked Cheesecake, where the beloved spiced cookie meets creamy cheesecake perfection. Each slice features a thick Biscoff cookie crust topped with smooth cream cheese filling swirled with Biscoff spread and finished with caramel drizzle. The combination of crunchy cookies and creamy filling creates the ultimate texture experience. Perfect for spice lovers who want their cheesecake with a distinctive, caramelized cookie crunch.'
-  },
-  {
-    id: '38',
-    name: 'Blueberry Cheesecake Slice',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Individual slice of blueberry cheesecake with fresh berry topping.',
-    category: ['Cheesecake', 'Pastries'],
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/cheesecakes/Blueberry-Cheesecake-Slice.jpg',
-        alt: 'Blueberry Cheesecake Slice with fresh berries'
-      }],
-    sizes: [
-      { id: 'single', label: 'Single Slice', priceModifier: 0 },
-      { id: 'double', label: 'Two Slices', priceModifier: 250 },
-      { id: 'half-dozen', label: 'Half Dozen Slices', priceModifier: 1200 }
-    ],
-    flavors: [
-      { id: 'blueberry', label: 'Fresh Blueberry', priceModifier: 0 },
-      { id: 'mixed-berry', label: 'Mixed Berry', priceModifier: 50 }
-    ],
-    ingredients: [
-      { name: 'Graham Crackers', allergen: true },
-      { name: 'Cream Cheese', allergen: true },
-      { name: 'Blueberries', allergen: false },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Eggs', allergen: true }
-    ],
-    nutrition: {
-      servingSize: '1 slice (140g)',
-      calories: 420,
-      fat: '28g',
-      carbs: '42g',
-      protein: '8g',
-      sugar: '32g'
-    },
-    detailedDescription: 'Enjoy the perfect portion with our Blueberry Cheesecake Slice, where classic cheesecake meets fresh berry delight in individual portion perfection. Each slice features a buttery graham cracker crust topped with smooth cream cheese filling and generous fresh blueberry topping. The individual slice format ensures you get the perfect ratio of crust, filling, and topping. Perfect for those who want cheesecake without committing to a whole cake, or for portion control. The fresh blueberries add natural sweetness and vibrant color to this timeless dessert.'
-  },
-  {
-    id: '39',
-    name: 'Classic Oreo Cheesecake Slice',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Creamy cheesecake slice with Oreo cookie crust and chocolate cookie pieces.',
-    category: ['Cheesecake', 'Pastries'],
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/cheesecakes/oreo-bake-cheesecake-slice-past.jpg',
-        alt: 'Classic Oreo Cheesecake Slice with cookie pieces'
-      }],
-    sizes: [
-      { id: 'single', label: 'Single Slice', priceModifier: 0 },
-      { id: 'double', label: 'Two Slices', priceModifier: 250 },
-      { id: 'half-dozen', label: 'Half Dozen Slices', priceModifier: 1200 }
-    ],
-    flavors: [
-      { id: 'oreo', label: 'Classic Oreo', priceModifier: 0 },
-      { id: 'double-stuf', label: 'Double Stuf Oreo', priceModifier: 70 }
-    ],
-    ingredients: [
-      { name: 'Oreo Cookies', allergen: true },
-      { name: 'Cream Cheese', allergen: true },
-      { name: 'Chocolate', allergen: false },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Eggs', allergen: true }
-    ],
-    nutrition: {
-      servingSize: '1 slice (145g)',
-      calories: 460,
-      fat: '30g',
-      carbs: '46g',
-      protein: '8g',
-      sugar: '34g'
-    },
-    detailedDescription: 'Create cookie magic with our Classic Oreo Cheesecake Slice, where America\'s favorite cookie transforms cheesecake into an irresistible treat. Each slice features a thick Oreo cookie crust topped with smooth cream cheese filling studded with crushed Oreo pieces and finished with whole Oreo cookies. The individual portion format ensures you get the perfect ratio of cookie crust to creamy filling. Perfect for Oreo fans who want their cheesecake experience elevated with that distinctive chocolate cookie crunch.'
-  },
-  {
-    id: '40',
-    name: 'Biscoff Baked Cheesecake Slice',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Individual slice of Biscoff cheesecake with spiced cookie crust.',
-    category: ['Cheesecake', 'Pastries'],
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/cheesecakes/biscoff-baked-cheesecake-slice-past.jpg',
-        alt: 'Biscoff Baked Cheesecake Slice with cookie crust'
-      }],
-    sizes: [
-      { id: 'single', label: 'Single Slice', priceModifier: 0 },
-      { id: 'double', label: 'Two Slices', priceModifier: 250 },
-      { id: 'half-dozen', label: 'Half Dozen Slices', priceModifier: 1200 }
-    ],
-    flavors: [
-      { id: 'biscoff', label: 'Classic Biscoff', priceModifier: 0 },
-      { id: 'lotus', label: 'Lotus Biscoff', priceModifier: 80 }
-    ],
-    ingredients: [
-      { name: 'Biscoff Cookies', allergen: true },
-      { name: 'Cream Cheese', allergen: true },
-      { name: 'Biscoff Spread', allergen: true },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Eggs', allergen: true }
-    ],
-    nutrition: {
-      servingSize: '1 slice (150g)',
-      calories: 480,
-      fat: '32g',
-      carbs: '48g',
-      protein: '8g',
-      sugar: '36g'
-    },
-    detailedDescription: 'Experience spiced perfection with our Biscoff Baked Cheesecake Slice, where Belgian cookie perfection meets creamy cheesecake in individual slice format. Each slice features a thick Biscoff cookie crust topped with smooth cream cheese filling swirled with Biscoff spread and finished with caramel drizzle. The individual portion ensures you get the perfect ratio of spiced crust to creamy filling without waste. Perfect for Biscoff enthusiasts who want their favorite cookie in cheesecake form.'
-  },
-  {
-    id: '41',
-    name: 'Nutella Cheesecake Slice',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Decadent cheesecake slice with Nutella filling and hazelnut crunch.',
-    category: ['Cheesecake', 'Pastries'],
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/cheesecakes/spongy-nutella-pastry-past.jpg',
-        alt: 'Nutella Cheesecake Slice with hazelnut toppings'
-      }],
-    sizes: [
-      { id: 'single', label: 'Single Slice', priceModifier: 0 },
-      { id: 'double', label: 'Two Slices', priceModifier: 250 },
-      { id: 'half-dozen', label: 'Half Dozen Slices', priceModifier: 1200 }
-    ],
-    flavors: [
-      { id: 'nutella', label: 'Classic Nutella', priceModifier: 0 },
-      { id: 'gianduja', label: 'Gianduja Nutella', priceModifier: 90 }
-    ],
-    ingredients: [
-      { name: 'Graham Crackers', allergen: true },
-      { name: 'Cream Cheese', allergen: true },
-      { name: 'Nutella', allergen: true },
-      { name: 'Hazelnuts', allergen: true },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false }
-    ],
-    nutrition: {
-      servingSize: '1 slice (155g)',
-      calories: 500,
-      fat: '34g',
-      carbs: '50g',
-      protein: '9g',
-      sugar: '38g'
-    },
-    detailedDescription: 'Indulge in hazelnut paradise with our Nutella Cheesecake Slice, where the world\'s favorite chocolate-hazelnut spread meets creamy cheesecake perfection. Each slice features a graham cracker crust topped with smooth cream cheese filling swirled with generous amounts of Nutella and finished with crunchy hazelnut pieces. The individual portion format ensures you get the perfect balance of crust, filling, and topping. Perfect for Nutella lovers who want their cheesecake experience transformed by the distinctive flavor and texture of roasted hazelnuts.'
-  },
-  {
-    id: '43',
-    name: 'New York Baked Cheesecake Slice',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Authentic New York-style cheesecake slice with rich, dense texture.',
-    category: ['Cheesecake', 'Pastries'],
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/cheesecakes/new-york-bake-cheesecake-slice-past.jpg',
-        alt: 'New York Baked Cheesecake Slice with classic style'
-      }],
-    sizes: [
-      { id: 'single', label: 'Single Slice', priceModifier: 0 },
-      { id: 'double', label: 'Two Slices', priceModifier: 250 },
-      { id: 'half-dozen', label: 'Half Dozen Slices', priceModifier: 1200 }
-    ],
-    flavors: [
-      { id: 'classic-ny', label: 'Classic New York', priceModifier: 0 },
-      { id: 'premium-ny', label: 'Premium New York', priceModifier: 80 }
-    ],
-    ingredients: [
-      { name: 'Graham Crackers', allergen: true },
-      { name: 'Cream Cheese', allergen: true },
-      { name: 'Sour Cream', allergen: true },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Eggs', allergen: true }
-    ],
-    nutrition: {
-      servingSize: '1 slice (160g)',
-      calories: 480,
-      fat: '35g',
-      carbs: '40g',
-      protein: '9g',
-      sugar: '30g'
-    },
-    detailedDescription: 'Master the classic with our New York Baked Cheesecake Slice, bringing the Big Apple\'s most famous dessert to individual portion perfection. Each slice features a thick graham cracker crust topped with rich, dense cream cheese filling made with extra cream cheese for that signature New York texture. The individual portion format ensures you get the perfect portion of this iconic dessert. Known for its creamy richness and slight tang from sour cream, this cheesecake represents the gold standard that has made New York cheesecake famous worldwide.'
-  },
-  {
-    id: '44',
-    name: 'Classic Chocolate Truffle Pastry',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Elegant chocolate truffle pastry with rich ganache filling.',
-    category: 'Pastries',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/pastries/Classic-Chocolate-Truffle-Pastry.jpg',
-        alt: 'Classic Chocolate Truffle Pastry with elegant design'
-      }],
-    sizes: [
-      { id: 'single', label: 'Single Pastry', priceModifier: 0 },
-      { id: 'double', label: 'Two Pastries', priceModifier: 250 },
-      { id: 'half-dozen', label: 'Half Dozen', priceModifier: 1200 }
-    ],
-    flavors: [
-      { id: 'dark-truffle', label: 'Dark Chocolate Truffle', priceModifier: 0 },
-      { id: 'milk-truffle', label: 'Milk Chocolate Truffle', priceModifier: 60 }
-    ],
-    ingredients: [
-      { name: 'Puff Pastry', allergen: true },
-      { name: 'Dark Chocolate', allergen: false },
-      { name: 'Heavy Cream', allergen: true },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Cocoa Powder', allergen: false }
-    ],
-    nutrition: {
-      servingSize: '1 pastry (85g)',
-      calories: 380,
-      fat: '26g',
-      carbs: '35g',
-      protein: '5g',
-      sugar: '22g'
-    },
-    detailedDescription: 'Indulge in sophistication with our Classic Chocolate Truffle Pastry, where French pastry artistry meets Italian truffle tradition. Each pastry features flaky puff pastry filled with rich chocolate ganache and topped with chocolate glaze. The combination of buttery, crisp pastry and smooth, intense chocolate creates an elegant dessert experience. Perfect for special occasions or when you want to treat yourself to something truly luxurious. The dark chocolate provides deep, complex flavor notes that chocolate connoisseurs will appreciate.'
-  },
-  {
-    id: '45',
-    name: 'Tropical Pineapple Pastry',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Fresh pineapple pastry with tropical flavors and flaky crust.',
-    category: 'Pastries',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/pastries/Tropical-Pineapple-Pastry.jpg',
-        alt: 'Tropical Pineapple Pastry with fresh pineapple'
-      }],
-    sizes: [
-      { id: 'single', label: 'Single Pastry', priceModifier: 0 },
-      { id: 'double', label: 'Two Pastries', priceModifier: 250 },
-      { id: 'half-dozen', label: 'Half Dozen', priceModifier: 1200 }
-    ],
-    flavors: [
-      { id: 'pineapple', label: 'Fresh Pineapple', priceModifier: 0 },
-      { id: 'coconut-pineapple', label: 'Coconut Pineapple', priceModifier: 70 }
-    ],
-    ingredients: [
-      { name: 'Puff Pastry', allergen: true },
-      { name: 'Pineapple', allergen: false },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Cinnamon', allergen: false },
-      { name: 'Eggs', allergen: true }
-    ],
-    nutrition: {
-      servingSize: '1 pastry (90g)',
-      calories: 340,
-      fat: '18g',
-      carbs: '42g',
-      protein: '4g',
-      sugar: '25g'
-    },
-    detailedDescription: 'Transport yourself to paradise with our Tropical Pineapple Pastry, where fresh pineapple meets buttery pastry perfection. Each pastry features flaky puff pastry filled with sweet pineapple compote and topped with pineapple slices. The natural sweetness of fresh pineapple is enhanced by a hint of cinnamon, creating a delightful tropical flavor profile. Perfect for breakfast, brunch, or as a light dessert. The combination of juicy fruit and crisp pastry creates a refreshing contrast that\'s both satisfying and surprisingly light.'
-  },
-  {
-    id: '46',
-    name: 'Happy Birthday Chocolate Pastries',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Festive chocolate pastries perfect for birthday celebrations.',
-    category: 'Pastries',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/pastries/Happy-Birthday-Chocolate-Pastries.jpg',
-        alt: 'Happy Birthday Chocolate Pastries with festive decorations'
-      }],
-    sizes: [
-      { id: 'single', label: 'Single Pastry', priceModifier: 0 },
-      { id: 'double', label: 'Two Pastries', priceModifier: 250 },
-      { id: 'half-dozen', label: 'Half Dozen', priceModifier: 1200 }
-    ],
-    flavors: [
-      { id: 'birthday-choco', label: 'Birthday Chocolate', priceModifier: 0 },
-      { id: 'sprinkle-choco', label: 'Sprinkle Chocolate', priceModifier: 60 }
-    ],
-    ingredients: [
-      { name: 'Puff Pastry', allergen: true },
-      { name: 'Chocolate', allergen: false },
-      { name: 'Chocolate Filling', allergen: true },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Sprinkles', allergen: false }
-    ],
-    nutrition: {
-      servingSize: '1 pastry (80g)',
-      calories: 360,
-      fat: '22g',
-      carbs: '38g',
-      protein: '5g',
-      sugar: '24g'
-    },
-    detailedDescription: 'Make birthdays magical with our Happy Birthday Chocolate Pastries, where festive celebration meets delicious chocolate indulgence. Each pastry features flaky puff pastry filled with rich chocolate and decorated with colorful sprinkles, edible glitter, and birthday-themed toppings. The chocolate filling is perfectly balanced - not too sweet, with deep cocoa flavor. Perfect for birthday parties, allowing guests to enjoy individual portions of celebratory goodness. Available in various birthday themes and customizations for truly special celebrations.'
-  },
-  {
-    id: '47',
-    name: 'Assorted Pastry Box',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Curated selection of assorted pastries in a beautiful gift box.',
-    category: 'Pastries',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/pastries/Assorted-Pastry-Box.jpg',
-        alt: 'Assorted Pastry Box with variety of pastries'
-      }],
-    sizes: [
-      { id: 'small-box', label: 'Small Box (4 pieces)', priceModifier: 0 },
-      { id: 'medium-box', label: 'Medium Box (6 pieces)', priceModifier: 400 },
-      { id: 'large-box', label: 'Large Box (8 pieces)', priceModifier: 800 }
-    ],
-    flavors: [
-      { id: 'mixed-selection', label: 'Mixed Selection', priceModifier: 0 },
-      { id: 'themed-assortment', label: 'Themed Assortment', priceModifier: 120 }
-    ],
-    ingredients: [
-      { name: 'Various Pastries', allergen: true },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Eggs', allergen: true },
-      { name: 'Flour', allergen: true },
-      { name: 'Various Fillings', allergen: true }
-    ],
-    nutrition: {
-      servingSize: '1 pastry (85g avg)',
-      calories: 350,
-      fat: '20g',
-      carbs: '40g',
-      protein: '5g',
-      sugar: '22g'
-    },
-    detailedDescription: 'Experience variety and delight with our Assorted Pastry Box, a carefully curated selection of our finest pastries in a beautiful presentation box. Each box contains a mix of classic favorites and seasonal specialties, from chocolate croissants to fruit danishes, ensuring there\'s something for every taste preference. The assortment includes both sweet and savory options, all freshly baked that morning. Perfect for gifting, corporate events, or when you want to sample our full range of pastry excellence. Each pastry is individually wrapped to maintain freshness and quality.'
-  },
-  {
-    id: '48',
-    name: 'Classic Butterscotch Pastry',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Traditional butterscotch pastry with caramelized sugar and butter.',
-    category: 'Pastries',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/pastries/Classic-Butterscotch-Pastry.jpg',
-        alt: 'Classic Butterscotch Pastry with golden caramel'
-      }],
-    sizes: [
-      { id: 'single', label: 'Single Pastry', priceModifier: 0 },
-      { id: 'double', label: 'Two Pastries', priceModifier: 250 },
-      { id: 'half-dozen', label: 'Half Dozen', priceModifier: 1200 }
-    ],
-    flavors: [
-      { id: 'classic-butterscotch', label: 'Classic Butterscotch', priceModifier: 0 },
-      { id: 'salted-butterscotch', label: 'Salted Butterscotch', priceModifier: 60 }
-    ],
-    ingredients: [
-      { name: 'Puff Pastry', allergen: true },
-      { name: 'Butter', allergen: true },
-      { name: 'Brown Sugar', allergen: false },
-      { name: 'Cream', allergen: true },
-      { name: 'Vanilla', allergen: false },
-      { name: 'Salt', allergen: false }
-    ],
-    nutrition: {
-      servingSize: '1 pastry (85g)',
-      calories: 380,
-      fat: '24g',
-      carbs: '38g',
-      protein: '4g',
-      sugar: '28g'
-    },
-    detailedDescription: 'Relive nostalgic comfort with our Classic Butterscotch Pastry, where rich caramelized butter and brown sugar create pure indulgence. Each pastry features flaky puff pastry filled with homemade butterscotch sauce made from slowly caramelized butter and brown sugar. The butterscotch is cooked to perfection, creating a sauce that\'s both smooth and deeply flavorful, with notes of vanilla and a hint of salt to balance the sweetness. Perfect for those who love the comforting, caramel-like taste of traditional butterscotch in a sophisticated pastry format.'
-  },
-  {
-    id: '49',
-    name: 'Classic Red Velvet Pastry',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Red velvet pastry with cream cheese filling and chocolate notes.',
-    category: 'Pastries',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/pastries/Classic-Red-Velvet-Pastry.jpg',
-        alt: 'Classic Red Velvet Pastry with cream cheese'
-      }],
-    sizes: [
-      { id: 'single', label: 'Single Pastry', priceModifier: 0 },
-      { id: 'double', label: 'Two Pastries', priceModifier: 250 },
-      { id: 'half-dozen', label: 'Half Dozen', priceModifier: 1200 }
-    ],
-    flavors: [
-      { id: 'classic-red', label: 'Classic Red Velvet', priceModifier: 0 },
-      { id: 'chocolate-red', label: 'Chocolate Red Velvet', priceModifier: 70 }
-    ],
-    ingredients: [
-      { name: 'Puff Pastry', allergen: true },
-      { name: 'Cocoa Powder', allergen: false },
-      { name: 'Cream Cheese', allergen: true },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Red Food Coloring', allergen: false }
-    ],
-    nutrition: {
-      servingSize: '1 pastry (90g)',
-      calories: 370,
-      fat: '22g',
-      carbs: '40g',
-      protein: '5g',
-      sugar: '26g'
-    },
-    detailedDescription: 'Celebrate Southern charm with our Classic Red Velvet Pastry, bringing the beloved red velvet flavor to flaky pastry perfection. Each pastry features tender red velvet dough filled with cream cheese and topped with a light glaze. The signature subtle chocolate flavor and tangy cream cheese create a sophisticated breakfast or dessert option. Perfect for those who love red velvet but want it in a different format. The natural red color comes from careful balance of cocoa and food coloring, resulting in that distinctive red velvet appearance and flavor.'
-  },
-  {
-    id: '51',
-    name: 'Rose Tres Leches',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Elegant tres leches cake with rose flavor and traditional soaking.',
-    category: 'Pastries',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/pastries/Rose-Tres-Leches.jpg',
-        alt: 'Rose Tres Leches with elegant rose decoration'
-      }],
-    sizes: [
-      { id: 'slice', label: 'Single Slice', priceModifier: 0 },
-      { id: 'half', label: 'Half Cake', priceModifier: 400 },
-      { id: 'whole', label: 'Whole Cake', priceModifier: 800 }
-    ],
-    flavors: [
-      { id: 'rose', label: 'Classic Rose', priceModifier: 0 },
-      { id: 'lavender-rose', label: 'Lavender Rose', priceModifier: 80 }
-    ],
-    ingredients: [
-      { name: 'Wheat Flour', allergen: true },
-      { name: 'Three Milks', allergen: true },
-      { name: 'Rose Water', allergen: false },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Eggs', allergen: true }
-    ],
-    nutrition: {
-      servingSize: '1 slice (130g)',
-      calories: 380,
-      fat: '18g',
-      carbs: '52g',
-      protein: '8g',
-      sugar: '38g'
-    },
-    detailedDescription: 'Experience floral elegance with our Rose Tres Leches, where the traditional Latin American tres leches cake meets delicate rose flavor. Each slice features light vanilla sponge cake soaked in three types of milk (evaporated, condensed, and heavy cream) and infused with rose water. The result is a moist, tender cake with subtle floral notes that\'s both refreshing and indulgent. Topped with rose petals and served chilled, this dessert offers a sophisticated twist on a classic. Perfect for romantic occasions or when you want something light yet luxurious.'
-  },
-  {
-    id: '52',
-    name: 'Choco Truffle Pastry Made With KitKat',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Chocolate truffle pastry featuring KitKat bars and rich ganache.',
-    category: 'Pastries',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/pastries/Choco-Truffle-Pastry-Made-With-KitKat.jpg',
-        alt: 'Choco Truffle Pastry Made With KitKat bars'
-      }],
-    sizes: [
-      { id: 'single', label: 'Single Pastry', priceModifier: 0 },
-      { id: 'double', label: 'Two Pastries', priceModifier: 250 },
-      { id: 'half-dozen', label: 'Half Dozen', priceModifier: 1200 }
-    ],
-    flavors: [
-      { id: 'kitkat-truffle', label: 'KitKat Truffle', priceModifier: 0 },
-      { id: 'dark-kitkat', label: 'Dark KitKat', priceModifier: 70 }
-    ],
-    ingredients: [
-      { name: 'Puff Pastry', allergen: true },
-      { name: 'KitKat Chocolate', allergen: true },
-      { name: 'Chocolate Ganache', allergen: true },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Cream', allergen: true }
-    ],
-    nutrition: {
-      servingSize: '1 pastry (95g)',
-      calories: 420,
-      fat: '28g',
-      carbs: '42g',
-      protein: '6g',
-      sugar: '28g'
-    },
-    detailedDescription: 'Combine beloved chocolate treats with pastry perfection in our Choco Truffle Pastry Made With KitKat, where the iconic wafer crunch meets rich truffle filling. Each pastry features flaky puff pastry filled with chocolate ganache and pieces of KitKat bars, topped with more KitKat pieces for that satisfying crunch. The combination of smooth chocolate truffle and crispy wafer creates an irresistible texture experience. Perfect for KitKat lovers who want their favorite chocolate bar elevated to pastry status. Each bite delivers the perfect balance of creamy truffle and crunchy wafer chocolate.'
-  },
-  {
-    id: '56',
-    name: 'Classic Choco Chip Pastry',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Traditional chocolate chip pastry with buttery dough and chocolate chunks.',
-    category: 'Pastries',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/pastries/Classic-Choco-Chip-Pastry.jpg',
-        alt: 'Classic Choco Chip Pastry with chocolate chips'
-      }],
-    sizes: [
-      { id: 'single', label: 'Single Pastry', priceModifier: 0 },
-      { id: 'double', label: 'Two Pastries', priceModifier: 250 },
-      { id: 'half-dozen', label: 'Half Dozen', priceModifier: 1200 }
-    ],
-    flavors: [
-      { id: 'milk-choco', label: 'Milk Chocolate Chips', priceModifier: 0 },
-      { id: 'dark-choco', label: 'Dark Chocolate Chips', priceModifier: 60 }
-    ],
-    ingredients: [
-      { name: 'Puff Pastry', allergen: true },
-      { name: 'Chocolate Chips', allergen: true },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Eggs', allergen: true },
-      { name: 'Vanilla', allergen: false }
-    ],
-    nutrition: {
-      servingSize: '1 pastry (85g)',
-      calories: 380,
-      fat: '24g',
-      carbs: '38g',
-      protein: '5g',
-      sugar: '22g'
-    },
-    detailedDescription: 'Celebrate the simple joy of chocolate chips with our Classic Choco Chip Pastry, where buttery pastry meets generous chocolate chip filling. Each pastry features flaky puff pastry filled with melted chocolate chips and topped with more chocolate chips for that signature crunch. The chocolate chips are evenly distributed throughout, ensuring chocolate in every bite. Perfect for breakfast, brunch, or as a comforting snack. The combination of warm, buttery pastry and melty chocolate creates a nostalgic treat that reminds you of homemade cookies but in elegant pastry form.'
-  },
-  {
-    id: '57',
-    name: 'Black Forest Pastry',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'German-inspired pastry with chocolate, cherries, and cream.',
-    category: 'Pastries',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/pastries/Black-Forest-Pastry.jpg',
-        alt: 'Black Forest Pastry with chocolate and cherries'
-      }],
-    sizes: [
-      { id: 'single', label: 'Single Pastry', priceModifier: 0 },
-      { id: 'double', label: 'Two Pastries', priceModifier: 250 },
-      { id: 'half-dozen', label: 'Half Dozen', priceModifier: 1200 }
-    ],
-    flavors: [
-      { id: 'traditional', label: 'Traditional Black Forest', priceModifier: 0 },
-      { id: 'kirsch', label: 'Kirsch Black Forest', priceModifier: 80 }
-    ],
-    ingredients: [
-      { name: 'Puff Pastry', allergen: true },
-      { name: 'Dark Chocolate', allergen: false },
-      { name: 'Cherries', allergen: false },
-      { name: 'Whipped Cream', allergen: true },
-      { name: 'Kirsch Liqueur', allergen: false },
-      { name: 'Sugar', allergen: false }
-    ],
-    nutrition: {
-      servingSize: '1 pastry (95g)',
-      calories: 400,
-      fat: '26g',
-      carbs: '42g',
-      protein: '6g',
-      sugar: '28g'
-    },
-    detailedDescription: 'Experience German tradition with our Black Forest Pastry, bringing the iconic Schwarzwälder Kirschtorte flavors to elegant pastry form. Each pastry features flaky puff pastry filled with chocolate ganache, tart cherries, and whipped cream, finished with chocolate shavings. The combination of rich chocolate, juicy cherries, and light cream creates a sophisticated dessert experience. Perfect for special occasions or when you want something classically European. The kirsch liqueur adds authentic depth, while fresh cherries provide natural sweetness and vibrant color. A timeless combination that has delighted dessert lovers for generations.'
-  },
-  {
-    id: '59',
-    name: 'Red Velvet Anniversary Pastries',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Romantic red velvet pastries perfect for anniversary celebrations.',
-    category: 'Pastries',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/pastries/Red-Velvet-Anniversary-Pastries.jpg',
-        alt: 'Red Velvet Anniversary Pastries with romantic design'
-      }],
-    sizes: [
-      { id: 'single', label: 'Single Pastry', priceModifier: 0 },
-      { id: 'double', label: 'Two Pastries', priceModifier: 250 },
-      { id: 'half-dozen', label: 'Half Dozen', priceModifier: 1200 }
-    ],
-    flavors: [
-      { id: 'anniversary', label: 'Anniversary Red Velvet', priceModifier: 0 },
-      { id: 'celebration', label: 'Celebration Red Velvet', priceModifier: 90 }
-    ],
-    ingredients: [
-      { name: 'Puff Pastry', allergen: true },
-      { name: 'Cocoa Powder', allergen: false },
-      { name: 'Cream Cheese', allergen: true },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Red Food Coloring', allergen: false }
-    ],
-    nutrition: {
-      servingSize: '1 pastry (90g)',
-      calories: 370,
-      fat: '22g',
-      carbs: '40g',
-      protein: '5g',
-      sugar: '26g'
-    },
-    detailedDescription: 'Celebrate love with our Red Velvet Anniversary Pastries, where romantic red velvet meets elegant pastry presentation. Each pastry features tender red velvet dough filled with cream cheese and decorated with anniversary-themed toppings like hearts, edible glitter, and personalized messages. The subtle chocolate flavor and tangy cream cheese create a sophisticated treat perfect for romantic occasions. Available with various anniversary customizations to make your celebration truly special. Perfect for sharing intimate moments or surprising your loved one with a thoughtful, delicious gesture that combines tradition with personalization.'
-  },
-  {
-    id: '60',
-    name: 'Six Pineapple Chocolate and Red Velvet Anniversary Pastries',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Assortment of six anniversary pastries with pineapple, chocolate, and red velvet.',
-    category: 'Pastries',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/pastries/Six-Pineapple-Chocolate-and-Red-Velvet-Anniversary-Pastries.jpg',
-        alt: 'Six Pineapple Chocolate and Red Velvet Anniversary Pastries assortment'
-      }],
-    sizes: [
-      { id: 'six-pack', label: 'Six Pack Assortment', priceModifier: 0 },
-      { id: 'twelve-pack', label: 'Twelve Pack Assortment', priceModifier: 900 },
-      { id: 'eighteen-pack', label: 'Eighteen Pack Assortment', priceModifier: 1800 }
-    ],
-    flavors: [
-      { id: 'mixed-anniversary', label: 'Mixed Anniversary', priceModifier: 0 },
-      { id: 'custom-anniversary', label: 'Custom Anniversary', priceModifier: 180 }
-    ],
-    ingredients: [
-      { name: 'Various Pastries', allergen: true },
-      { name: 'Pineapple', allergen: false },
-      { name: 'Chocolate', allergen: false },
-      { name: 'Cocoa Powder', allergen: false },
-      { name: 'Cream Cheese', allergen: true },
-      { name: 'Butter', allergen: true }
-    ],
-    nutrition: {
-      servingSize: '1 pastry (90g avg)',
-      calories: 375,
-      fat: '22g',
-      carbs: '42g',
-      protein: '5g',
-      sugar: '26g'
-    },
-    detailedDescription: 'Create unforgettable anniversary celebrations with our Six Pineapple Chocolate and Red Velvet Anniversary Pastries, a perfectly curated assortment for romantic occasions. This collection includes pineapple pastries for tropical sweetness, rich chocolate pastries for indulgence, and red velvet pastries for classic romance - all beautifully decorated with anniversary themes. The variety ensures there\'s something for every taste preference while maintaining the celebratory spirit. Perfect for larger gatherings, corporate events, or when you want to offer your guests a memorable assortment of anniversary treats. Each pastry is individually decorated and presented for maximum visual and culinary impact.'
-  },
-  {
-    id: '61',
-    name: 'Filter Coffee Mousse Verrine Cup',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Elegant verrine cup with coffee mousse and biscuit layers.',
-    category: 'Pastries',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/pastries/Filter-Coffee-Mousse-Verrine-Cup.jpg',
-        alt: 'Filter Coffee Mousse Verrine Cup with coffee layers'
-      }],
-    sizes: [
-      { id: 'single', label: 'Single Cup', priceModifier: 0 },
-      { id: 'double', label: 'Two Cups', priceModifier: 250 },
-      { id: 'half-dozen', label: 'Half Dozen Cups', priceModifier: 1200 }
-    ],
-    flavors: [
-      { id: 'filter-coffee', label: 'Filter Coffee', priceModifier: 0 },
-      { id: 'espresso', label: 'Espresso', priceModifier: 70 }
-    ],
-    ingredients: [
-      { name: 'Coffee', allergen: false },
-      { name: 'Biscuit', allergen: true },
-      { name: 'Heavy Cream', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Eggs', allergen: true },
-      { name: 'Gelatin', allergen: false }
-    ],
-    nutrition: {
-      servingSize: '1 cup (140g)',
-      calories: 320,
-      fat: '22g',
-      carbs: '32g',
-      protein: '6g',
-      sugar: '24g'
-    },
-    detailedDescription: 'Awaken your senses with our Filter Coffee Mousse Verrine Cup, where rich South Indian filter coffee meets elegant French mousse tradition. Each verrine cup contains alternating layers of coffee-infused mousse and buttery biscuit, creating a sophisticated dessert that\'s both comforting and refined. The strong, aromatic coffee flavor is perfectly balanced with the light, airy mousse texture. Perfect for coffee lovers who want their caffeine fix in dessert form. The individual cup format makes it ideal for dinner parties, and the authentic filter coffee flavor brings a taste of South Indian coffee culture to your table.'
-  },
-  {
-    id: '62',
-    name: 'Choco Truffle N Butterscotch Pastries',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Assortment of chocolate truffle and butterscotch pastries.',
-    category: 'Pastries',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/pastries/Choco-Truffle-N-Butterscotch-Pastries.jpg',
-        alt: 'Choco Truffle N Butterscotch Pastries assortment'
-      }],
-    sizes: [
-      { id: 'single-each', label: 'One of Each', priceModifier: 0 },
-      { id: 'double-mix', label: 'Two Mixed', priceModifier: 250 },
-      { id: 'half-dozen', label: 'Half Dozen Mixed', priceModifier: 1200 }
-    ],
-    flavors: [
-      { id: 'assorted', label: 'Assorted Mix', priceModifier: 0 },
-      { id: 'premium-assorted', label: 'Premium Assorted', priceModifier: 100 }
-    ],
-    ingredients: [
-      { name: 'Puff Pastry', allergen: true },
-      { name: 'Dark Chocolate', allergen: false },
-      { name: 'Butterscotch', allergen: false },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Cream', allergen: true }
-    ],
-    nutrition: {
-      servingSize: '1 pastry (90g avg)',
-      calories: 395,
-      fat: '25g',
-      carbs: '40g',
-      protein: '5g',
-      sugar: '26g'
-    },
-    detailedDescription: 'Indulge in the best of both worlds with our Choco Truffle N Butterscotch Pastries, where rich chocolate truffle meets caramelized butterscotch in perfect pastry harmony. Each assortment includes flaky pastries filled with smooth chocolate ganache alongside butterscotch-filled pastries with their distinctive caramel flavor. The combination offers both deep, intense chocolate and sweet, buttery caramel notes. Perfect for those who can\'t decide between chocolate and butterscotch, or for sharing with friends who have different preferences. Each pastry is crafted with premium ingredients to ensure both flavors shine through beautifully.'
-  },
-  {
-    id: '63',
-    name: 'Candied Caramel Mousse',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Light mousse with candied caramel pieces and smooth texture.',
-    category: 'Pastries',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/pastries/Candied-Caramel-Mousse.jpg',
-        alt: 'Candied Caramel Mousse with caramel pieces'
-      }],
-    sizes: [
-      { id: 'single', label: 'Single Serving', priceModifier: 0 },
-      { id: 'double', label: 'Two Servings', priceModifier: 250 },
-      { id: 'half-dozen', label: 'Half Dozen Servings', priceModifier: 1200 }
-    ],
-    flavors: [
-      { id: 'candied-caramel', label: 'Candied Caramel', priceModifier: 0 },
-      { id: 'salted-caramel', label: 'Salted Caramel', priceModifier: 70 }
-    ],
-    ingredients: [
-      { name: 'Heavy Cream', allergen: true },
-      { name: 'Caramel Sauce', allergen: false },
-      { name: 'Sugar', allergen: false },
-      { name: 'Butter', allergen: true },
-      { name: 'Gelatin', allergen: false },
-      { name: 'Vanilla', allergen: false }
-    ],
-    nutrition: {
-      servingSize: '1 serving (130g)',
-      calories: 380,
-      fat: '28g',
-      carbs: '35g',
-      protein: '4g',
-      sugar: '32g'
-    },
-    detailedDescription: 'Experience caramel perfection with our Candied Caramel Mousse, where smooth, airy mousse meets delightful candied caramel pieces. Each serving features light-as-air mousse made with fresh cream and homemade caramel sauce, studded with crunchy candied caramel pieces for texture contrast. The mousse is stabilized to maintain its perfect consistency, creating a dessert that\'s both elegant and indulgent. Perfect for caramel lovers who appreciate the balance of smooth and crunchy textures. The rich, buttery caramel flavor is perfectly complemented by the light mousse base, making each spoonful a moment of pure indulgence.'
-  },
-  {
-    id: '64',
-    name: 'Square Shaped Delicious Butterscotch Pastry',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Square butterscotch pastry with rich caramel filling and buttery crust.',
-    category: 'Pastries',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/pastries/Square-Shaped-Delicious-Butterscotch-Pastry.jpg',
-        alt: 'Square Shaped Delicious Butterscotch Pastry with caramel'
-      }],
-    sizes: [
-      { id: 'single', label: 'Single Square', priceModifier: 0 },
-      { id: 'double', label: 'Two Squares', priceModifier: 250 },
-      { id: 'half-dozen', label: 'Half Dozen Squares', priceModifier: 1200 }
-    ],
-    flavors: [
-      { id: 'butterscotch', label: 'Classic Butterscotch', priceModifier: 0 },
-      { id: 'premium-butterscotch', label: 'Premium Butterscotch', priceModifier: 70 }
-    ],
-    ingredients: [
-      { name: 'Puff Pastry', allergen: true },
-      { name: 'Butter', allergen: true },
-      { name: 'Brown Sugar', allergen: false },
-      { name: 'Cream', allergen: true },
-      { name: 'Vanilla', allergen: false },
-      { name: 'Salt', allergen: false }
-    ],
-    nutrition: {
-      servingSize: '1 square (95g)',
-      calories: 420,
-      fat: '28g',
-      carbs: '42g',
-      protein: '4g',
-      sugar: '30g'
-    },
-    detailedDescription: 'Savor the unique square shape of our Square Shaped Delicious Butterscotch Pastry, where generous portions meet rich caramel flavor. Each square features flaky puff pastry filled with homemade butterscotch sauce made from slowly caramelized butter and brown sugar. The square format provides more surface area for the rich filling, ensuring every bite is filled with butterscotch goodness. Perfect for those who love generous portions of their favorite flavors. The butterscotch is cooked to perfection, creating a sauce that\'s both smooth and deeply flavorful, with notes of vanilla and a hint of salt to balance the sweetness.'
-  },
-  {
-    id: '65',
-    name: 'Signature Assorted Pastries',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Curated selection of our signature pastries in elegant presentation.',
-    category: 'Pastries',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/pastries/Signature-Assorted-Pastries.jpg',
-        alt: 'Signature Assorted Pastries with elegant arrangement'
-      }],
-    sizes: [
-      { id: 'small-assortment', label: 'Small Assortment (4 pieces)', priceModifier: 0 },
-      { id: 'medium-assortment', label: 'Medium Assortment (6 pieces)', priceModifier: 500 },
-      { id: 'large-assortment', label: 'Large Assortment (8 pieces)', priceModifier: 1000 }
-    ],
-    flavors: [
-      { id: 'signature-mix', label: 'Signature Mix', priceModifier: 0 },
-      { id: 'seasonal-signature', label: 'Seasonal Signature', priceModifier: 130 }
-    ],
-    ingredients: [
-      { name: 'Various Premium Pastries', allergen: true },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Eggs', allergen: true },
-      { name: 'Various Fillings', allergen: true },
-      { name: 'Fresh Fruits', allergen: false }
-    ],
-    nutrition: {
-      servingSize: '1 pastry (85g avg)',
-      calories: 360,
-      fat: '22g',
-      carbs: '38g',
-      protein: '5g',
-      sugar: '24g'
-    },
-    detailedDescription: 'Experience the best of our pastry collection with our Signature Assorted Pastries, a carefully curated selection showcasing our most popular and innovative creations. Each assortment includes a mix of classic favorites and seasonal specialties, from chocolate croissants to fruit danishes, ensuring there\'s something for every taste preference. The assortment includes both sweet and savory options, all freshly baked that morning. Perfect for gifting, corporate events, or when you want to sample our full range of pastry excellence. Each pastry is individually wrapped to maintain freshness and quality.'
-  },
-  {
-    id: '66',
-    name: 'Choco Trio Mousse',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Three-layer chocolate mousse with varying chocolate intensities.',
-    category: 'Pastries',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/pastries/Choco-Trio-Mousse.jpg',
-        alt: 'Choco Trio Mousse with three chocolate layers'
-      }],
-    sizes: [
-      { id: 'single', label: 'Single Serving', priceModifier: 0 },
-      { id: 'double', label: 'Two Servings', priceModifier: 250 },
-      { id: 'half-dozen', label: 'Half Dozen Servings', priceModifier: 1200 }
-    ],
-    flavors: [
-      { id: 'choco-trio', label: 'Chocolate Trio', priceModifier: 0 },
-      { id: 'premium-trio', label: 'Premium Trio', priceModifier: 100 }
-    ],
-    ingredients: [
-      { name: 'Dark Chocolate', allergen: false },
-      { name: 'Milk Chocolate', allergen: true },
-      { name: 'White Chocolate', allergen: true },
-      { name: 'Heavy Cream', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Gelatin', allergen: false }
-    ],
-    nutrition: {
-      servingSize: '1 serving (140g)',
-      calories: 420,
-      fat: '32g',
-      carbs: '38g',
-      protein: '6g',
-      sugar: '32g'
-    },
-    detailedDescription: 'Journey through chocolate paradise with our Choco Trio Mousse, featuring three distinct layers of chocolate mousse in one elegant serving. Each dessert includes dark chocolate mousse for intense cocoa depth, milk chocolate mousse for creamy sweetness, and white chocolate mousse for silky lightness. The layers are carefully separated to maintain distinct flavors and textures, creating a sophisticated tasting experience. Perfect for chocolate connoisseurs who want to explore the full spectrum of chocolate flavors. Topped with chocolate shavings and served chilled, this mousse offers both visual appeal and culinary delight in every spoonful.'
-  },
-  {
-    id: '67',
-    name: 'Tiramisu Pastry',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Italian-inspired pastry with coffee-soaked layers and mascarpone.',
-    category: 'Pastries',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/pastries/Tiramisu-Pastry.jpg',
-        alt: 'Tiramisu Pastry with coffee and mascarpone'
-      }],
-    sizes: [
-      { id: 'single', label: 'Single Pastry', priceModifier: 0 },
-      { id: 'double', label: 'Two Pastries', priceModifier: 250 },
-      { id: 'half-dozen', label: 'Half Dozen', priceModifier: 1200 }
-    ],
-    flavors: [
-      { id: 'classic-tiramisu', label: 'Classic Tiramisu', priceModifier: 0 },
-      { id: 'espresso-tiramisu', label: 'Espresso Tiramisu', priceModifier: 80 }
-    ],
-    ingredients: [
-      { name: 'Ladyfinger Biscuits', allergen: true },
-      { name: 'Mascarpone Cheese', allergen: true },
-      { name: 'Coffee', allergen: false },
-      { name: 'Cocoa Powder', allergen: false },
-      { name: 'Sugar', allergen: false },
-      { name: 'Eggs', allergen: true }
-    ],
-    nutrition: {
-      servingSize: '1 pastry (120g)',
-      calories: 380,
-      fat: '24g',
-      carbs: '36g',
-      protein: '8g',
-      sugar: '24g'
-    },
-    detailedDescription: 'Transport yourself to Italy with our Tiramisu Pastry, bringing the beloved Italian dessert to elegant pastry form. Each pastry features coffee-soaked ladyfinger biscuits layered with rich mascarpone cream and finished with cocoa powder dusting. The combination of strong espresso, creamy mascarpone, and crunchy biscuits creates the authentic tiramisu experience. Perfect for coffee lovers and Italian food enthusiasts. The flavors are perfectly balanced - not too sweet, with the coffee providing a pleasant bitterness that contrasts beautifully with the creamy filling. A sophisticated dessert that captures the essence of Italian café culture.'
-  },
-  {
-    id: '68',
-    name: 'Classic Chocolate Pastries',
-    price: 373,
-    rating: 4.8,
-    reviewCount: 112,
-    description: 'Traditional chocolate pastries with rich filling and flaky crust.',
-    category: 'Pastries',
-    inStock: true,
-    images: [{
-        id: 'img1',
-        url: '/assets/images/pastries/Classic-Chocolate-Pastries.jpg',
-        alt: 'Classic Chocolate Pastries with rich chocolate'
-      }],
-    sizes: [
-      { id: 'single', label: 'Single Pastry', priceModifier: 0 },
-      { id: 'double', label: 'Two Pastries', priceModifier: 250 },
-      { id: 'half-dozen', label: 'Half Dozen', priceModifier: 1200 }
-    ],
-    flavors: [
-      { id: 'classic-chocolate', label: 'Classic Chocolate', priceModifier: 0 },
-      { id: 'belgian-chocolate', label: 'Belgian Chocolate', priceModifier: 90 }
-    ],
-    ingredients: [
-      { name: 'Puff Pastry', allergen: true },
-      { name: 'Dark Chocolate', allergen: false },
-      { name: 'Chocolate Filling', allergen: true },
-      { name: 'Butter', allergen: true },
-      { name: 'Sugar', allergen: false },
-      { name: 'Eggs', allergen: true }
-    ],
-    nutrition: {
-      servingSize: '1 pastry (85g)',
-      calories: 380,
-      fat: '24g',
-      carbs: '36g',
-      protein: '5g',
-      sugar: '22g'
-    },
-    detailedDescription: 'Return to chocolate basics with our Classic Chocolate Pastries, where traditional pastry meets timeless chocolate indulgence. Each pastry features flaky puff pastry filled with rich chocolate filling and topped with chocolate glaze. The chocolate is perfectly balanced - deep and complex without being overpowering. Perfect for those who appreciate the simple elegance of classic chocolate desserts. The buttery pastry provides the perfect crisp contrast to the smooth chocolate filling, creating a harmonious bite that satisfies both texture and flavor preferences. A comforting, familiar treat that never goes out of style.'
-  }
+//   {
+//     id: '32',
+//     name: 'Birthday Chocolate Jar Cakes',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Festive birthday jar cakes with chocolate decorations and celebratory flair.',
+//     category: 'Jar Cake',
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/jarcakes/two-birthday-personalised-chocolate-jar-cakes-jar.jpg',
+//         alt: 'Birthday Chocolate Jar Cakes with festive decorations'
+//       }],
+//     sizes: [
+//       { id: 'double', label: 'Two Jars', priceModifier: 0 },
+//       { id: 'triple', label: 'Three Jars', priceModifier: 300 },
+//       { id: 'four', label: 'Four Jars', priceModifier: 500 }
+//     ],
+//     flavors: [
+//       { id: 'birthday-choco', label: 'Birthday Chocolate', priceModifier: 0 },
+//       { id: 'celebration', label: 'Celebration Mix', priceModifier: 70 }
+//     ],
+//     ingredients: [
+//       { name: 'Wheat Flour', allergen: true },
+//       { name: 'Chocolate', allergen: false },
+//       { name: 'Chocolate Frosting', allergen: true },
+//       { name: 'Butter', allergen: true },
+//       { name: 'Sugar', allergen: false },
+//       { name: 'Eggs', allergen: true }
+//     ],
+//     nutrition: {
+//       servingSize: '1 jar (200g)',
+//       calories: 470,
+//       fat: '26g',
+//       carbs: '58g',
+//       protein: '7g',
+//       sugar: '42g'
+//     },
+//     detailedDescription: 'Make birthdays magical with our Birthday Chocolate Jar Cakes, where festive celebration meets delicious chocolate indulgence. Each jar contains moist chocolate cake with chocolate frosting, decorated with colorful sprinkles, edible glitter, and birthday-themed toppings. The jar format makes them perfect for birthday parties, allowing guests to enjoy individual portions of celebratory goodness. Available in various birthday themes and customizations for truly special celebrations.'
+//   },
+//   {
+//     id: '33',
+//     name: 'Decadent Chocolate Jar Cake Duo',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Luxurious pair of chocolate jar cakes with premium ingredients and presentation.',
+//     category: 'Jar Cake',
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/jarcakes/decadent-chocolate-jar-cake-duo-jar.jpg',
+//         alt: 'Decadent Chocolate Jar Cake Duo with premium presentation'
+//       }],
+//     sizes: [
+//       { id: 'double', label: 'Two Jars', priceModifier: 0 },
+//       { id: 'triple', label: 'Three Jars', priceModifier: 300 },
+//       { id: 'four', label: 'Four Jars', priceModifier: 500 }
+//     ],
+//     flavors: [
+//       { id: 'decadent', label: 'Decadent Chocolate', priceModifier: 0 },
+//       { id: 'premium', label: 'Premium Belgian', priceModifier: 100 }
+//     ],
+//     ingredients: [
+//       { name: 'Wheat Flour', allergen: true },
+//       { name: 'Belgian Chocolate', allergen: false },
+//       { name: 'Chocolate Ganache', allergen: true },
+//       { name: 'Butter', allergen: true },
+//       { name: 'Sugar', allergen: false },
+//       { name: 'Eggs', allergen: true }
+//     ],
+//     nutrition: {
+//       servingSize: '1 jar (210g)',
+//       calories: 500,
+//       fat: '30g',
+//       carbs: '56g',
+//       protein: '8g',
+//       sugar: '44g'
+//     },
+//     detailedDescription: 'Elevate your chocolate experience with our Decadent Chocolate Jar Cake Duo, where premium ingredients meet masterful presentation. Each jar features rich chocolate cake layered with Belgian chocolate ganache and premium chocolate fillings, topped with gold-dusted chocolate shavings and fresh berries. The duo format makes them perfect for sharing special moments with someone special. Crafted with the finest Belgian chocolate and fresh cream, these jar cakes represent the pinnacle of chocolate indulgence and elegant dessert presentation.'
+//   },
+//   {
+//     id: '34',
+//     name: 'Sweet Red Velvet Jar Cake Duo',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Delicious pair of red velvet jar cakes with sweet cream cheese frosting.',
+//     category: 'Jar Cake',
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/jarcakes/sweet-red-velvet-jar-cake-duo-jar.jpg',
+//         alt: 'Sweet Red Velvet Jar Cake Duo with sweet presentation'
+//       }],
+//     sizes: [
+//       { id: 'double', label: 'Two Jars', priceModifier: 0 },
+//       { id: 'triple', label: 'Three Jars', priceModifier: 300 },
+//       { id: 'four', label: 'Four Jars', priceModifier: 500 }
+//     ],
+//     flavors: [
+//       { id: 'sweet-red', label: 'Sweet Red Velvet', priceModifier: 0 },
+//       { id: 'berry-red', label: 'Berry Red Velvet', priceModifier: 60 }
+//     ],
+//     ingredients: [
+//       { name: 'Wheat Flour', allergen: true },
+//       { name: 'Cocoa Powder', allergen: false },
+//       { name: 'Cream Cheese', allergen: true },
+//       { name: 'Butter', allergen: true },
+//       { name: 'Sugar', allergen: false },
+//       { name: 'Eggs', allergen: true }
+//     ],
+//     nutrition: {
+//       servingSize: '1 jar (200g)',
+//       calories: 460,
+//       fat: '22g',
+//       carbs: '64g',
+//       protein: '7g',
+//       sugar: '46g'
+//     },
+//     detailedDescription: 'Share the sweetness with our Sweet Red Velvet Jar Cake Duo, where the classic Southern favorite comes in perfectly portioned jars for two. Each jar contains moist red velvet cake with extra sweet cream cheese frosting, topped with red velvet crumbs and fresh berries. The duo format makes them ideal for couples, friends, or anyone who wants to enjoy red velvet without leftovers. With their sweet flavor profile and charming presentation, these jar cakes bring joy and indulgence to any occasion.'
+//   },
+//   {
+//     id: '35',
+//     name: 'Belgian Chocolate Mousse Jar',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Luxurious Belgian chocolate mousse in jar format with premium quality.',
+//     category: 'Jar Cake',
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/jarcakes/belgian-chocolate-mousse-jar-cake-jar.jpg',
+//         alt: 'Belgian Chocolate Mousse Jar with premium chocolate'
+//       }],
+//     sizes: [
+//       { id: 'single', label: 'Single Jar', priceModifier: 0 },
+//       { id: 'double', label: 'Double Jar', priceModifier: 300 },
+//       { id: 'triple', label: 'Triple Jar', priceModifier: 600 }
+//     ],
+//     flavors: [
+//       { id: 'belgian-dark', label: 'Belgian Dark', priceModifier: 0 },
+//       { id: 'belgian-milk', label: 'Belgian Milk', priceModifier: 60 }
+//     ],
+//     ingredients: [
+//       { name: 'Belgian Chocolate', allergen: false },
+//       { name: 'Heavy Cream', allergen: true },
+//       { name: 'Butter', allergen: true },
+//       { name: 'Sugar', allergen: false },
+//       { name: 'Eggs', allergen: true },
+//       { name: 'Vanilla', allergen: false }
+//     ],
+//     nutrition: {
+//       servingSize: '1 jar (150g)',
+//       calories: 380,
+//       fat: '30g',
+//       carbs: '28g',
+//       protein: '4g',
+//       sugar: '24g'
+//     },
+//     detailedDescription: 'Indulge in Belgian luxury with our Belgian Chocolate Mousse Jar, where the world\'s finest chocolate meets ethereal mousse texture. Each jar contains silky smooth mousse made with premium Belgian chocolate and fresh cream, stabilized to perfection for the ultimate light-yet-rich experience. The single jar format makes it perfect for personal indulgence or elegant entertaining. Topped with Belgian chocolate shavings and served in a decorative jar, this dessert represents the pinnacle of chocolate sophistication and European craftsmanship.'
+//   },
+//   {
+//     id: '36',
+//     name: 'Blueberry Cheesecake',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Creamy blueberry cheesecake with graham cracker crust and fresh berries.',
+//     category: 'Cheesecake',
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/cheesecakes/viscous-blueberry-cheesecake-cake.jpg',
+//         alt: 'Blueberry Cheesecake with fresh blueberry toppings'
+//       }],
+//     sizes: [
+//       { id: 'slice', label: 'Single Slice', priceModifier: 0 },
+//       { id: 'half', label: 'Half Cake', priceModifier: 400 },
+//       { id: 'whole', label: 'Whole Cake', priceModifier: 800 }
+//     ],
+//     flavors: [
+//       { id: 'blueberry', label: 'Fresh Blueberry', priceModifier: 0 },
+//       { id: 'wild-blueberry', label: 'Wild Blueberry', priceModifier: 60 }
+//     ],
+//     ingredients: [
+//       { name: 'Graham Crackers', allergen: true },
+//       { name: 'Cream Cheese', allergen: true },
+//       { name: 'Blueberries', allergen: false },
+//       { name: 'Butter', allergen: true },
+//       { name: 'Sugar', allergen: false },
+//       { name: 'Eggs', allergen: true }
+//     ],
+//     nutrition: {
+//       servingSize: '1 slice (140g)',
+//       calories: 420,
+//       fat: '28g',
+//       carbs: '42g',
+//       protein: '8g',
+//       sugar: '32g'
+//     },
+//     detailedDescription: 'Savor the perfect balance of tart and sweet with our Blueberry Cheesecake, where creamy cheesecake meets the vibrant flavor of fresh blueberries. Each slice features a buttery graham cracker crust topped with smooth cream cheese filling and fresh blueberry compote. The combination of tangy cream cheese, crunchy crust, and juicy blueberries creates a symphony of textures and flavors. Perfect for those who appreciate the classic cheesecake experience elevated by the natural sweetness and color of seasonal blueberries.'
+//   },
+//   {
+//     id: '37',
+//     name: 'Biscoff Baked Cheesecake',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Rich Biscoff cheesecake with spiced cookie crust and caramel drizzle.',
+//     category: 'Cheesecake',
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/cheesecakes/biscolicious-cheesecake-cake.jpg',
+//         alt: 'Biscoff Baked Cheesecake with Biscoff cookie crust'
+//       }],
+//     sizes: [
+//       { id: 'slice', label: 'Single Slice', priceModifier: 0 },
+//       { id: 'half', label: 'Half Cake', priceModifier: 400 },
+//       { id: 'whole', label: 'Whole Cake', priceModifier: 800 }
+//     ],
+//     flavors: [
+//       { id: 'biscoff', label: 'Classic Biscoff', priceModifier: 0 },
+//       { id: 'salted', label: 'Salted Caramel Biscoff', priceModifier: 70 }
+//     ],
+//     ingredients: [
+//       { name: 'Biscoff Cookies', allergen: true },
+//       { name: 'Cream Cheese', allergen: true },
+//       { name: 'Biscoff Spread', allergen: true },
+//       { name: 'Butter', allergen: true },
+//       { name: 'Sugar', allergen: false },
+//       { name: 'Eggs', allergen: true }
+//     ],
+//     nutrition: {
+//       servingSize: '1 slice (150g)',
+//       calories: 480,
+//       fat: '32g',
+//       carbs: '48g',
+//       protein: '8g',
+//       sugar: '36g'
+//     },
+//     detailedDescription: 'Satisfy your spice craving with our Biscoff Baked Cheesecake, where the beloved spiced cookie meets creamy cheesecake perfection. Each slice features a thick Biscoff cookie crust topped with smooth cream cheese filling swirled with Biscoff spread and finished with caramel drizzle. The combination of crunchy cookies and creamy filling creates the ultimate texture experience. Perfect for spice lovers who want their cheesecake with a distinctive, caramelized cookie crunch.'
+//   },
+//   {
+//     id: '38',
+//     name: 'Blueberry Cheesecake Slice',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Individual slice of blueberry cheesecake with fresh berry topping.',
+//     category: ['Cheesecake', 'Pastries'],
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/cheesecakes/Blueberry-Cheesecake-Slice.jpg',
+//         alt: 'Blueberry Cheesecake Slice with fresh berries'
+//       }],
+//     sizes: [
+//       { id: 'single', label: 'Single Slice', priceModifier: 0 },
+//       { id: 'double', label: 'Two Slices', priceModifier: 250 },
+//       { id: 'half-dozen', label: 'Half Dozen Slices', priceModifier: 1200 }
+//     ],
+//     flavors: [
+//       { id: 'blueberry', label: 'Fresh Blueberry', priceModifier: 0 },
+//       { id: 'mixed-berry', label: 'Mixed Berry', priceModifier: 50 }
+//     ],
+//     ingredients: [
+//       { name: 'Graham Crackers', allergen: true },
+//       { name: 'Cream Cheese', allergen: true },
+//       { name: 'Blueberries', allergen: false },
+//       { name: 'Butter', allergen: true },
+//       { name: 'Sugar', allergen: false },
+//       { name: 'Eggs', allergen: true }
+//     ],
+//     nutrition: {
+//       servingSize: '1 slice (140g)',
+//       calories: 420,
+//       fat: '28g',
+//       carbs: '42g',
+//       protein: '8g',
+//       sugar: '32g'
+//     },
+//     detailedDescription: 'Enjoy the perfect portion with our Blueberry Cheesecake Slice, where classic cheesecake meets fresh berry delight in individual portion perfection. Each slice features a buttery graham cracker crust topped with smooth cream cheese filling and generous fresh blueberry topping. The individual slice format ensures you get the perfect ratio of crust, filling, and topping. Perfect for those who want cheesecake without committing to a whole cake, or for portion control. The fresh blueberries add natural sweetness and vibrant color to this timeless dessert.'
+//   },
+//   {
+//     id: '39',
+//     name: 'Classic Oreo Cheesecake Slice',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Creamy cheesecake slice with Oreo cookie crust and chocolate cookie pieces.',
+//     category: ['Cheesecake', 'Pastries'],
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/cheesecakes/oreo-bake-cheesecake-slice-past.jpg',
+//         alt: 'Classic Oreo Cheesecake Slice with cookie pieces'
+//       }],
+//     sizes: [
+//       { id: 'single', label: 'Single Slice', priceModifier: 0 },
+//       { id: 'double', label: 'Two Slices', priceModifier: 250 },
+//       { id: 'half-dozen', label: 'Half Dozen Slices', priceModifier: 1200 }
+//     ],
+//     flavors: [
+//       { id: 'oreo', label: 'Classic Oreo', priceModifier: 0 },
+//       { id: 'double-stuf', label: 'Double Stuf Oreo', priceModifier: 70 }
+//     ],
+//     ingredients: [
+//       { name: 'Oreo Cookies', allergen: true },
+//       { name: 'Cream Cheese', allergen: true },
+//       { name: 'Chocolate', allergen: false },
+//       { name: 'Butter', allergen: true },
+//       { name: 'Sugar', allergen: false },
+//       { name: 'Eggs', allergen: true }
+//     ],
+//     nutrition: {
+//       servingSize: '1 slice (145g)',
+//       calories: 460,
+//       fat: '30g',
+//       carbs: '46g',
+//       protein: '8g',
+//       sugar: '34g'
+//     },
+//     detailedDescription: 'Create cookie magic with our Classic Oreo Cheesecake Slice, where America\'s favorite cookie transforms cheesecake into an irresistible treat. Each slice features a thick Oreo cookie crust topped with smooth cream cheese filling studded with crushed Oreo pieces and finished with whole Oreo cookies. The individual portion format ensures you get the perfect ratio of cookie crust to creamy filling. Perfect for Oreo fans who want their cheesecake experience elevated with that distinctive chocolate cookie crunch.'
+//   },
+//   {
+//     id: '40',
+//     name: 'Biscoff Baked Cheesecake Slice',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Individual slice of Biscoff cheesecake with spiced cookie crust.',
+//     category: ['Cheesecake', 'Pastries'],
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/cheesecakes/biscoff-baked-cheesecake-slice-past.jpg',
+//         alt: 'Biscoff Baked Cheesecake Slice with cookie crust'
+//       }],
+//     sizes: [
+//       { id: 'single', label: 'Single Slice', priceModifier: 0 },
+//       { id: 'double', label: 'Two Slices', priceModifier: 250 },
+//       { id: 'half-dozen', label: 'Half Dozen Slices', priceModifier: 1200 }
+//     ],
+//     flavors: [
+//       { id: 'biscoff', label: 'Classic Biscoff', priceModifier: 0 },
+//       { id: 'lotus', label: 'Lotus Biscoff', priceModifier: 80 }
+//     ],
+//     ingredients: [
+//       { name: 'Biscoff Cookies', allergen: true },
+//       { name: 'Cream Cheese', allergen: true },
+//       { name: 'Biscoff Spread', allergen: true },
+//       { name: 'Butter', allergen: true },
+//       { name: 'Sugar', allergen: false },
+//       { name: 'Eggs', allergen: true }
+//     ],
+//     nutrition: {
+//       servingSize: '1 slice (150g)',
+//       calories: 480,
+//       fat: '32g',
+//       carbs: '48g',
+//       protein: '8g',
+//       sugar: '36g'
+//     },
+//     detailedDescription: 'Experience spiced perfection with our Biscoff Baked Cheesecake Slice, where Belgian cookie perfection meets creamy cheesecake in individual slice format. Each slice features a thick Biscoff cookie crust topped with smooth cream cheese filling swirled with Biscoff spread and finished with caramel drizzle. The individual portion ensures you get the perfect ratio of spiced crust to creamy filling without waste. Perfect for Biscoff enthusiasts who want their favorite cookie in cheesecake form.'
+//   },
+//   {
+//     id: '41',
+//     name: 'Nutella Cheesecake Slice',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Decadent cheesecake slice with Nutella filling and hazelnut crunch.',
+//     category: ['Cheesecake', 'Pastries'],
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/cheesecakes/spongy-nutella-pastry-past.jpg',
+//         alt: 'Nutella Cheesecake Slice with hazelnut toppings'
+//       }],
+//     sizes: [
+//       { id: 'single', label: 'Single Slice', priceModifier: 0 },
+//       { id: 'double', label: 'Two Slices', priceModifier: 250 },
+//       { id: 'half-dozen', label: 'Half Dozen Slices', priceModifier: 1200 }
+//     ],
+//     flavors: [
+//       { id: 'nutella', label: 'Classic Nutella', priceModifier: 0 },
+//       { id: 'gianduja', label: 'Gianduja Nutella', priceModifier: 90 }
+//     ],
+//     ingredients: [
+//       { name: 'Graham Crackers', allergen: true },
+//       { name: 'Cream Cheese', allergen: true },
+//       { name: 'Nutella', allergen: true },
+//       { name: 'Hazelnuts', allergen: true },
+//       { name: 'Butter', allergen: true },
+//       { name: 'Sugar', allergen: false }
+//     ],
+//     nutrition: {
+//       servingSize: '1 slice (155g)',
+//       calories: 500,
+//       fat: '34g',
+//       carbs: '50g',
+//       protein: '9g',
+//       sugar: '38g'
+//     },
+//     detailedDescription: 'Indulge in hazelnut paradise with our Nutella Cheesecake Slice, where the world\'s favorite chocolate-hazelnut spread meets creamy cheesecake perfection. Each slice features a graham cracker crust topped with smooth cream cheese filling swirled with generous amounts of Nutella and finished with crunchy hazelnut pieces. The individual portion format ensures you get the perfect balance of crust, filling, and topping. Perfect for Nutella lovers who want their cheesecake experience transformed by the distinctive flavor and texture of roasted hazelnuts.'
+//   },
+//   {
+//     id: '43',
+//     name: 'New York Baked Cheesecake Slice',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Authentic New York-style cheesecake slice with rich, dense texture.',
+//     category: ['Cheesecake', 'Pastries'],
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/cheesecakes/new-york-bake-cheesecake-slice-past.jpg',
+//         alt: 'New York Baked Cheesecake Slice with classic style'
+//       }],
+//     sizes: [
+//       { id: 'single', label: 'Single Slice', priceModifier: 0 },
+//       { id: 'double', label: 'Two Slices', priceModifier: 250 },
+//       { id: 'half-dozen', label: 'Half Dozen Slices', priceModifier: 1200 }
+//     ],
+//     flavors: [
+//       { id: 'classic-ny', label: 'Classic New York', priceModifier: 0 },
+//       { id: 'premium-ny', label: 'Premium New York', priceModifier: 80 }
+//     ],
+//     ingredients: [
+//       { name: 'Graham Crackers', allergen: true },
+//       { name: 'Cream Cheese', allergen: true },
+//       { name: 'Sour Cream', allergen: true },
+//       { name: 'Butter', allergen: true },
+//       { name: 'Sugar', allergen: false },
+//       { name: 'Eggs', allergen: true }
+//     ],
+//     nutrition: {
+//       servingSize: '1 slice (160g)',
+//       calories: 480,
+//       fat: '35g',
+//       carbs: '40g',
+//       protein: '9g',
+//       sugar: '30g'
+//     },
+//     detailedDescription: 'Master the classic with our New York Baked Cheesecake Slice, bringing the Big Apple\'s most famous dessert to individual portion perfection. Each slice features a thick graham cracker crust topped with rich, dense cream cheese filling made with extra cream cheese for that signature New York texture. The individual portion format ensures you get the perfect portion of this iconic dessert. Known for its creamy richness and slight tang from sour cream, this cheesecake represents the gold standard that has made New York cheesecake famous worldwide.'
+//   },
+//   {
+//     id: '44',
+//     name: 'Classic Chocolate Truffle Pastry',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Elegant chocolate truffle pastry with rich ganache filling.',
+//     category: 'Pastries',
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/pastries/Classic-Chocolate-Truffle-Pastry.jpg',
+//         alt: 'Classic Chocolate Truffle Pastry with elegant design'
+//       }],
+//     sizes: [
+//       { id: 'single', label: 'Single Pastry', priceModifier: 0 },
+//       { id: 'double', label: 'Two Pastries', priceModifier: 250 },
+//       { id: 'half-dozen', label: 'Half Dozen', priceModifier: 1200 }
+//     ],
+//     flavors: [
+//       { id: 'dark-truffle', label: 'Dark Chocolate Truffle', priceModifier: 0 },
+//       { id: 'milk-truffle', label: 'Milk Chocolate Truffle', priceModifier: 60 }
+//     ],
+//     ingredients: [
+//       { name: 'Puff Pastry', allergen: true },
+//       { name: 'Dark Chocolate', allergen: false },
+//       { name: 'Heavy Cream', allergen: true },
+//       { name: 'Butter', allergen: true },
+//       { name: 'Sugar', allergen: false },
+//       { name: 'Cocoa Powder', allergen: false }
+//     ],
+//     nutrition: {
+//       servingSize: '1 pastry (85g)',
+//       calories: 380,
+//       fat: '26g',
+//       carbs: '35g',
+//       protein: '5g',
+//       sugar: '22g'
+//     },
+//     detailedDescription: 'Indulge in sophistication with our Classic Chocolate Truffle Pastry, where French pastry artistry meets Italian truffle tradition. Each pastry features flaky puff pastry filled with rich chocolate ganache and topped with chocolate glaze. The combination of buttery, crisp pastry and smooth, intense chocolate creates an elegant dessert experience. Perfect for special occasions or when you want to treat yourself to something truly luxurious. The dark chocolate provides deep, complex flavor notes that chocolate connoisseurs will appreciate.'
+//   },
+//   {
+//     id: '45',
+//     name: 'Tropical Pineapple Pastry',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Fresh pineapple pastry with tropical flavors and flaky crust.',
+//     category: 'Pastries',
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/pastries/Tropical-Pineapple-Pastry.jpg',
+//         alt: 'Tropical Pineapple Pastry with fresh pineapple'
+//       }],
+//     sizes: [
+//       { id: 'single', label: 'Single Pastry', priceModifier: 0 },
+//       { id: 'double', label: 'Two Pastries', priceModifier: 250 },
+//       { id: 'half-dozen', label: 'Half Dozen', priceModifier: 1200 }
+//     ],
+//     flavors: [
+//       { id: 'pineapple', label: 'Fresh Pineapple', priceModifier: 0 },
+//       { id: 'coconut-pineapple', label: 'Coconut Pineapple', priceModifier: 70 }
+//     ],
+//     ingredients: [
+//       { name: 'Puff Pastry', allergen: true },
+//       { name: 'Pineapple', allergen: false },
+//       { name: 'Butter', allergen: true },
+//       { name: 'Sugar', allergen: false },
+//       { name: 'Cinnamon', allergen: false },
+//       { name: 'Eggs', allergen: true }
+//     ],
+//     nutrition: {
+//       servingSize: '1 pastry (90g)',
+//       calories: 340,
+//       fat: '18g',
+//       carbs: '42g',
+//       protein: '4g',
+//       sugar: '25g'
+//     },
+//     detailedDescription: 'Transport yourself to paradise with our Tropical Pineapple Pastry, where fresh pineapple meets buttery pastry perfection. Each pastry features flaky puff pastry filled with sweet pineapple compote and topped with pineapple slices. The natural sweetness of fresh pineapple is enhanced by a hint of cinnamon, creating a delightful tropical flavor profile. Perfect for breakfast, brunch, or as a light dessert. The combination of juicy fruit and crisp pastry creates a refreshing contrast that\'s both satisfying and surprisingly light.'
+//   },
+//   {
+//     id: '46',
+//     name: 'Happy Birthday Chocolate Pastries',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Festive chocolate pastries perfect for birthday celebrations.',
+//     category: 'Pastries',
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/pastries/Happy-Birthday-Chocolate-Pastries.jpg',
+//         alt: 'Happy Birthday Chocolate Pastries with festive decorations'
+//       }],
+//     sizes: [
+//       { id: 'single', label: 'Single Pastry', priceModifier: 0 },
+//       { id: 'double', label: 'Two Pastries', priceModifier: 250 },
+//       { id: 'half-dozen', label: 'Half Dozen', priceModifier: 1200 }
+//     ],
+//     flavors: [
+//       { id: 'birthday-choco', label: 'Birthday Chocolate', priceModifier: 0 },
+//       { id: 'sprinkle-choco', label: 'Sprinkle Chocolate', priceModifier: 60 }
+//     ],
+//     ingredients: [
+//       { name: 'Puff Pastry', allergen: true },
+//       { name: 'Chocolate', allergen: false },
+//       { name: 'Chocolate Filling', allergen: true },
+//       { name: 'Butter', allergen: true },
+//       { name: 'Sugar', allergen: false },
+//       { name: 'Sprinkles', allergen: false }
+//     ],
+//     nutrition: {
+//       servingSize: '1 pastry (80g)',
+//       calories: 360,
+//       fat: '22g',
+//       carbs: '38g',
+//       protein: '5g',
+//       sugar: '24g'
+//     },
+//     detailedDescription: 'Make birthdays magical with our Happy Birthday Chocolate Pastries, where festive celebration meets delicious chocolate indulgence. Each pastry features flaky puff pastry filled with rich chocolate and decorated with colorful sprinkles, edible glitter, and birthday-themed toppings. The chocolate filling is perfectly balanced - not too sweet, with deep cocoa flavor. Perfect for birthday parties, allowing guests to enjoy individual portions of celebratory goodness. Available in various birthday themes and customizations for truly special celebrations.'
+//   },
+//   {
+//     id: '47',
+//     name: 'Assorted Pastry Box',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Curated selection of assorted pastries in a beautiful gift box.',
+//     category: 'Pastries',
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/pastries/Assorted-Pastry-Box.jpg',
+//         alt: 'Assorted Pastry Box with variety of pastries'
+//       }],
+//     sizes: [
+//       { id: 'small-box', label: 'Small Box (4 pieces)', priceModifier: 0 },
+//       { id: 'medium-box', label: 'Medium Box (6 pieces)', priceModifier: 400 },
+//       { id: 'large-box', label: 'Large Box (8 pieces)', priceModifier: 800 }
+//     ],
+//     flavors: [
+//       { id: 'mixed-selection', label: 'Mixed Selection', priceModifier: 0 },
+//       { id: 'themed-assortment', label: 'Themed Assortment', priceModifier: 120 }
+//     ],
+//     ingredients: [
+//       { name: 'Various Pastries', allergen: true },
+//       { name: 'Butter', allergen: true },
+//       { name: 'Sugar', allergen: false },
+//       { name: 'Eggs', allergen: true },
+//       { name: 'Flour', allergen: true },
+//       { name: 'Various Fillings', allergen: true }
+//     ],
+//     nutrition: {
+//       servingSize: '1 pastry (85g avg)',
+//       calories: 350,
+//       fat: '20g',
+//       carbs: '40g',
+//       protein: '5g',
+//       sugar: '22g'
+//     },
+//     detailedDescription: 'Experience variety and delight with our Assorted Pastry Box, a carefully curated selection of our finest pastries in a beautiful presentation box. Each box contains a mix of classic favorites and seasonal specialties, from chocolate croissants to fruit danishes, ensuring there\'s something for every taste preference. The assortment includes both sweet and savory options, all freshly baked that morning. Perfect for gifting, corporate events, or when you want to sample our full range of pastry excellence. Each pastry is individually wrapped to maintain freshness and quality.'
+//   },
+//   {
+//     id: '48',
+//     name: 'Classic Butterscotch Pastry',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Traditional butterscotch pastry with caramelized sugar and butter.',
+//     category: 'Pastries',
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/pastries/Classic-Butterscotch-Pastry.jpg',
+//         alt: 'Classic Butterscotch Pastry with golden caramel'
+//       }],
+//     sizes: [
+//       { id: 'single', label: 'Single Pastry', priceModifier: 0 },
+//       { id: 'double', label: 'Two Pastries', priceModifier: 250 },
+//       { id: 'half-dozen', label: 'Half Dozen', priceModifier: 1200 }
+//     ],
+//     flavors: [
+//       { id: 'classic-butterscotch', label: 'Classic Butterscotch', priceModifier: 0 },
+//       { id: 'salted-butterscotch', label: 'Salted Butterscotch', priceModifier: 60 }
+//     ],
+//     ingredients: [
+//       { name: 'Puff Pastry', allergen: true },
+//       { name: 'Butter', allergen: true },
+//       { name: 'Brown Sugar', allergen: false },
+//       { name: 'Cream', allergen: true },
+//       { name: 'Vanilla', allergen: false },
+//       { name: 'Salt', allergen: false }
+//     ],
+//     nutrition: {
+//       servingSize: '1 pastry (85g)',
+//       calories: 380,
+//       fat: '24g',
+//       carbs: '38g',
+//       protein: '4g',
+//       sugar: '28g'
+//     },
+//     detailedDescription: 'Relive nostalgic comfort with our Classic Butterscotch Pastry, where rich caramelized butter and brown sugar create pure indulgence. Each pastry features flaky puff pastry filled with homemade butterscotch sauce made from slowly caramelized butter and brown sugar. The butterscotch is cooked to perfection, creating a sauce that\'s both smooth and deeply flavorful, with notes of vanilla and a hint of salt to balance the sweetness. Perfect for those who love the comforting, caramel-like taste of traditional butterscotch in a sophisticated pastry format.'
+//   },
+//   {
+//     id: '49',
+//     name: 'Classic Red Velvet Pastry',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Red velvet pastry with cream cheese filling and chocolate notes.',
+//     category: 'Pastries',
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/pastries/Classic-Red-Velvet-Pastry.jpg',
+//         alt: 'Classic Red Velvet Pastry with cream cheese'
+//       }],
+//     sizes: [
+//       { id: 'single', label: 'Single Pastry', priceModifier: 0 },
+//       { id: 'double', label: 'Two Pastries', priceModifier: 250 },
+//       { id: 'half-dozen', label: 'Half Dozen', priceModifier: 1200 }
+//     ],
+//     flavors: [
+//       { id: 'classic-red', label: 'Classic Red Velvet', priceModifier: 0 },
+//       { id: 'chocolate-red', label: 'Chocolate Red Velvet', priceModifier: 70 }
+//     ],
+//     ingredients: [
+//       { name: 'Puff Pastry', allergen: true },
+//       { name: 'Cocoa Powder', allergen: false },
+//       { name: 'Cream Cheese', allergen: true },
+//       { name: 'Butter', allergen: true },
+//       { name: 'Sugar', allergen: false },
+//       { name: 'Red Food Coloring', allergen: false }
+//     ],
+//     nutrition: {
+//       servingSize: '1 pastry (90g)',
+//       calories: 370,
+//       fat: '22g',
+//       carbs: '40g',
+//       protein: '5g',
+//       sugar: '26g'
+//     },
+//     detailedDescription: 'Celebrate Southern charm with our Classic Red Velvet Pastry, bringing the beloved red velvet flavor to flaky pastry perfection. Each pastry features tender red velvet dough filled with cream cheese and topped with a light glaze. The signature subtle chocolate flavor and tangy cream cheese create a sophisticated breakfast or dessert option. Perfect for those who love red velvet but want it in a different format. The natural red color comes from careful balance of cocoa and food coloring, resulting in that distinctive red velvet appearance and flavor.'
+//   },
+//   {
+//     id: '51',
+//     name: 'Rose Tres Leches',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Elegant tres leches cake with rose flavor and traditional soaking.',
+//     category: 'Pastries',
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/pastries/Rose-Tres-Leches.jpg',
+//         alt: 'Rose Tres Leches with elegant rose decoration'
+//       }],
+//     sizes: [
+//       { id: 'slice', label: 'Single Slice', priceModifier: 0 },
+//       { id: 'half', label: 'Half Cake', priceModifier: 400 },
+//       { id: 'whole', label: 'Whole Cake', priceModifier: 800 }
+//     ],
+//     flavors: [
+//       { id: 'rose', label: 'Classic Rose', priceModifier: 0 },
+//       { id: 'lavender-rose', label: 'Lavender Rose', priceModifier: 80 }
+//     ],
+//     ingredients: [
+//       { name: 'Wheat Flour', allergen: true },
+//       { name: 'Three Milks', allergen: true },
+//       { name: 'Rose Water', allergen: false },
+//       { name: 'Butter', allergen: true },
+//       { name: 'Sugar', allergen: false },
+//       { name: 'Eggs', allergen: true }
+//     ],
+//     nutrition: {
+//       servingSize: '1 slice (130g)',
+//       calories: 380,
+//       fat: '18g',
+//       carbs: '52g',
+//       protein: '8g',
+//       sugar: '38g'
+//     },
+//     detailedDescription: 'Experience floral elegance with our Rose Tres Leches, where the traditional Latin American tres leches cake meets delicate rose flavor. Each slice features light vanilla sponge cake soaked in three types of milk (evaporated, condensed, and heavy cream) and infused with rose water. The result is a moist, tender cake with subtle floral notes that\'s both refreshing and indulgent. Topped with rose petals and served chilled, this dessert offers a sophisticated twist on a classic. Perfect for romantic occasions or when you want something light yet luxurious.'
+//   },
+//   {
+//     id: '52',
+//     name: 'Choco Truffle Pastry Made With KitKat',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Chocolate truffle pastry featuring KitKat bars and rich ganache.',
+//     category: 'Pastries',
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/pastries/Choco-Truffle-Pastry-Made-With-KitKat.jpg',
+//         alt: 'Choco Truffle Pastry Made With KitKat bars'
+//       }],
+//     sizes: [
+//       { id: 'single', label: 'Single Pastry', priceModifier: 0 },
+//       { id: 'double', label: 'Two Pastries', priceModifier: 250 },
+//       { id: 'half-dozen', label: 'Half Dozen', priceModifier: 1200 }
+//     ],
+//     flavors: [
+//       { id: 'kitkat-truffle', label: 'KitKat Truffle', priceModifier: 0 },
+//       { id: 'dark-kitkat', label: 'Dark KitKat', priceModifier: 70 }
+//     ],
+//     ingredients: [
+//       { name: 'Puff Pastry', allergen: true },
+//       { name: 'KitKat Chocolate', allergen: true },
+//       { name: 'Chocolate Ganache', allergen: true },
+//       { name: 'Butter', allergen: true },
+//       { name: 'Sugar', allergen: false },
+//       { name: 'Cream', allergen: true }
+//     ],
+//     nutrition: {
+//       servingSize: '1 pastry (95g)',
+//       calories: 420,
+//       fat: '28g',
+//       carbs: '42g',
+//       protein: '6g',
+//       sugar: '28g'
+//     },
+//     detailedDescription: 'Combine beloved chocolate treats with pastry perfection in our Choco Truffle Pastry Made With KitKat, where the iconic wafer crunch meets rich truffle filling. Each pastry features flaky puff pastry filled with chocolate ganache and pieces of KitKat bars, topped with more KitKat pieces for that satisfying crunch. The combination of smooth chocolate truffle and crispy wafer creates an irresistible texture experience. Perfect for KitKat lovers who want their favorite chocolate bar elevated to pastry status. Each bite delivers the perfect balance of creamy truffle and crunchy wafer chocolate.'
+//   },
+//   {
+//     id: '56',
+//     name: 'Classic Choco Chip Pastry',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Traditional chocolate chip pastry with buttery dough and chocolate chunks.',
+//     category: 'Pastries',
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/pastries/Classic-Choco-Chip-Pastry.jpg',
+//         alt: 'Classic Choco Chip Pastry with chocolate chips'
+//       }],
+//     sizes: [
+//       { id: 'single', label: 'Single Pastry', priceModifier: 0 },
+//       { id: 'double', label: 'Two Pastries', priceModifier: 250 },
+//       { id: 'half-dozen', label: 'Half Dozen', priceModifier: 1200 }
+//     ],
+//     flavors: [
+//       { id: 'milk-choco', label: 'Milk Chocolate Chips', priceModifier: 0 },
+//       { id: 'dark-choco', label: 'Dark Chocolate Chips', priceModifier: 60 }
+//     ],
+//     ingredients: [
+//       { name: 'Puff Pastry', allergen: true },
+//       { name: 'Chocolate Chips', allergen: true },
+//       { name: 'Butter', allergen: true },
+//       { name: 'Sugar', allergen: false },
+//       { name: 'Eggs', allergen: true },
+//       { name: 'Vanilla', allergen: false }
+//     ],
+//     nutrition: {
+//       servingSize: '1 pastry (85g)',
+//       calories: 380,
+//       fat: '24g',
+//       carbs: '38g',
+//       protein: '5g',
+//       sugar: '22g'
+//     },
+//     detailedDescription: 'Celebrate the simple joy of chocolate chips with our Classic Choco Chip Pastry, where buttery pastry meets generous chocolate chip filling. Each pastry features flaky puff pastry filled with melted chocolate chips and topped with more chocolate chips for that signature crunch. The chocolate chips are evenly distributed throughout, ensuring chocolate in every bite. Perfect for breakfast, brunch, or as a comforting snack. The combination of warm, buttery pastry and melty chocolate creates a nostalgic treat that reminds you of homemade cookies but in elegant pastry form.'
+//   },
+//   {
+//     id: '57',
+//     name: 'Black Forest Pastry',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'German-inspired pastry with chocolate, cherries, and cream.',
+//     category: 'Pastries',
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/pastries/Black-Forest-Pastry.jpg',
+//         alt: 'Black Forest Pastry with chocolate and cherries'
+//       }],
+//     sizes: [
+//       { id: 'single', label: 'Single Pastry', priceModifier: 0 },
+//       { id: 'double', label: 'Two Pastries', priceModifier: 250 },
+//       { id: 'half-dozen', label: 'Half Dozen', priceModifier: 1200 }
+//     ],
+//     flavors: [
+//       { id: 'traditional', label: 'Traditional Black Forest', priceModifier: 0 },
+//       { id: 'kirsch', label: 'Kirsch Black Forest', priceModifier: 80 }
+//     ],
+//     ingredients: [
+//       { name: 'Puff Pastry', allergen: true },
+//       { name: 'Dark Chocolate', allergen: false },
+//       { name: 'Cherries', allergen: false },
+//       { name: 'Whipped Cream', allergen: true },
+//       { name: 'Kirsch Liqueur', allergen: false },
+//       { name: 'Sugar', allergen: false }
+//     ],
+//     nutrition: {
+//       servingSize: '1 pastry (95g)',
+//       calories: 400,
+//       fat: '26g',
+//       carbs: '42g',
+//       protein: '6g',
+//       sugar: '28g'
+//     },
+//     detailedDescription: 'Experience German tradition with our Black Forest Pastry, bringing the iconic Schwarzwälder Kirschtorte flavors to elegant pastry form. Each pastry features flaky puff pastry filled with chocolate ganache, tart cherries, and whipped cream, finished with chocolate shavings. The combination of rich chocolate, juicy cherries, and light cream creates a sophisticated dessert experience. Perfect for special occasions or when you want something classically European. The kirsch liqueur adds authentic depth, while fresh cherries provide natural sweetness and vibrant color. A timeless combination that has delighted dessert lovers for generations.'
+//   },
+//   {
+//     id: '59',
+//     name: 'Red Velvet Anniversary Pastries',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Romantic red velvet pastries perfect for anniversary celebrations.',
+//     category: 'Pastries',
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/pastries/Red-Velvet-Anniversary-Pastries.jpg',
+//         alt: 'Red Velvet Anniversary Pastries with romantic design'
+//       }],
+//     sizes: [
+//       { id: 'single', label: 'Single Pastry', priceModifier: 0 },
+//       { id: 'double', label: 'Two Pastries', priceModifier: 250 },
+//       { id: 'half-dozen', label: 'Half Dozen', priceModifier: 1200 }
+//     ],
+//     flavors: [
+//       { id: 'anniversary', label: 'Anniversary Red Velvet', priceModifier: 0 },
+//       { id: 'celebration', label: 'Celebration Red Velvet', priceModifier: 90 }
+//     ],
+//     ingredients: [
+//       { name: 'Puff Pastry', allergen: true },
+//       { name: 'Cocoa Powder', allergen: false },
+//       { name: 'Cream Cheese', allergen: true },
+//       { name: 'Butter', allergen: true },
+//       { name: 'Sugar', allergen: false },
+//       { name: 'Red Food Coloring', allergen: false }
+//     ],
+//     nutrition: {
+//       servingSize: '1 pastry (90g)',
+//       calories: 370,
+//       fat: '22g',
+//       carbs: '40g',
+//       protein: '5g',
+//       sugar: '26g'
+//     },
+//     detailedDescription: 'Celebrate love with our Red Velvet Anniversary Pastries, where romantic red velvet meets elegant pastry presentation. Each pastry features tender red velvet dough filled with cream cheese and decorated with anniversary-themed toppings like hearts, edible glitter, and personalized messages. The subtle chocolate flavor and tangy cream cheese create a sophisticated treat perfect for romantic occasions. Available with various anniversary customizations to make your celebration truly special. Perfect for sharing intimate moments or surprising your loved one with a thoughtful, delicious gesture that combines tradition with personalization.'
+//   },
+//   {
+//     id: '60',
+//     name: 'Six Pineapple Chocolate and Red Velvet Anniversary Pastries',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Assortment of six anniversary pastries with pineapple, chocolate, and red velvet.',
+//     category: 'Pastries',
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/pastries/Six-Pineapple-Chocolate-and-Red-Velvet-Anniversary-Pastries.jpg',
+//         alt: 'Six Pineapple Chocolate and Red Velvet Anniversary Pastries assortment'
+//       }],
+//     sizes: [
+//       { id: 'six-pack', label: 'Six Pack Assortment', priceModifier: 0 },
+//       { id: 'twelve-pack', label: 'Twelve Pack Assortment', priceModifier: 900 },
+//       { id: 'eighteen-pack', label: 'Eighteen Pack Assortment', priceModifier: 1800 }
+//     ],
+//     flavors: [
+//       { id: 'mixed-anniversary', label: 'Mixed Anniversary', priceModifier: 0 },
+//       { id: 'custom-anniversary', label: 'Custom Anniversary', priceModifier: 180 }
+//     ],
+//     ingredients: [
+//       { name: 'Various Pastries', allergen: true },
+//       { name: 'Pineapple', allergen: false },
+//       { name: 'Chocolate', allergen: false },
+//       { name: 'Cocoa Powder', allergen: false },
+//       { name: 'Cream Cheese', allergen: true },
+//       { name: 'Butter', allergen: true }
+//     ],
+//     nutrition: {
+//       servingSize: '1 pastry (90g avg)',
+//       calories: 375,
+//       fat: '22g',
+//       carbs: '42g',
+//       protein: '5g',
+//       sugar: '26g'
+//     },
+//     detailedDescription: 'Create unforgettable anniversary celebrations with our Six Pineapple Chocolate and Red Velvet Anniversary Pastries, a perfectly curated assortment for romantic occasions. This collection includes pineapple pastries for tropical sweetness, rich chocolate pastries for indulgence, and red velvet pastries for classic romance - all beautifully decorated with anniversary themes. The variety ensures there\'s something for every taste preference while maintaining the celebratory spirit. Perfect for larger gatherings, corporate events, or when you want to offer your guests a memorable assortment of anniversary treats. Each pastry is individually decorated and presented for maximum visual and culinary impact.'
+//   },
+//   {
+//     id: '61',
+//     name: 'Filter Coffee Mousse Verrine Cup',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Elegant verrine cup with coffee mousse and biscuit layers.',
+//     category: 'Pastries',
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/pastries/Filter-Coffee-Mousse-Verrine-Cup.jpg',
+//         alt: 'Filter Coffee Mousse Verrine Cup with coffee layers'
+//       }],
+//     sizes: [
+//       { id: 'single', label: 'Single Cup', priceModifier: 0 },
+//       { id: 'double', label: 'Two Cups', priceModifier: 250 },
+//       { id: 'half-dozen', label: 'Half Dozen Cups', priceModifier: 1200 }
+//     ],
+//     flavors: [
+//       { id: 'filter-coffee', label: 'Filter Coffee', priceModifier: 0 },
+//       { id: 'espresso', label: 'Espresso', priceModifier: 70 }
+//     ],
+//     ingredients: [
+//       { name: 'Coffee', allergen: false },
+//       { name: 'Biscuit', allergen: true },
+//       { name: 'Heavy Cream', allergen: true },
+//       { name: 'Sugar', allergen: false },
+//       { name: 'Eggs', allergen: true },
+//       { name: 'Gelatin', allergen: false }
+//     ],
+//     nutrition: {
+//       servingSize: '1 cup (140g)',
+//       calories: 320,
+//       fat: '22g',
+//       carbs: '32g',
+//       protein: '6g',
+//       sugar: '24g'
+//     },
+//     detailedDescription: 'Awaken your senses with our Filter Coffee Mousse Verrine Cup, where rich South Indian filter coffee meets elegant French mousse tradition. Each verrine cup contains alternating layers of coffee-infused mousse and buttery biscuit, creating a sophisticated dessert that\'s both comforting and refined. The strong, aromatic coffee flavor is perfectly balanced with the light, airy mousse texture. Perfect for coffee lovers who want their caffeine fix in dessert form. The individual cup format makes it ideal for dinner parties, and the authentic filter coffee flavor brings a taste of South Indian coffee culture to your table.'
+//   },
+//   {
+//     id: '62',
+//     name: 'Choco Truffle N Butterscotch Pastries',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Assortment of chocolate truffle and butterscotch pastries.',
+//     category: 'Pastries',
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/pastries/Choco-Truffle-N-Butterscotch-Pastries.jpg',
+//         alt: 'Choco Truffle N Butterscotch Pastries assortment'
+//       }],
+//     sizes: [
+//       { id: 'single-each', label: 'One of Each', priceModifier: 0 },
+//       { id: 'double-mix', label: 'Two Mixed', priceModifier: 250 },
+//       { id: 'half-dozen', label: 'Half Dozen Mixed', priceModifier: 1200 }
+//     ],
+//     flavors: [
+//       { id: 'assorted', label: 'Assorted Mix', priceModifier: 0 },
+//       { id: 'premium-assorted', label: 'Premium Assorted', priceModifier: 100 }
+//     ],
+//     ingredients: [
+//       { name: 'Puff Pastry', allergen: true },
+//       { name: 'Dark Chocolate', allergen: false },
+//       { name: 'Butterscotch', allergen: false },
+//       { name: 'Butter', allergen: true },
+//       { name: 'Sugar', allergen: false },
+//       { name: 'Cream', allergen: true }
+//     ],
+//     nutrition: {
+//       servingSize: '1 pastry (90g avg)',
+//       calories: 395,
+//       fat: '25g',
+//       carbs: '40g',
+//       protein: '5g',
+//       sugar: '26g'
+//     },
+//     detailedDescription: 'Indulge in the best of both worlds with our Choco Truffle N Butterscotch Pastries, where rich chocolate truffle meets caramelized butterscotch in perfect pastry harmony. Each assortment includes flaky pastries filled with smooth chocolate ganache alongside butterscotch-filled pastries with their distinctive caramel flavor. The combination offers both deep, intense chocolate and sweet, buttery caramel notes. Perfect for those who can\'t decide between chocolate and butterscotch, or for sharing with friends who have different preferences. Each pastry is crafted with premium ingredients to ensure both flavors shine through beautifully.'
+//   },
+//   {
+//     id: '63',
+//     name: 'Candied Caramel Mousse',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Light mousse with candied caramel pieces and smooth texture.',
+//     category: 'Pastries',
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/pastries/Candied-Caramel-Mousse.jpg',
+//         alt: 'Candied Caramel Mousse with caramel pieces'
+//       }],
+//     sizes: [
+//       { id: 'single', label: 'Single Serving', priceModifier: 0 },
+//       { id: 'double', label: 'Two Servings', priceModifier: 250 },
+//       { id: 'half-dozen', label: 'Half Dozen Servings', priceModifier: 1200 }
+//     ],
+//     flavors: [
+//       { id: 'candied-caramel', label: 'Candied Caramel', priceModifier: 0 },
+//       { id: 'salted-caramel', label: 'Salted Caramel', priceModifier: 70 }
+//     ],
+//     ingredients: [
+//       { name: 'Heavy Cream', allergen: true },
+//       { name: 'Caramel Sauce', allergen: false },
+//       { name: 'Sugar', allergen: false },
+//       { name: 'Butter', allergen: true },
+//       { name: 'Gelatin', allergen: false },
+//       { name: 'Vanilla', allergen: false }
+//     ],
+//     nutrition: {
+//       servingSize: '1 serving (130g)',
+//       calories: 380,
+//       fat: '28g',
+//       carbs: '35g',
+//       protein: '4g',
+//       sugar: '32g'
+//     },
+//     detailedDescription: 'Experience caramel perfection with our Candied Caramel Mousse, where smooth, airy mousse meets delightful candied caramel pieces. Each serving features light-as-air mousse made with fresh cream and homemade caramel sauce, studded with crunchy candied caramel pieces for texture contrast. The mousse is stabilized to maintain its perfect consistency, creating a dessert that\'s both elegant and indulgent. Perfect for caramel lovers who appreciate the balance of smooth and crunchy textures. The rich, buttery caramel flavor is perfectly complemented by the light mousse base, making each spoonful a moment of pure indulgence.'
+//   },
+//   {
+//     id: '64',
+//     name: 'Square Shaped Delicious Butterscotch Pastry',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Square butterscotch pastry with rich caramel filling and buttery crust.',
+//     category: 'Pastries',
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/pastries/Square-Shaped-Delicious-Butterscotch-Pastry.jpg',
+//         alt: 'Square Shaped Delicious Butterscotch Pastry with caramel'
+//       }],
+//     sizes: [
+//       { id: 'single', label: 'Single Square', priceModifier: 0 },
+//       { id: 'double', label: 'Two Squares', priceModifier: 250 },
+//       { id: 'half-dozen', label: 'Half Dozen Squares', priceModifier: 1200 }
+//     ],
+//     flavors: [
+//       { id: 'butterscotch', label: 'Classic Butterscotch', priceModifier: 0 },
+//       { id: 'premium-butterscotch', label: 'Premium Butterscotch', priceModifier: 70 }
+//     ],
+//     ingredients: [
+//       { name: 'Puff Pastry', allergen: true },
+//       { name: 'Butter', allergen: true },
+//       { name: 'Brown Sugar', allergen: false },
+//       { name: 'Cream', allergen: true },
+//       { name: 'Vanilla', allergen: false },
+//       { name: 'Salt', allergen: false }
+//     ],
+//     nutrition: {
+//       servingSize: '1 square (95g)',
+//       calories: 420,
+//       fat: '28g',
+//       carbs: '42g',
+//       protein: '4g',
+//       sugar: '30g'
+//     },
+//     detailedDescription: 'Savor the unique square shape of our Square Shaped Delicious Butterscotch Pastry, where generous portions meet rich caramel flavor. Each square features flaky puff pastry filled with homemade butterscotch sauce made from slowly caramelized butter and brown sugar. The square format provides more surface area for the rich filling, ensuring every bite is filled with butterscotch goodness. Perfect for those who love generous portions of their favorite flavors. The butterscotch is cooked to perfection, creating a sauce that\'s both smooth and deeply flavorful, with notes of vanilla and a hint of salt to balance the sweetness.'
+//   },
+//   {
+//     id: '65',
+//     name: 'Signature Assorted Pastries',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Curated selection of our signature pastries in elegant presentation.',
+//     category: 'Pastries',
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/pastries/Signature-Assorted-Pastries.jpg',
+//         alt: 'Signature Assorted Pastries with elegant arrangement'
+//       }],
+//     sizes: [
+//       { id: 'small-assortment', label: 'Small Assortment (4 pieces)', priceModifier: 0 },
+//       { id: 'medium-assortment', label: 'Medium Assortment (6 pieces)', priceModifier: 500 },
+//       { id: 'large-assortment', label: 'Large Assortment (8 pieces)', priceModifier: 1000 }
+//     ],
+//     flavors: [
+//       { id: 'signature-mix', label: 'Signature Mix', priceModifier: 0 },
+//       { id: 'seasonal-signature', label: 'Seasonal Signature', priceModifier: 130 }
+//     ],
+//     ingredients: [
+//       { name: 'Various Premium Pastries', allergen: true },
+//       { name: 'Butter', allergen: true },
+//       { name: 'Sugar', allergen: false },
+//       { name: 'Eggs', allergen: true },
+//       { name: 'Various Fillings', allergen: true },
+//       { name: 'Fresh Fruits', allergen: false }
+//     ],
+//     nutrition: {
+//       servingSize: '1 pastry (85g avg)',
+//       calories: 360,
+//       fat: '22g',
+//       carbs: '38g',
+//       protein: '5g',
+//       sugar: '24g'
+//     },
+//     detailedDescription: 'Experience the best of our pastry collection with our Signature Assorted Pastries, a carefully curated selection showcasing our most popular and innovative creations. Each assortment includes a mix of classic favorites and seasonal specialties, from chocolate croissants to fruit danishes, ensuring there\'s something for every taste preference. The assortment includes both sweet and savory options, all freshly baked that morning. Perfect for gifting, corporate events, or when you want to sample our full range of pastry excellence. Each pastry is individually wrapped to maintain freshness and quality.'
+//   },
+//   {
+//     id: '66',
+//     name: 'Choco Trio Mousse',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Three-layer chocolate mousse with varying chocolate intensities.',
+//     category: 'Pastries',
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/pastries/Choco-Trio-Mousse.jpg',
+//         alt: 'Choco Trio Mousse with three chocolate layers'
+//       }],
+//     sizes: [
+//       { id: 'single', label: 'Single Serving', priceModifier: 0 },
+//       { id: 'double', label: 'Two Servings', priceModifier: 250 },
+//       { id: 'half-dozen', label: 'Half Dozen Servings', priceModifier: 1200 }
+//     ],
+//     flavors: [
+//       { id: 'choco-trio', label: 'Chocolate Trio', priceModifier: 0 },
+//       { id: 'premium-trio', label: 'Premium Trio', priceModifier: 100 }
+//     ],
+//     ingredients: [
+//       { name: 'Dark Chocolate', allergen: false },
+//       { name: 'Milk Chocolate', allergen: true },
+//       { name: 'White Chocolate', allergen: true },
+//       { name: 'Heavy Cream', allergen: true },
+//       { name: 'Sugar', allergen: false },
+//       { name: 'Gelatin', allergen: false }
+//     ],
+//     nutrition: {
+//       servingSize: '1 serving (140g)',
+//       calories: 420,
+//       fat: '32g',
+//       carbs: '38g',
+//       protein: '6g',
+//       sugar: '32g'
+//     },
+//     detailedDescription: 'Journey through chocolate paradise with our Choco Trio Mousse, featuring three distinct layers of chocolate mousse in one elegant serving. Each dessert includes dark chocolate mousse for intense cocoa depth, milk chocolate mousse for creamy sweetness, and white chocolate mousse for silky lightness. The layers are carefully separated to maintain distinct flavors and textures, creating a sophisticated tasting experience. Perfect for chocolate connoisseurs who want to explore the full spectrum of chocolate flavors. Topped with chocolate shavings and served chilled, this mousse offers both visual appeal and culinary delight in every spoonful.'
+//   },
+//   {
+//     id: '67',
+//     name: 'Tiramisu Pastry',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Italian-inspired pastry with coffee-soaked layers and mascarpone.',
+//     category: 'Pastries',
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/pastries/Tiramisu-Pastry.jpg',
+//         alt: 'Tiramisu Pastry with coffee and mascarpone'
+//       }],
+//     sizes: [
+//       { id: 'single', label: 'Single Pastry', priceModifier: 0 },
+//       { id: 'double', label: 'Two Pastries', priceModifier: 250 },
+//       { id: 'half-dozen', label: 'Half Dozen', priceModifier: 1200 }
+//     ],
+//     flavors: [
+//       { id: 'classic-tiramisu', label: 'Classic Tiramisu', priceModifier: 0 },
+//       { id: 'espresso-tiramisu', label: 'Espresso Tiramisu', priceModifier: 80 }
+//     ],
+//     ingredients: [
+//       { name: 'Ladyfinger Biscuits', allergen: true },
+//       { name: 'Mascarpone Cheese', allergen: true },
+//       { name: 'Coffee', allergen: false },
+//       { name: 'Cocoa Powder', allergen: false },
+//       { name: 'Sugar', allergen: false },
+//       { name: 'Eggs', allergen: true }
+//     ],
+//     nutrition: {
+//       servingSize: '1 pastry (120g)',
+//       calories: 380,
+//       fat: '24g',
+//       carbs: '36g',
+//       protein: '8g',
+//       sugar: '24g'
+//     },
+//     detailedDescription: 'Transport yourself to Italy with our Tiramisu Pastry, bringing the beloved Italian dessert to elegant pastry form. Each pastry features coffee-soaked ladyfinger biscuits layered with rich mascarpone cream and finished with cocoa powder dusting. The combination of strong espresso, creamy mascarpone, and crunchy biscuits creates the authentic tiramisu experience. Perfect for coffee lovers and Italian food enthusiasts. The flavors are perfectly balanced - not too sweet, with the coffee providing a pleasant bitterness that contrasts beautifully with the creamy filling. A sophisticated dessert that captures the essence of Italian café culture.'
+//   },
+//   {
+//     id: '68',
+//     name: 'Classic Chocolate Pastries',
+//     price: 373,
+//     rating: 4.8,
+//     reviewCount: 112,
+//     description: 'Traditional chocolate pastries with rich filling and flaky crust.',
+//     category: 'Pastries',
+//     inStock: true,
+//     images: [{
+//         id: 'img1',
+//         url: '/assets/images/pastries/Classic-Chocolate-Pastries.jpg',
+//         alt: 'Classic Chocolate Pastries with rich chocolate'
+//       }],
+//     sizes: [
+//       { id: 'single', label: 'Single Pastry', priceModifier: 0 },
+//       { id: 'double', label: 'Two Pastries', priceModifier: 250 },
+//       { id: 'half-dozen', label: 'Half Dozen', priceModifier: 1200 }
+//     ],
+//     flavors: [
+//       { id: 'classic-chocolate', label: 'Classic Chocolate', priceModifier: 0 },
+//       { id: 'belgian-chocolate', label: 'Belgian Chocolate', priceModifier: 90 }
+//     ],
+//     ingredients: [
+//       { name: 'Puff Pastry', allergen: true },
+//       { name: 'Dark Chocolate', allergen: false },
+//       { name: 'Chocolate Filling', allergen: true },
+//       { name: 'Butter', allergen: true },
+//       { name: 'Sugar', allergen: false },
+//       { name: 'Eggs', allergen: true }
+//     ],
+//     nutrition: {
+//       servingSize: '1 pastry (85g)',
+//       calories: 380,
+//       fat: '24g',
+//       carbs: '36g',
+//       protein: '5g',
+//       sugar: '22g'
+//     },
+//     detailedDescription: 'Return to chocolate basics with our Classic Chocolate Pastries, where traditional pastry meets timeless chocolate indulgence. Each pastry features flaky puff pastry filled with rich chocolate filling and topped with chocolate glaze. The chocolate is perfectly balanced - deep and complex without being overpowering. Perfect for those who appreciate the simple elegance of classic chocolate desserts. The buttery pastry provides the perfect crisp contrast to the smooth chocolate filling, creating a harmonious bite that satisfies both texture and flavor preferences. A comforting, familiar treat that never goes out of style.'
+//   }
 ];
 
 export default products;

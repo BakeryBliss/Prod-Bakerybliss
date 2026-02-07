@@ -10,7 +10,7 @@ import CustomerReviews from './CustomerReviews';
 import RelatedProducts from './RelatedProducts';
 import SocialShare from './SocialShare';
 import Icon from '@/components/ui/AppIcon';
-import { products } from '@/data/products';
+import { useProducts } from '@/hooks/useProducts';
 
 interface Review {
   id: string;
@@ -41,12 +41,15 @@ const ProductDetailsInteractive = () => {
   const [isHydrated, setIsHydrated] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   
+  // Fetch products from database
+  const { products: fetchedProducts, isLoading } = useProducts();
 
   useEffect(() => {
     setIsHydrated(true);
   }, []);
 
-  const allProducts = products;
+  // Use fetched products from database
+  const allProducts = fetchedProducts;
 
 
   const mockReviews: Review[] = [
@@ -124,7 +127,7 @@ const ProductDetailsInteractive = () => {
       image: p.images[0].url,
       imageAlt: p.images[0].alt,
       rating: p.rating,
-      category: p.category
+      category: Array.isArray(p.category) ? p.category[0] : p.category
     }));
 
   const handleAddToCart = (customization: any) => {
@@ -146,7 +149,7 @@ const ProductDetailsInteractive = () => {
     setTimeout(() => setShowSuccessModal(false), 3000);
   };
   
-  if (!isHydrated) {
+  if (!isHydrated || isLoading || allProducts.length === 0 || !currentProduct) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">

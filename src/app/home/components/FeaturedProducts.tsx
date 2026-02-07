@@ -4,7 +4,7 @@ import { useState } from 'react';
 import AppImage from '@/components/ui/AppImage';
 import Icon from '@/components/ui/AppIcon';
 import Link from 'next/link';
-import { products as allProducts } from '@/data/products';
+import { useProducts } from '@/hooks/useProducts';
 
 interface Product {
   id: string;
@@ -23,11 +23,13 @@ interface FeaturedProductsProps {
 
 const FeaturedProducts = ({ className = '' }: FeaturedProductsProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { products: fetchedProducts, isLoading } = useProducts({ limit: 6 });
 
-  const products: Product[] = allProducts.slice(0, 6).map(product => ({
+  // Transform fetched products to the display format
+  const products: Product[] = fetchedProducts.map(product => ({
     id: product.id,
     name: product.name,
-    category: product.category,
+    category: Array.isArray(product.category) ? product.category[0] : product.category,
     price: product.price,
     image: product.images[0]?.url || '',
     alt: product.name,

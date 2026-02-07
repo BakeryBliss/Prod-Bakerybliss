@@ -121,7 +121,7 @@ export function productsToExcel(products: Product[]): XLSX.WorkBook {
     rating: product.rating,
     reviewCount: product.reviewCount,
     description: product.description,
-    category: product.category,
+    category: Array.isArray(product.category) ? product.category.join('; ') : product.category,
     inStock: product.inStock,
     imageUrls: serializeArray(product.images, 'url'),
     sizes: serializeArray(product.sizes, 'label'),

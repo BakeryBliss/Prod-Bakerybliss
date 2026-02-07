@@ -2,7 +2,6 @@
 node_modules/
 package-lock.json
 .env
-.env.local
 # Next.js build output
 .next/
 out/

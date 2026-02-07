@@ -6,7 +6,7 @@ import CategorySidebar from './CategorySidebar';
 import ProductFilters from './ProductFilters';
 import ProductGrid from './ProductGrid';
 import Icon from '@/components/ui/AppIcon';
-import { products as detailedProducts } from '@/data/products';
+import { useProducts } from '@/hooks/useProducts';
 
 export interface Product {
   id: string;
@@ -27,42 +27,11 @@ export interface Product {
   allergens: string[];
 }
 
-// Convert detailed products to the format expected by products page
-const products: Product[] = detailedProducts.map(product => {
-  const categories = Array.isArray(product.category) ? product.category : [product.category];
-  return {
-    id: product.id,
-    name: product.name,
-    price: product.price,
-    originalPrice: product.originalPrice,
-    image: product.images[0]?.url || '',
-    alt: product.name,
-    category: product.category,
-    subcategory: product.subcategory || (Array.isArray(product.category) ? product.category[0] : product.category),
-    rating: product.rating,
-    reviewCount: product.reviewCount,
-    description: product.description,
-    tags: product.tags || ['Vegetarian'],
-    isNew: product.isNew || false,
-    isPopular: product.isPopular || false,
-    isVegan: product.isVegan || false,
-    allergens: product.allergens || []
-  };
-});
-
 // Helper function to check if product belongs to category
 const belongsToCategory = (product: Product, categoryId: string): boolean => {
   const categories = Array.isArray(product.category) ? product.category : [product.category];
   return categories.some(cat => cat.toLowerCase() === categoryId);
 };
-
-const categories = [
-  { id: 'all', name: 'All Products', count: products.length },
-  { id: 'jar cake', name: 'Jar Cake', count: products.filter(p => belongsToCategory(p, 'jar cake')).length },
-  { id: 'pastries', name: 'Pastries', count: products.filter(p => belongsToCategory(p, 'pastries')).length },
-  { id: 'cakes', name: 'Cakes', count: products.filter(p => belongsToCategory(p, 'cakes')).length },
-  { id: 'cheesecake', name: 'Cheesecake', count: products.filter(p => belongsToCategory(p, 'cheesecake')).length }
-];
 
 const sortOptions = [
   { value: 'name', label: 'Name (A-Z)' },
@@ -80,6 +49,42 @@ export default function ProductsPageInteractive() {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 4200]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [showFilters, setShowFilters] = useState(false);
+
+  // Fetch products from database
+  const { products: fetchedProducts, isLoading } = useProducts();
+
+  // Convert detailed products to the format expected by products page
+  const products: Product[] = useMemo(() => {
+    return fetchedProducts.map(product => {
+      return {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        originalPrice: product.originalPrice,
+        image: product.images[0]?.url || '',
+        alt: product.name,
+        category: product.category,
+        subcategory: product.subcategory || (Array.isArray(product.category) ? product.category[0] : product.category),
+        rating: product.rating,
+        reviewCount: product.reviewCount,
+        description: product.description,
+        tags: product.tags || ['Vegetarian'],
+        isNew: product.isNew || false,
+        isPopular: product.isPopular || false,
+        isVegan: product.isVegan || false,
+        allergens: product.allergens || []
+      };
+    });
+  }, [fetchedProducts]);
+
+  // Dynamic categories based on loaded products
+  const categories = useMemo(() => [
+    { id: 'all', name: 'All Products', count: products.length },
+    { id: 'jar cake', name: 'Jar Cake', count: products.filter(p => belongsToCategory(p, 'jar cake')).length },
+    { id: 'pastries', name: 'Pastries', count: products.filter(p => belongsToCategory(p, 'pastries')).length },
+    { id: 'cakes', name: 'Cakes', count: products.filter(p => belongsToCategory(p, 'cakes')).length },
+    { id: 'cheesecake', name: 'Cheesecake', count: products.filter(p => belongsToCategory(p, 'cheesecake')).length }
+  ], [products]);
 
   // Update selectedCategory when URL parameter changes
   useEffect(() => {
@@ -99,7 +104,7 @@ export default function ProductsPageInteractive() {
       product.tags.forEach(tag => tags.add(tag));
     });
     return Array.from(tags).sort();
-  }, []);
+  }, [products]);
 
   // Filter and sort products
   const filteredAndSortedProducts = useMemo(() => {
@@ -155,7 +160,7 @@ export default function ProductsPageInteractive() {
     });
 
     return filtered;
-  }, [selectedCategory, sortBy, priceRange, selectedTags, searchTerm]);
+  }, [products, selectedCategory, sortBy, priceRange, selectedTags, searchTerm]);
 
   const handleTagToggle = (tag: string) => {
     setSelectedTags(prev =>
@@ -164,6 +169,18 @@ export default function ProductsPageInteractive() {
         : [...prev, tag]
     );
   };
+
+  // Show loading state while fetching products
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center">
+          <Icon name="ArrowPathIcon" size={48} className="text-primary animate-spin mx-auto mb-4" />
+          <p className="text-muted-foreground">Loading products...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col lg:flex-row gap-8">

@@ -15,7 +15,7 @@ export interface Product {
   originalPrice?: number;
   image: string;
   alt: string;
-  category: string;
+  category: string | string[];
   subcategory?: string;
   rating: number;
   reviewCount: number;
@@ -28,31 +28,40 @@ export interface Product {
 }
 
 // Convert detailed products to the format expected by products page
-const products: Product[] = detailedProducts.map(product => ({
-  id: product.id,
-  name: product.name,
-  price: product.price,
-  originalPrice: product.originalPrice,
-  image: product.images[0]?.url || '',
-  alt: product.name,
-  category: product.category,
-  subcategory: product.subcategory || product.category,
-  rating: product.rating,
-  reviewCount: product.reviewCount,
-  description: product.description,
-  tags: product.tags || ['Vegetarian'],
-  isNew: product.isNew || false,
-  isPopular: product.isPopular || false,
-  isVegan: product.isVegan || false,
-  allergens: product.allergens || []
-}));
+const products: Product[] = detailedProducts.map(product => {
+  const categories = Array.isArray(product.category) ? product.category : [product.category];
+  return {
+    id: product.id,
+    name: product.name,
+    price: product.price,
+    originalPrice: product.originalPrice,
+    image: product.images[0]?.url || '',
+    alt: product.name,
+    category: product.category,
+    subcategory: product.subcategory || (Array.isArray(product.category) ? product.category[0] : product.category),
+    rating: product.rating,
+    reviewCount: product.reviewCount,
+    description: product.description,
+    tags: product.tags || ['Vegetarian'],
+    isNew: product.isNew || false,
+    isPopular: product.isPopular || false,
+    isVegan: product.isVegan || false,
+    allergens: product.allergens || []
+  };
+});
+
+// Helper function to check if product belongs to category
+const belongsToCategory = (product: Product, categoryId: string): boolean => {
+  const categories = Array.isArray(product.category) ? product.category : [product.category];
+  return categories.some(cat => cat.toLowerCase() === categoryId);
+};
 
 const categories = [
   { id: 'all', name: 'All Products', count: products.length },
-  { id: 'jar cake', name: 'Jar Cake', count: products.filter(p => p.category === 'Jar Cake').length },
-  { id: 'pastries', name: 'Pastries', count: products.filter(p => p.category === 'Pastries').length },
-  { id: 'cakes', name: 'Cakes', count: products.filter(p => p.category === 'Cakes').length },
-  { id: 'cheesecake', name: 'Cheesecake', count: products.filter(p => p.category === 'Cheesecake').length }
+  { id: 'jar cake', name: 'Jar Cake', count: products.filter(p => belongsToCategory(p, 'jar cake')).length },
+  { id: 'pastries', name: 'Pastries', count: products.filter(p => belongsToCategory(p, 'pastries')).length },
+  { id: 'cakes', name: 'Cakes', count: products.filter(p => belongsToCategory(p, 'cakes')).length },
+  { id: 'cheesecake', name: 'Cheesecake', count: products.filter(p => belongsToCategory(p, 'cheesecake')).length }
 ];
 
 const sortOptions = [
@@ -66,10 +75,22 @@ const sortOptions = [
 export default function ProductsPageInteractive() {
   const searchParams = useSearchParams();
   const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || 'all');
+  const [searchTerm, setSearchTerm] = useState(searchParams.get('search') || '');
   const [sortBy, setSortBy] = useState('name');
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 4200]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [showFilters, setShowFilters] = useState(false);
+
+  // Update selectedCategory when URL parameter changes
+  useEffect(() => {
+    const categoryParam = searchParams.get('category');
+    setSelectedCategory(categoryParam || 'all');
+  }, [searchParams]);
+
+  useEffect(() => {
+    const searchParam = searchParams.get('search') || '';
+    setSearchTerm(searchParam);
+  }, [searchParams]);
 
   // Get all unique tags for filtering
   const allTags = useMemo(() => {
@@ -83,11 +104,23 @@ export default function ProductsPageInteractive() {
   // Filter and sort products
   const filteredAndSortedProducts = useMemo(() => {
     let filtered = products;
+    const normalizedSearch = searchTerm.trim().toLowerCase();
+
+    if (normalizedSearch) {
+      filtered = filtered.filter(product => {
+        const inName = product.name.toLowerCase().includes(normalizedSearch);
+        const categories = Array.isArray(product.category) ? product.category : [product.category];
+        const inCategory = categories.some(cat => cat.toLowerCase().includes(normalizedSearch));
+        const inSubcategory = product.subcategory?.toLowerCase().includes(normalizedSearch);
+        const inTags = product.tags.some(tag => tag.toLowerCase().includes(normalizedSearch));
+        return inName || inCategory || inSubcategory || inTags;
+      });
+    }
 
     // Category filter
     if (selectedCategory !== 'all') {
       filtered = filtered.filter(product =>
-        product.category.toLowerCase() === selectedCategory
+        belongsToCategory(product, selectedCategory)
       );
     }
 
@@ -122,7 +155,7 @@ export default function ProductsPageInteractive() {
     });
 
     return filtered;
-  }, [selectedCategory, sortBy, priceRange, selectedTags]);
+  }, [selectedCategory, sortBy, priceRange, selectedTags, searchTerm]);
 
   const handleTagToggle = (tag: string) => {
     setSelectedTags(prev =>

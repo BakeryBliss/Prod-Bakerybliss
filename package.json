@@ -46,14 +46,17 @@
         "lint:fix": "next lint --fix",
         "format": "prettier --write \"src/**/*.{ts,tsx,css,md,json}\"",
         "serve": "next start",
-        "type-check": "tsc --noEmit"
+        "type-check": "tsc --noEmit",
+        "sync:export": "ts-node scripts/productSync.ts export",
+        "sync:import": "ts-node scripts/productSync.ts import"
     },
     "overrides": {
         "chalk": "4.1.2"
-      },
+    },
     "dependencies": {
         "@dhiwise/component-tagger": "^1.0.14",
         "@heroicons/react": "^2.2.0",
+        "@supabase/supabase-js": "^2.94.0",
         "@tailwindcss/forms": "^0.5.10",
         "@tailwindcss/typography": "^0.5.16",
         "chalk": "4.1.2",
@@ -61,7 +64,8 @@
         "nodemailer": "^7.0.12",
         "react": "19.0.3",
         "react-dom": "19.0.3",
-        "recharts": "^2.15.2"
+        "recharts": "^2.15.2",
+        "xlsx": "^0.18.5"
     },
     "devDependencies": {
         "@eslint/eslintrc": "^3",
@@ -81,6 +85,7 @@
         "prettier": "^3.5.3",
         "tailwindcss": "3.4.6",
         "tailwindcss-animate": "^1.0.7",
+        "ts-node": "^10.9.2",
         "typescript": "^5"
     }
 }

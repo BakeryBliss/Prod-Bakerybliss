@@ -162,7 +162,10 @@ const ProductDetailsInteractive = () => {
       <div className="space-y-8 lg:space-y-12">
         {/* Main Product Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-          <ProductImageGallery images={currentProduct.images} productName={currentProduct.name} />
+          <div className="space-y-6 sticky top-20 h-fit">
+            <ProductImageGallery images={currentProduct.images} productName={currentProduct.name} />
+            <SocialShare productName={currentProduct.name} productUrl={currentUrl} />
+          </div>
           <div className="space-y-6">
             <ProductInfo
               name={currentProduct.name}
@@ -180,8 +183,6 @@ const ProductDetailsInteractive = () => {
               basePrice={currentProduct.price}
               inStock={currentProduct.inStock}
               onAddToCart={handleAddToCart} />
-
-            <SocialShare productName={currentProduct.name} productUrl={currentUrl} />
           </div>
         </div>
 

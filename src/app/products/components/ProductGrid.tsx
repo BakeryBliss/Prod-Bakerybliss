@@ -67,6 +67,8 @@ function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       href={`/product-details?id=${product.id}`}
+      target="_blank"
+      rel="noopener noreferrer"
       className="group bg-card rounded-lg shadow-warm-sm hover:shadow-warm-md transition-all duration-300 overflow-hidden hover:-translate-y-1"
     >
       <div className="relative aspect-square overflow-hidden">
@@ -113,7 +115,7 @@ function ProductCard({ product }: { product: Product }) {
         {/* Category */}
         <div className="flex items-center justify-between mb-2">
           <span className="text-xs text-muted-foreground uppercase tracking-wide">
-            {product.category}
+            {Array.isArray(product.category) ? product.category.join(', ') : product.category}
           </span>
           {/* Rating */}
           <div className="flex items-center gap-1">
@@ -167,12 +169,12 @@ function ProductCard({ product }: { product: Product }) {
           </div>
 
           {/* Add to Cart Button */}
-          <button
+          {/* <button
             className="p-2 bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-colors opacity-0 group-hover:opacity-100"
             aria-label="Add to cart"
           >
             <Icon name="ShoppingBagIcon" size={16} />
-          </button>
+          </button> */}
         </div>
       </div>
     </Link>

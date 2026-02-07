@@ -22,6 +22,7 @@
           "name": "next"
         }
       ],
+      "baseUrl": ".",
       "paths": {
         "@/*": [
           "./src/*"
@@ -38,5 +39,16 @@
     ],
     "exclude": [
       "node_modules"
-    ]
-  }  
+    ],
+    "ts-node": {
+      "compilerOptions": {
+        "module": "commonjs",
+        "baseUrl": ".",
+        "paths": {
+          "@/*": [
+            "./src/*"
+          ]
+        }
+      }
+    }
+  }

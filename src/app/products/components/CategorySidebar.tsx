@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Icon from '@/components/ui/AppIcon';
+import ContactUsDialog from '@/components/ui/ContactUsDialog';
 
 interface Category {
   id: string;
@@ -21,9 +22,10 @@ export default function CategorySidebar({
   onCategoryChange
 }: CategorySidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isContactDialogOpen, setIsContactDialogOpen] = useState(false);
 
   return (
-    <div className={`bg-card rounded-lg shadow-warm-sm sticky top-24 ${
+    <div className={`bg-card rounded-lg shadow-warm-sm sticky top-24 z-10 ${
       isCollapsed ? 'w-16 p-3' : 'w-full lg:w-64 p-6'
     } transition-all duration-300`}>
       {/* Header */}
@@ -148,12 +150,19 @@ export default function CategorySidebar({
           <p className="text-sm text-muted-foreground mb-3">
             Can't find what you're looking for?
           </p>
-          <button className="w-full px-3 py-2 bg-primary text-primary-foreground text-sm rounded-md hover:bg-primary/90 transition-colors">
+          <button 
+            onClick={() => setIsContactDialogOpen(true)}
+            className="w-full px-3 py-2 bg-primary text-primary-foreground text-sm rounded-md hover:bg-primary/90 transition-colors"
+          >
             Contact Us
           </button>
         </div>
       </div>
 
+      <ContactUsDialog
+        isOpen={isContactDialogOpen}
+        onClose={() => setIsContactDialogOpen(false)}
+      />
     </div>
   );
 }

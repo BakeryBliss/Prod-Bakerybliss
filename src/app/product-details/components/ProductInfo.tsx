@@ -7,7 +7,7 @@ interface ProductInfoProps {
   rating: number;
   reviewCount: number;
   description: string;
-  category: string;
+  category: string | string[];
   inStock: boolean;
 }
 
@@ -28,7 +28,7 @@ const ProductInfo = ({
       {/* Category Badge */}
       <div className="flex items-center gap-2">
         <span className="px-3 py-1 bg-primary/10 text-primary rounded-full caption font-medium">
-          {category}
+          {Array.isArray(category) ? category.join(', ') : category}
         </span>
         {!inStock && (
           <span className="px-3 py-1 bg-destructive/10 text-destructive rounded-full caption font-medium">

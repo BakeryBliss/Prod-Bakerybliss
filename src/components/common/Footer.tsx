@@ -17,22 +17,22 @@ const Footer = ({ className = '' }: FooterProps) => {
     ],
     company: [
       { label: 'About Us', href: '/about-us' },
-      { label: 'Our Story', href: '/about-us#story' },
-      { label: 'Careers', href: '/about-us#careers' },
-      { label: 'Contact', href: '/about-us#contact' },
+      // { label: 'Our Story', href: '/about-us#story' },
+      // { label: 'Careers', href: '/about-us#careers' },
+      // { label: 'Contact', href: '/about-us#contact' },
     ],
-    support: [
-      { label: 'My Account', href: '/customer-profile' },
-      { label: 'Order History', href: '/order-confirmation' },
-      { label: 'Shopping Cart', href: '/shopping-cart' },
-      { label: 'FAQs', href: '/about-us#faq' },
-    ],
-    legal: [
-      { label: 'Privacy Policy', href: '/privacy-policy' },
-      { label: 'Terms & Conditions', href: '/terms-conditions' },
-      { label: 'Cookie Policy', href: '/cookie-policy' },
-      { label: 'Refund Policy', href: '/refund-policy' },
-    ],
+    // support: [
+    //   { label: 'My Account', href: '/customer-profile' },
+    //   { label: 'Order History', href: '/order-confirmation' },
+    //   { label: 'Shopping Cart', href: '/shopping-cart' },
+    //   { label: 'FAQs', href: '/about-us#faq' },
+    // ],
+    // legal: [
+    //   { label: 'Privacy Policy', href: '/privacy-policy' },
+    //   { label: 'Terms & Conditions', href: '/terms-conditions' },
+    //   { label: 'Cookie Policy', href: '/cookie-policy' },
+    //   { label: 'Refund Policy', href: '/refund-policy' },
+    // ],
   };
 
   const socialLinks = [
@@ -129,7 +129,7 @@ const Footer = ({ className = '' }: FooterProps) => {
             </ul>
           </div>
 
-          <div>
+          {/* <div>
             <h3 className="font-heading font-semibold text-foreground mb-4">Support</h3>
             <ul className="space-y-3">
               {footerLinks.support.map((link) => (
@@ -143,9 +143,9 @@ const Footer = ({ className = '' }: FooterProps) => {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
 
-          <div>
+          {/* <div>
             <h3 className="font-heading font-semibold text-foreground mb-4">Legal</h3>
             <ul className="space-y-3">
               {footerLinks.legal.map((link) => (
@@ -159,7 +159,7 @@ const Footer = ({ className = '' }: FooterProps) => {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
         </div>
 
         <div className="mt-12 pt-8 border-t border-border">

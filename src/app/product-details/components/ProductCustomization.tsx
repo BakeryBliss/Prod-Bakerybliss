@@ -139,6 +139,7 @@ const ProductCustomization = ({
             className="w-20 h-12 text-center text-lg font-bold bg-input border border-border rounded-md focus:outline-none focus:ring-3 focus:ring-ring"
             min="1"
             max="99"
+            aria-label="Quantity input"
           />
           <button
             onClick={() => handleQuantityChange(1)}
@@ -179,14 +180,14 @@ const ProductCustomization = ({
         </div>
 
         {/* Add to Cart Button */}
-        <button
+        {/* <button
           onClick={handleAddToCart}
           disabled={!inStock}
           className="w-full py-4 bg-primary text-primary-foreground rounded-md font-medium text-lg hover:bg-primary/90 transition-smooth disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2 flex items-center justify-center gap-2"
         >
           <Icon name="ShoppingCartIcon" size={24} />
           {inStock ? 'Add to Cart' : 'Out of Stock'}
-        </button>
+        </button> */}
       </div>
     </div>
   );

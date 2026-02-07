@@ -7,7 +7,7 @@ interface HeroSectionProps {
 const HeroSection = ({ className = '' }: HeroSectionProps) => {
   return (
     <section className={`relative bg-gradient-to-br from-primary/10 via-secondary to-accent/10 ${className}`}>
-      <div className="mx-auto px-5 lg:px-20 py-16 lg:py-24">
+      <div className="mx-auto px-5 lg:px-20 py-16 lg:py-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
           <div className="space-y-6">

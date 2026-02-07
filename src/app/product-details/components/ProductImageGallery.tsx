@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AppImage from '@/components/ui/AppImage';
 import Icon from '@/components/ui/AppIcon';
 
@@ -18,6 +18,11 @@ interface ProductImageGalleryProps {
 const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
+
+  useEffect(() => {
+    setSelectedImageIndex(0);
+    setIsZoomed(false);
+  }, [images, productName]);
 
   const handlePrevious = () => {
     setSelectedImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));

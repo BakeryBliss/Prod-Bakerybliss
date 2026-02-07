@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/ui/AppIcon';
+import { products } from '@/data/products';
 
 interface SearchBarProps {
   className?: string;
@@ -11,7 +12,7 @@ interface SearchBarProps {
 interface SearchSuggestion {
   id: string;
   name: string;
-  category: string;
+  category: string | string[];
 }
 
 const SearchBar = ({ className = '' }: SearchBarProps) => {
@@ -24,14 +25,15 @@ const SearchBar = ({ className = '' }: SearchBarProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
-  const mockSuggestions: SearchSuggestion[] = [
-    { id: '1', name: 'Chocolate Croissant', category: 'Pastries' },
-    { id: '2', name: 'Sourdough Bread', category: 'Breads' },
-    { id: '3', name: 'Blueberry Muffin', category: 'Muffins' },
-    { id: '4', name: 'Cinnamon Roll', category: 'Pastries' },
-    { id: '5', name: 'Baguette', category: 'Breads' },
-    { id: '6', name: 'Red Velvet Cake', category: 'Cakes' },
-  ];
+  const allProducts = useMemo(
+    () =>
+      products.map((product) => ({
+        id: product.id,
+        name: product.name,
+        category: product.category,
+      })),
+    []
+  );
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -59,24 +61,28 @@ const SearchBar = ({ className = '' }: SearchBarProps) => {
   }, []);
 
   useEffect(() => {
-    if (searchQuery.trim().length > 0) {
-      const filtered = mockSuggestions.filter(
-        (item) =>
-          item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          item.category.toLowerCase().includes(searchQuery.toLowerCase())
+    const normalizedQuery = searchQuery.trim().toLowerCase();
+    if (normalizedQuery.length > 0) {
+      const filtered = allProducts.filter(
+        (item) => {
+          const matchesName = item.name.toLowerCase().includes(normalizedQuery);
+          const categories = Array.isArray(item.category) ? item.category : [item.category];
+          const matchesCategory = categories.some(cat => cat.toLowerCase().includes(normalizedQuery));
+          return matchesName || matchesCategory;
+        }
       );
-      setSuggestions(filtered);
+      setSuggestions(filtered.slice(0, 8));
       setShowSuggestions(true);
     } else {
       setSuggestions([]);
       setShowSuggestions(false);
     }
     setSelectedIndex(-1);
-  }, [searchQuery]);
+  }, [allProducts, searchQuery]);
 
   const handleSearch = (query: string) => {
     if (query.trim()) {
-      router.push(`/product-details?search=${encodeURIComponent(query.trim())}`);
+      router.push(`/products?search=${encodeURIComponent(query.trim())}`);
       setIsExpanded(false);
       setShowSuggestions(false);
       setSearchQuery('');
@@ -93,7 +99,10 @@ const SearchBar = ({ className = '' }: SearchBarProps) => {
     } else if (e.key === 'Enter') {
       e.preventDefault();
       if (selectedIndex >= 0 && suggestions[selectedIndex]) {
-        handleSearch(suggestions[selectedIndex].name);
+        router.push(`/product-details?id=${encodeURIComponent(suggestions[selectedIndex].id)}`);
+        setIsExpanded(false);
+        setShowSuggestions(false);
+        setSearchQuery('');
       } else {
         handleSearch(searchQuery);
       }
@@ -101,7 +110,10 @@ const SearchBar = ({ className = '' }: SearchBarProps) => {
   };
 
   const handleSuggestionClick = (suggestion: SearchSuggestion) => {
-    handleSearch(suggestion.name);
+    router.push(`/product-details?id=${encodeURIComponent(suggestion.id)}`);
+    setIsExpanded(false);
+    setShowSuggestions(false);
+    setSearchQuery('');
   };
 
   return (

@@ -91,22 +91,22 @@ const OrderSummary = ({ summary, onApplyCoupon, onProceedToCheckout }: OrderSumm
       <div className="space-y-3 mb-6 pb-6 border-b border-border">
         <div className="flex justify-between text-foreground">
           <span>Subtotal</span>
-          <span className="data-text">${summary.subtotal.toFixed(2)}</span>
+          <span className="data-text">₹{summary.subtotal.toFixed(2)}</span>
         </div>
         <div className="flex justify-between text-foreground">
           <span>Tax (8%)</span>
-          <span className="data-text">${summary.tax.toFixed(2)}</span>
+          <span className="data-text">₹{summary.tax.toFixed(2)}</span>
         </div>
         <div className="flex justify-between text-foreground">
           <span>Delivery Fee</span>
           <span className="data-text">
-            {summary.deliveryFee === 0 ? 'FREE' : `$${summary.deliveryFee.toFixed(2)}`}
+            {summary.deliveryFee === 0 ? 'FREE' : `₹${summary.deliveryFee.toFixed(2)}`}
           </span>
         </div>
         {summary.discount > 0 && (
           <div className="flex justify-between text-success">
             <span>Discount</span>
-            <span className="data-text">-${summary.discount.toFixed(2)}</span>
+            <span className="data-text">-₹{summary.discount.toFixed(2)}</span>
           </div>
         )}
       </div>
@@ -115,18 +115,18 @@ const OrderSummary = ({ summary, onApplyCoupon, onProceedToCheckout }: OrderSumm
       <div className="flex justify-between items-center mb-6">
         <span className="font-heading font-semibold text-lg text-foreground">Total</span>
         <span className="font-heading font-bold text-2xl text-primary">
-          ${summary.total.toFixed(2)}
+          ₹{summary.total.toFixed(2)}
         </span>
       </div>
 
       {/* Checkout Button */}
-      <button
+      {/* <button
         onClick={onProceedToCheckout}
         className="w-full px-6 py-4 bg-primary text-primary-foreground rounded-md font-heading font-semibold text-lg hover:bg-primary/90 transition-smooth focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2 flex items-center justify-center gap-2"
       >
         Proceed to Checkout
         <Icon name="ArrowRightIcon" size={20} />
-      </button>
+      </button> */}
 
       {/* Security Badge */}
       <div className="mt-4 flex items-center justify-center gap-2 text-muted-foreground">

@@ -1,12 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import CartItem from './CartItem';
 import OrderSummary from './OrderSummary';
 import DeliveryOptions from './DeliveryOptions';
 import SavedForLater from './SavedForLater';
 import EmptyCart from './EmptyCart';
+import { useProducts } from '@/hooks/useProducts';
 
 interface CartItemData {
   id: string;
@@ -53,6 +54,21 @@ const ShoppingCartInteractive = () => {
   const [savedItems, setSavedItems] = useState<SavedItem[]>([]);
   const [selectedDeliveryOption, setSelectedDeliveryOption] = useState<DeliveryOption | null>(null);
   const [appliedDiscount, setAppliedDiscount] = useState(0);
+
+  // Fetch popular products from database
+  const { products: fetchedProducts } = useProducts({ onlyPopular: true, limit: 4 });
+
+  // Transform popular products to suggested products format
+  const suggestedProducts: SuggestedProduct[] = useMemo(() => {
+    return fetchedProducts.map(product => ({
+      id: product.id,
+      name: product.name,
+      image: product.images[0]?.url || '',
+      alt: product.images[0]?.alt || product.name,
+      price: product.price,
+      category: Array.isArray(product.category) ? product.category[0] : product.category
+    }));
+  }, [fetchedProducts]);
 
   useEffect(() => {
     setIsHydrated(true);
@@ -128,41 +144,6 @@ const ShoppingCartInteractive = () => {
     image: "https://images.unsplash.com/photo-1603339343179-23b7bbc17731",
     alt: 'Glazed cinnamon roll with white icing drizzle and visible cinnamon swirls',
     price: 5.99
-  }];
-
-
-  const suggestedProducts: SuggestedProduct[] = [
-  {
-    id: '5',
-    name: 'Sourdough Bread',
-    image: "https://images.unsplash.com/photo-1597388778288-8ae51973e2a3",
-    alt: 'Rustic sourdough bread loaf with crispy golden crust and flour dusting',
-    price: 7.99,
-    category: 'Breads'
-  },
-  {
-    id: '6',
-    name: 'Strawberry Tart',
-    image: "https://images.unsplash.com/photo-1733077131658-750e5a8b4d0f",
-    alt: 'Fresh strawberry tart with glazed berries on custard filling in golden pastry',
-    price: 6.99,
-    category: 'Pastries'
-  },
-  {
-    id: '7',
-    name: 'Chocolate Chip Cookies',
-    image: "https://images.unsplash.com/photo-1605243614624-277f48f46d52",
-    alt: 'Stack of golden chocolate chip cookies with melted chocolate chunks',
-    price: 12.99,
-    category: 'Cookies'
-  },
-  {
-    id: '8',
-    name: 'Vanilla Cupcake',
-    image: "https://images.unsplash.com/photo-1723638003508-d50cf5f585ae",
-    alt: 'Vanilla cupcake with swirled buttercream frosting and colorful sprinkles',
-    price: 3.99,
-    category: 'Cupcakes'
   }];
 
 
@@ -313,7 +294,7 @@ const ShoppingCartInteractive = () => {
       </div>
 
       {/* Delivery Options */}
-      <DeliveryOptions onSelectOption={handleSelectDeliveryOption} />
+      {/* <DeliveryOptions onSelectOption={handleSelectDeliveryOption} /> */}
 
       {/* Saved for Later */}
       <SavedForLater

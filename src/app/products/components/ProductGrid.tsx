@@ -169,12 +169,12 @@ function ProductCard({ product }: { product: Product }) {
           </div>
 
           {/* Add to Cart Button */}
-          {/* <button
+          <button
             className="p-2 bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-colors opacity-0 group-hover:opacity-100"
             aria-label="Add to cart"
           >
             <Icon name="ShoppingBagIcon" size={16} />
-          </button> */}
+          </button>
         </div>
       </div>
     </Link>

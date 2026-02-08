@@ -119,7 +119,7 @@ const Header = ({ className = '' }: HeaderProps) => {
             </div>
 
             {/* Cart Indicator */}
-            {/* <CartIndicator /> */}
+            <CartIndicator />
 
             {/* User Account Menu */}
             {/* <UserAccountMenu /> */}

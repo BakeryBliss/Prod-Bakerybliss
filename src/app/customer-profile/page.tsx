@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Header from '@/components/common/Header';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import CustomerProfileInteractive from './components/CustomerProfileInteractive';
+import Footer from '@/components/common/Footer';
 
 export const metadata: Metadata = {
   title: 'My Account - BakeryBliss',
@@ -199,6 +200,8 @@ export default function CustomerProfilePage() {
 
         </div>
       </main>
+
+      <Footer />
     </>);
 
 }

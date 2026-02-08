@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Header from '@/components/common/Header';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import ShoppingCartInteractive from './components/ShoppingCartInteractive';
+import Footer from '@/components/common/Footer';
 
 export const metadata: Metadata = {
   title: 'Shopping Cart - BakeryBliss',
@@ -32,6 +33,8 @@ export default function ShoppingCartPage() {
           <ShoppingCartInteractive />
         </div>
       </main>
+
+      <Footer />
     </>
   );
 }

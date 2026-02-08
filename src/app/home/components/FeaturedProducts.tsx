@@ -23,6 +23,7 @@ interface FeaturedProductsProps {
 
 const FeaturedProducts = ({ className = '' }: FeaturedProductsProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [addedToCart, setAddedToCart] = useState<string | null>(null);
   const { products: fetchedProducts, isLoading } = useProducts({ limit: 6 });
 
   // Transform fetched products to the display format
@@ -48,18 +49,32 @@ const FeaturedProducts = ({ className = '' }: FeaturedProductsProps) => {
     setCurrentIndex((prev) => (prev - 1 + totalPages) % totalPages);
   };
 
-  const handleAddToCart = (product: Product) => {
+  const handleAddToCart = (e: React.MouseEvent, product: Product) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
     const existingItem = cart.find((item: any) => item.id === product.id);
 
     if (existingItem) {
       existingItem.quantity += 1;
     } else {
-      cart.push({ ...product, quantity: 1 });
+      cart.push({
+        id: product.id,
+        name: product.name,
+        image: product.image,
+        alt: product.alt,
+        price: product.price,
+        quantity: 1
+      });
     }
 
     localStorage.setItem('cart', JSON.stringify(cart));
     window.dispatchEvent(new Event('cartUpdated'));
+    
+    // Show feedback
+    setAddedToCart(product.id);
+    setTimeout(() => setAddedToCart(null), 60000);
   };
 
   const visibleProducts = products.slice(
@@ -133,13 +148,17 @@ const FeaturedProducts = ({ className = '' }: FeaturedProductsProps) => {
                     <span className="data-text text-2xl font-bold text-primary">
                       ₹{product.price.toFixed(2)}
                     </span>
-                    {/* <button
-                    onClick={() => handleAddToCart(product)}
-                    className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 transition-smooth focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2">
+                    <button
+                    onClick={(e) => handleAddToCart(e, product)}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-md font-medium transition-smooth focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2 ${
+                      addedToCart === product.id
+                        ? 'bg-success text-white'
+                        : 'bg-primary text-primary-foreground hover:bg-primary/90'
+                    }`}>
 
-                      <Icon name="ShoppingCartIcon" size={18} />
-                      <span>Add</span>
-                    </button> */}
+                      <Icon name={addedToCart === product.id ? 'CheckIcon' : 'ShoppingCartIcon'} size={18} />
+                      <span>{addedToCart === product.id ? 'Added!' : 'Add'}</span>
+                    </button>
                   </div>
                 </div>
               </Link>

@@ -81,8 +81,6 @@ const ShoppingCartInteractive = () => {
       const storedCart = localStorage.getItem('cart');
       if (storedCart) {
         setCartItems(JSON.parse(storedCart));
-      } else {
-        setCartItems(mockCartItems);
       }
 
       const storedSaved = localStorage.getItem('savedForLater');
@@ -104,48 +102,6 @@ const ShoppingCartInteractive = () => {
     if (!isHydrated) return;
     localStorage.setItem('savedForLater', JSON.stringify(savedItems));
   }, [savedItems, isHydrated]);
-
-  const mockCartItems: CartItemData[] = [
-  {
-    id: '1',
-    name: 'Chocolate Croissant',
-    image: "https://images.unsplash.com/photo-1600930496627-33491158a923",
-    alt: 'Golden flaky chocolate croissant with visible chocolate layers on white plate',
-    price: 4.99,
-    quantity: 2,
-    size: 'Regular',
-    flavor: 'Dark Chocolate',
-    customization: 'Extra chocolate filling please'
-  },
-  {
-    id: '2',
-    name: 'Red Velvet Cake',
-    image: "https://images.unsplash.com/photo-1459878646907-22e397da1ae4",
-    alt: 'Layered red velvet cake with white cream cheese frosting and red crumbs on top',
-    price: 45.99,
-    quantity: 1,
-    size: '8 inch',
-    flavor: 'Classic Red Velvet'
-  },
-  {
-    id: '3',
-    name: 'Blueberry Muffin',
-    image: "https://images.unsplash.com/photo-1593395676686-10a61bbc004b",
-    alt: 'Fresh baked blueberry muffin with golden top and visible blueberries',
-    price: 3.49,
-    quantity: 4
-  }];
-
-
-  const mockSavedItems: SavedItem[] = [
-  {
-    id: '4',
-    name: 'Cinnamon Roll',
-    image: "https://images.unsplash.com/photo-1603339343179-23b7bbc17731",
-    alt: 'Glazed cinnamon roll with white icing drizzle and visible cinnamon swirls',
-    price: 5.99
-  }];
-
 
   const handleUpdateQuantity = (id: string, quantity: number) => {
     setCartItems((prev) =>
@@ -287,6 +243,7 @@ const ShoppingCartInteractive = () => {
         <div>
           <OrderSummary
             summary={summary}
+            cartItems={cartItems}
             onApplyCoupon={handleApplyCoupon}
             onProceedToCheckout={handleProceedToCheckout} />
 

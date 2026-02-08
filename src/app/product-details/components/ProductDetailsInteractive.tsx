@@ -116,6 +116,16 @@ const ProductDetailsInteractive = () => {
   `${window.location.origin}/product-details?id=${productId}` :
   '';
 
+  // Update page title with product name
+  useEffect(() => {
+    if (currentProduct?.name) {
+      document.title = `${currentProduct.name} - BakeryBliss`;
+    }
+    return () => {
+      document.title = 'BakeryBliss';
+    };
+  }, [currentProduct?.name]);
+
   const mockRelatedProducts: RelatedProduct[] = allProducts
     .filter(p => p.id !== productId)
     .slice(0, 4)
@@ -131,12 +141,20 @@ const ProductDetailsInteractive = () => {
     }));
 
   const handleAddToCart = (customization: any) => {
+    // Get the size and flavor labels from the product
+    const sizeOption = currentProduct.sizes.find((s: any) => s.id === customization.size);
+    const flavorOption = currentProduct.flavors.find((f: any) => f.id === customization.flavor);
+
     const cartItem = {
       id: currentProduct.id,
       name: currentProduct.name,
       image: currentProduct.images[0].url,
-      imageAlt: currentProduct.images[0].alt,
-      ...customization
+      alt: currentProduct.images[0].alt,
+      price: customization.totalPrice / customization.quantity, // Price per item
+      quantity: customization.quantity,
+      size: sizeOption?.label || customization.size,
+      flavor: flavorOption?.label || customization.flavor,
+      customization: customization.specialInstructions || ''
     };
 
     const existingCart = JSON.parse(localStorage.getItem('cart') || '[]');

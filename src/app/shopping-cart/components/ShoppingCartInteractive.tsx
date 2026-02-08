@@ -1,12 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import CartItem from './CartItem';
 import OrderSummary from './OrderSummary';
 import DeliveryOptions from './DeliveryOptions';
 import SavedForLater from './SavedForLater';
 import EmptyCart from './EmptyCart';
+import { useProducts } from '@/hooks/useProducts';
 
 interface CartItemData {
   id: string;
@@ -54,6 +55,21 @@ const ShoppingCartInteractive = () => {
   const [selectedDeliveryOption, setSelectedDeliveryOption] = useState<DeliveryOption | null>(null);
   const [appliedDiscount, setAppliedDiscount] = useState(0);
 
+  // Fetch popular products from database
+  const { products: fetchedProducts } = useProducts({ onlyPopular: true, limit: 4 });
+
+  // Transform popular products to suggested products format
+  const suggestedProducts: SuggestedProduct[] = useMemo(() => {
+    return fetchedProducts.map(product => ({
+      id: product.id,
+      name: product.name,
+      image: product.images[0]?.url || '',
+      alt: product.images[0]?.alt || product.name,
+      price: product.price,
+      category: Array.isArray(product.category) ? product.category[0] : product.category
+    }));
+  }, [fetchedProducts]);
+
   useEffect(() => {
     setIsHydrated(true);
   }, []);
@@ -65,8 +81,6 @@ const ShoppingCartInteractive = () => {
       const storedCart = localStorage.getItem('cart');
       if (storedCart) {
         setCartItems(JSON.parse(storedCart));
-      } else {
-        setCartItems(mockCartItems);
       }
 
       const storedSaved = localStorage.getItem('savedForLater');
@@ -88,83 +102,6 @@ const ShoppingCartInteractive = () => {
     if (!isHydrated) return;
     localStorage.setItem('savedForLater', JSON.stringify(savedItems));
   }, [savedItems, isHydrated]);
-
-  const mockCartItems: CartItemData[] = [
-  {
-    id: '1',
-    name: 'Chocolate Croissant',
-    image: "https://images.unsplash.com/photo-1600930496627-33491158a923",
-    alt: 'Golden flaky chocolate croissant with visible chocolate layers on white plate',
-    price: 4.99,
-    quantity: 2,
-    size: 'Regular',
-    flavor: 'Dark Chocolate',
-    customization: 'Extra chocolate filling please'
-  },
-  {
-    id: '2',
-    name: 'Red Velvet Cake',
-    image: "https://images.unsplash.com/photo-1459878646907-22e397da1ae4",
-    alt: 'Layered red velvet cake with white cream cheese frosting and red crumbs on top',
-    price: 45.99,
-    quantity: 1,
-    size: '8 inch',
-    flavor: 'Classic Red Velvet'
-  },
-  {
-    id: '3',
-    name: 'Blueberry Muffin',
-    image: "https://images.unsplash.com/photo-1593395676686-10a61bbc004b",
-    alt: 'Fresh baked blueberry muffin with golden top and visible blueberries',
-    price: 3.49,
-    quantity: 4
-  }];
-
-
-  const mockSavedItems: SavedItem[] = [
-  {
-    id: '4',
-    name: 'Cinnamon Roll',
-    image: "https://images.unsplash.com/photo-1603339343179-23b7bbc17731",
-    alt: 'Glazed cinnamon roll with white icing drizzle and visible cinnamon swirls',
-    price: 5.99
-  }];
-
-
-  const suggestedProducts: SuggestedProduct[] = [
-  {
-    id: '5',
-    name: 'Sourdough Bread',
-    image: "https://images.unsplash.com/photo-1597388778288-8ae51973e2a3",
-    alt: 'Rustic sourdough bread loaf with crispy golden crust and flour dusting',
-    price: 7.99,
-    category: 'Breads'
-  },
-  {
-    id: '6',
-    name: 'Strawberry Tart',
-    image: "https://images.unsplash.com/photo-1733077131658-750e5a8b4d0f",
-    alt: 'Fresh strawberry tart with glazed berries on custard filling in golden pastry',
-    price: 6.99,
-    category: 'Pastries'
-  },
-  {
-    id: '7',
-    name: 'Chocolate Chip Cookies',
-    image: "https://images.unsplash.com/photo-1605243614624-277f48f46d52",
-    alt: 'Stack of golden chocolate chip cookies with melted chocolate chunks',
-    price: 12.99,
-    category: 'Cookies'
-  },
-  {
-    id: '8',
-    name: 'Vanilla Cupcake',
-    image: "https://images.unsplash.com/photo-1723638003508-d50cf5f585ae",
-    alt: 'Vanilla cupcake with swirled buttercream frosting and colorful sprinkles',
-    price: 3.99,
-    category: 'Cupcakes'
-  }];
-
 
   const handleUpdateQuantity = (id: string, quantity: number) => {
     setCartItems((prev) =>
@@ -306,6 +243,7 @@ const ShoppingCartInteractive = () => {
         <div>
           <OrderSummary
             summary={summary}
+            cartItems={cartItems}
             onApplyCoupon={handleApplyCoupon}
             onProceedToCheckout={handleProceedToCheckout} />
 
@@ -313,7 +251,7 @@ const ShoppingCartInteractive = () => {
       </div>
 
       {/* Delivery Options */}
-      <DeliveryOptions onSelectOption={handleSelectDeliveryOption} />
+      {/* <DeliveryOptions onSelectOption={handleSelectDeliveryOption} /> */}
 
       {/* Saved for Later */}
       <SavedForLater

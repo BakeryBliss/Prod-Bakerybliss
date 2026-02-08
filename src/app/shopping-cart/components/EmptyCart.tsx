@@ -51,7 +51,8 @@ const EmptyCart = ({ suggestedProducts }: EmptyCartProps) => {
             {suggestedProducts.map((product) => (
               <Link
                 key={product.id}
-                href="/product-details"
+                href={`/product-details?id=${product.id}`}
+                target="_blank"
                 className="bg-card rounded-md border border-border overflow-hidden transition-smooth hover:shadow-warm-lg focus:outline-none focus:ring-2 focus:ring-ring group"
               >
                 <div className="relative w-full h-48 bg-muted overflow-hidden">
@@ -68,7 +69,7 @@ const EmptyCart = ({ suggestedProducts }: EmptyCartProps) => {
                     {product.name}
                   </h4>
                   <p className="font-heading font-semibold text-lg text-primary">
-                    ${product.price.toFixed(2)}
+                    ₹{product.price.toFixed(2)}
                   </p>
                 </div>
               </Link>

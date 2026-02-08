@@ -137,14 +137,14 @@ const CartItem = ({ item, onUpdateQuantity, onRemove, onSaveForLater }: CartItem
 
             <div className="flex items-center gap-4">
               <p className="font-heading font-semibold text-xl text-primary">
-                ${(item.price * item.quantity).toFixed(2)}
+                ₹{(item.price * item.quantity).toFixed(2)}
               </p>
-              <button
+              {/* <button
                 onClick={() => onSaveForLater(item.id)}
                 className="caption text-muted-foreground hover:text-primary transition-smooth focus:outline-none focus:underline"
               >
                 Save for Later
-              </button>
+              </button> */}
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/AppIcon';
 import type { Product } from './ProductsPageInteractive';
@@ -37,6 +38,41 @@ export default function ProductGrid({ products }: ProductGridProps) {
 }
 
 function ProductCard({ product }: { product: Product }) {
+  const [addedToCart, setAddedToCart] = useState(false);
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const cartItem = {
+      id: product.id,
+      name: product.name,
+      image: product.image,
+      alt: product.alt,
+      price: product.price,
+      quantity: 1,
+      size: 'Regular',
+      flavor: 'Original'
+    };
+
+    const existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
+    
+    // Check if item already exists in cart
+    const existingIndex = existingCart.findIndex((item: any) => item.id === product.id);
+    if (existingIndex >= 0) {
+      existingCart[existingIndex].quantity += 1;
+    } else {
+      existingCart.push(cartItem);
+    }
+    
+    localStorage.setItem('cart', JSON.stringify(existingCart));
+    window.dispatchEvent(new Event('cartUpdated'));
+
+    // Show feedback
+    setAddedToCart(true);
+    setTimeout(() => setAddedToCart(false), 2000);
+  };
+
   const renderStars = (rating: number) => {
     const stars = [];
     const fullStars = Math.floor(rating);
@@ -100,14 +136,14 @@ function ProductCard({ product }: { product: Product }) {
         </div>
 
         {/* Quick Actions */}
-        <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        {/* <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <button
             className="p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-sm hover:bg-white transition-colors"
             aria-label="Add to favorites"
           >
             <Icon name="HeartIcon" size={16} className="text-gray-600" />
           </button>
-        </div>
+        </div> */}
       </div>
 
       {/* Product Info */}
@@ -169,12 +205,17 @@ function ProductCard({ product }: { product: Product }) {
           </div>
 
           {/* Add to Cart Button */}
-          {/* <button
-            className="p-2 bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-colors opacity-0 group-hover:opacity-100"
-            aria-label="Add to cart"
+          <button
+            onClick={handleAddToCart}
+            className={`p-2 rounded-full transition-all ${
+              addedToCart 
+                ? 'bg-green-500 text-white opacity-100' 
+                : 'bg-primary text-primary-foreground hover:bg-primary/90 opacity-0 group-hover:opacity-100'
+            }`}
+            aria-label={addedToCart ? 'Added to cart' : 'Add to cart'}
           >
-            <Icon name="ShoppingBagIcon" size={16} />
-          </button> */}
+            <Icon name={addedToCart ? 'CheckIcon' : 'ShoppingBagIcon'} size={16} />
+          </button>
         </div>
       </div>
     </Link>

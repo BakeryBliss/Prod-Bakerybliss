@@ -58,7 +58,7 @@ const ProductInfo = ({
       </div>
 
       {/* Price */}
-      <div className="flex items-baseline gap-3">
+      {/* <div className="flex items-baseline gap-3">
         <span className="text-3xl font-bold text-primary">₹{price.toFixed(2)}</span>
         {originalPrice && (
           <>
@@ -70,7 +70,7 @@ const ProductInfo = ({
             </span>
           </>
         )}
-      </div>
+      </div> */}
 
       {/* Description */}
       <div className="pt-4 border-t border-border">

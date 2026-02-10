@@ -107,7 +107,7 @@ const RelatedProducts = ({ products }: RelatedProductsProps) => {
                     {product.rating.toFixed(1)}
                   </span>
                 </div>
-                <div className="flex items-baseline gap-2">
+                {/* <div className="flex items-baseline gap-2">
                   <span className="text-lg font-bold text-primary">
                   ₹{product.price.toFixed(2)}
                   </span>
@@ -116,7 +116,7 @@ const RelatedProducts = ({ products }: RelatedProductsProps) => {
                       ₹{product.originalPrice.toFixed(2)}
                     </span>
                   )}
-                </div>
+                </div> */}
               </div>
             </Link>
           );

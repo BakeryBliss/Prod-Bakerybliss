@@ -68,9 +68,9 @@ const EmptyCart = ({ suggestedProducts }: EmptyCartProps) => {
                   <h4 className="font-semibold text-foreground mb-2 line-clamp-2">
                     {product.name}
                   </h4>
-                  <p className="font-heading font-semibold text-lg text-primary">
+                  {/* <p className="font-heading font-semibold text-lg text-primary">
                     ₹{product.price.toFixed(2)}
-                  </p>
+                  </p> */}
                 </div>
               </Link>
             ))}

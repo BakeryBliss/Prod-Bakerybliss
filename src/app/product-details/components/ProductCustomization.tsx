@@ -172,22 +172,22 @@ const ProductCustomization = ({
 
       {/* Price Summary */}
       <div className="pt-4 border-t border-border">
-        <div className="flex items-center justify-between mb-4">
+        {/* <div className="flex items-center justify-between mb-4">
           <span className="text-lg font-medium text-foreground">Total Price:</span>
           <span className="text-2xl font-bold text-primary">
           ₹{calculateTotalPrice().toFixed(2)}
           </span>
-        </div>
+        </div> */}
 
         {/* Add to Cart Button */}
-        <button
+        {/* <button
           onClick={handleAddToCart}
           disabled={!inStock}
           className="w-full py-4 bg-primary text-primary-foreground rounded-md font-medium text-lg hover:bg-primary/90 transition-smooth disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2 flex items-center justify-center gap-2"
         >
           <Icon name="ShoppingCartIcon" size={24} />
           {inStock ? 'Add to Cart' : 'Out of Stock'}
-        </button>
+        </button> */}
       </div>
     </div>
   );

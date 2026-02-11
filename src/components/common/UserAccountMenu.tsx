@@ -4,8 +4,6 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Icon from '@/components/ui/AppIcon';
-import LoginRegisterDialog from '@/components/ui/LoginRegisterDialog';
-import { useAuth } from '@/hooks/useAuth';
 
 interface UserAccountMenuProps {
   className?: string;
@@ -13,10 +11,26 @@ interface UserAccountMenuProps {
 
 const UserAccountMenu = ({ className = '' }: UserAccountMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const { isLoggedIn, isLoading, logout } = useAuth();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+
+  useEffect(() => {
+    const checkAuthStatus = () => {
+      const authToken = localStorage.getItem('authToken');
+      setIsLoggedIn(!!authToken);
+    };
+
+    checkAuthStatus();
+
+    window.addEventListener('storage', checkAuthStatus);
+    window.addEventListener('authChanged', checkAuthStatus);
+
+    return () => {
+      window.removeEventListener('storage', checkAuthStatus);
+      window.removeEventListener('authChanged', checkAuthStatus);
+    };
+  }, []);
 
   useEffect(() => {
     setIsOpen(false);
@@ -46,8 +60,10 @@ const UserAccountMenu = ({ className = '' }: UserAccountMenuProps) => {
     };
   }, [isOpen]);
 
-  const handleLogout = async () => {
-    await logout();
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userData');
+    window.dispatchEvent(new Event('authChanged'));
     setIsOpen(false);
   };
 
@@ -64,7 +80,7 @@ const UserAccountMenu = ({ className = '' }: UserAccountMenuProps) => {
         onClick={() => setIsOpen(!isOpen)}
         className="p-2 rounded-md text-foreground hover:bg-primary/10 transition-smooth focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2"
         aria-label="User account menu"
-        aria-expanded={isOpen ? 'true' : 'false'}
+        aria-expanded={isOpen}
         aria-haspopup="true"
       >
         <Icon name="UserCircleIcon" size={24} />
@@ -104,15 +120,13 @@ const UserAccountMenu = ({ className = '' }: UserAccountMenuProps) => {
           ) : (
             <div className="p-4">
               <p className="font-medium text-popover-foreground mb-3">Welcome to BakeryBliss</p>
-              <button
-                onClick={() => {
-                  setIsDialogOpen(true);
-                  setIsOpen(false);
-                }}
+              <Link
+                href="/customer-profile"
                 className="block w-full px-4 py-3 bg-primary text-primary-foreground text-center rounded-md font-medium hover:bg-primary/90 transition-smooth focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2"
+                onClick={() => setIsOpen(false)}
               >
                 Sign In / Register
-              </button>
+              </Link>
               <p className="caption text-muted-foreground mt-3 text-center">
                 Access your orders and profile
               </p>
@@ -120,8 +134,6 @@ const UserAccountMenu = ({ className = '' }: UserAccountMenuProps) => {
           )}
         </div>
       )}
-
-      <LoginRegisterDialog isOpen={isDialogOpen} onClose={() => setIsDialogOpen(false)} />
     </div>
   );
 };

@@ -122,7 +122,7 @@ const Header = ({ className = '' }: HeaderProps) => {
             <CartIndicator />
 
             {/* User Account Menu */}
-            <UserAccountMenu />
+            {/* <UserAccountMenu /> */}
 
 
             {/* Mobile Menu Button */}

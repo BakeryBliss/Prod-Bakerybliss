@@ -59,7 +59,7 @@ const UserAccountMenu = ({ className = '' }: UserAccountMenuProps) => {
   const menuItems = isLoggedIn
     ? [
         { label: 'My Profile', href: '/customer-profile', icon: 'UserIcon' },
-        { label: 'Order History', href: '/order-confirmation', icon: 'ClipboardDocumentListIcon' },
+        // { label: 'Order History', href: '/order-confirmation', icon: 'ClipboardDocumentListIcon' },
       ]
     : [];
 
@@ -97,9 +97,9 @@ const UserAccountMenu = ({ className = '' }: UserAccountMenuProps) => {
                   />
                   <div className="flex-1 min-w-0">
                     <p className="font-medium text-popover-foreground truncate">
-                      {userName ? `Welcome back, ${userName.split(' ')[0]}!` : 'Welcome back!'}
+                      {userName ? ` ${userName.split(' ')[0]}!` : 'Welcome back!'}
                     </p>
-                    <p className="caption text-muted-foreground mt-1">Manage your account</p>
+                    {/* <p className="caption text-muted-foreground mt-1">Manage your account</p> */}
                   </div>
                 </div>
               </div>

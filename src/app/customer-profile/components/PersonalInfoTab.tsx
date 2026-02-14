@@ -8,7 +8,6 @@ interface PersonalInfo {
   lastName: string;
   email: string;
   phone: string;
-  dateOfBirth: string;
 }
 
 interface PersonalInfoTabProps {
@@ -164,22 +163,6 @@ const PersonalInfoTab = ({ initialData, onSave }: PersonalInfoTabProps) => {
           {errors.phone && (
             <p className="caption text-destructive mt-1">{errors.phone}</p>
           )}
-        </div>
-
-        <div>
-          <label htmlFor="dateOfBirth" className="block caption font-medium text-foreground mb-2">
-            Date of Birth
-          </label>
-          <input
-            id="dateOfBirth"
-            type="date"
-            value={formData.dateOfBirth}
-            onChange={(e) => setFormData({ ...formData, dateOfBirth: e.target.value })}
-            disabled={!isEditing}
-            className={`w-full px-4 py-3 bg-input border border-border rounded-md text-foreground focus:outline-none focus:ring-3 focus:ring-ring transition-smooth ${
-              !isEditing ? 'opacity-60 cursor-not-allowed' : ''
-            }`}
-          />
         </div>
       </div>
 

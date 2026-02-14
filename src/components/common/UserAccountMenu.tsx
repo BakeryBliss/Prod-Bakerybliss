@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Icon from '@/components/ui/AppIcon';
+import UserAvatar from '@/components/ui/UserAvatar';
 import LoginRegisterDialog from '@/components/ui/LoginRegisterDialog';
 import { useAuth } from '@/hooks/useAuth';
 
@@ -14,9 +15,13 @@ interface UserAccountMenuProps {
 const UserAccountMenu = ({ className = '' }: UserAccountMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const { isLoggedIn, isLoading, logout } = useAuth();
+  const { isLoggedIn, isLoading, logout, user } = useAuth();
   const menuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+
+  // Get user avatar and name from Google OAuth data
+  const userAvatar = user?.user_metadata?.avatar_url || user?.user_metadata?.picture;
+  const userName = user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email;
 
   useEffect(() => {
     setIsOpen(false);
@@ -62,12 +67,21 @@ const UserAccountMenu = ({ className = '' }: UserAccountMenuProps) => {
     <div ref={menuRef} className={`relative ${className}`}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="p-2 rounded-md text-foreground hover:bg-primary/10 transition-smooth focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2"
+        className="p-1 rounded-full text-foreground hover:bg-primary/10 transition-smooth focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2"
         aria-label="User account menu"
         aria-expanded={isOpen ? 'true' : 'false'}
         aria-haspopup="true"
       >
-        <Icon name="UserCircleIcon" size={24} />
+        {isLoggedIn ? (
+          <UserAvatar 
+            src={userAvatar} 
+            alt={userName || 'User avatar'}
+            size={32}
+            borderClassName="hover:border-primary/40 transition-colors border-2 border-primary/20"
+          />
+        ) : (
+          <Icon name="UserCircleIcon" size={24} />
+        )}
       </button>
 
       {isOpen && (
@@ -75,8 +89,19 @@ const UserAccountMenu = ({ className = '' }: UserAccountMenuProps) => {
           {isLoggedIn ? (
             <>
               <div className="p-4 border-b border-border">
-                <p className="font-medium text-popover-foreground">Welcome back!</p>
-                <p className="caption text-muted-foreground mt-1">Manage your account</p>
+                <div className="flex items-center gap-3">
+                  <UserAvatar 
+                    src={userAvatar}
+                    alt={userName || 'User avatar'}
+                    size={48}
+                  />
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-popover-foreground truncate">
+                      {userName ? `Welcome back, ${userName.split(' ')[0]}!` : 'Welcome back!'}
+                    </p>
+                    <p className="caption text-muted-foreground mt-1">Manage your account</p>
+                  </div>
+                </div>
               </div>
               <nav className="py-2">
                 {menuItems.map((item) => (

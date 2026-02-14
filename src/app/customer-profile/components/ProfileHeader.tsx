@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/AppIcon';
-import AppImage from '@/components/ui/AppImage';
+import UserAvatar from '@/components/ui/UserAvatar';
 
 interface ProfileHeaderProps {
   userData: {
@@ -28,9 +28,12 @@ const ProfileHeader = ({ userData, onImageChange }: ProfileHeaderProps) => {
     return (
       <div className="bg-card rounded-lg shadow-warm-md p-6 lg:p-8">
         <div className="flex flex-col lg:flex-row items-center gap-6">
-          <div className="relative">
-            <div className="w-24 h-24 lg:w-32 lg:h-32 rounded-full bg-muted animate-pulse" />
-          </div>
+          <UserAvatar 
+            src=""
+            alt="Loading..."
+            size={96}
+            borderClassName="border-4 border-primary/20"
+          />
           <div className="flex-1 text-center lg:text-left space-y-2">
             <div className="h-8 bg-muted rounded w-48 mx-auto lg:mx-0 animate-pulse" />
             <div className="h-4 bg-muted rounded w-64 mx-auto lg:mx-0 animate-pulse" />
@@ -44,13 +47,12 @@ const ProfileHeader = ({ userData, onImageChange }: ProfileHeaderProps) => {
     <div className="bg-card rounded-lg shadow-warm-md p-6 lg:p-8">
       <div className="flex flex-col lg:flex-row items-center gap-6">
         <div className="relative">
-          <div className="w-24 h-24 lg:w-32 lg:h-32 rounded-full overflow-hidden border-4 border-primary/20">
-            <AppImage
-              src={userData.image}
-              alt={userData.alt}
-              className="w-full h-full object-cover"
-            />
-          </div>
+          <UserAvatar 
+            src={userData.image}
+            alt={userData.alt || userData.name}
+            size={128}
+            borderClassName="border-4 border-primary/20"
+          />
           <button
             onClick={onImageChange}
             className="absolute bottom-0 right-0 p-2 bg-primary text-primary-foreground rounded-full shadow-warm hover:bg-primary/90 transition-smooth focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2"

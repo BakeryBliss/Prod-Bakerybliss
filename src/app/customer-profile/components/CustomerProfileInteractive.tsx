@@ -62,8 +62,8 @@ const CustomerProfileInteractive = ({
               phone: profile.phone_number || '',
               memberSince: new Date(user.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long' }),
               loyaltyPoints: 0,
-              image: profile.avatar_url || '',
-              alt: 'User profile picture'
+              image: profile.avatar_url || user.user_metadata?.avatar_url || user.user_metadata?.picture || '',
+              alt: `${profile.full_name || user.user_metadata?.full_name || 'User'} profile picture`
             });
           } else {
             // New user - set basic info from auth user
@@ -73,8 +73,8 @@ const CustomerProfileInteractive = ({
               phone: '',
               memberSince: new Date(user.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long' }),
               loyaltyPoints: 0,
-              image: user.user_metadata?.avatar_url || '',
-              alt: 'User profile picture'
+              image: user.user_metadata?.avatar_url || user.user_metadata?.picture || '',
+              alt: `${user.user_metadata?.full_name || 'User'} profile picture`
             });
           }
         } catch (error) {
@@ -86,19 +86,19 @@ const CustomerProfileInteractive = ({
     }
   }, [isLoggedIn, isLoading, user]);
 
-  // const tabs = [
-  //   { id: 'personal', label: 'Personal Info', icon: 'UserIcon' },
-  //   { id: 'orders', label: 'Order History', icon: 'ClipboardDocumentListIcon' },
-  //   { id: 'addresses', label: 'Addresses', icon: 'MapPinIcon' },
-  //   { id: 'payments', label: 'Payments', icon: 'CreditCardIcon' },
-  //   { id: 'notifications', label: 'Notifications', icon: 'BellIcon' },
-  //   { id: 'security', label: 'Security', icon: 'ShieldCheckIcon' },
-  // ];
+  const tabs = [
+    { id: 'personal', label: 'Personal Info', icon: 'UserIcon' },
+    { id: 'orders', label: 'Order History', icon: 'ClipboardDocumentListIcon' },
+    // { id: 'addresses', label: 'Addresses', icon: 'MapPinIcon' },
+    // { id: 'payments', label: 'Payments', icon: 'CreditCardIcon' },
+    // { id: 'notifications', label: 'Notifications', icon: 'BellIcon' },
+    // { id: 'security', label: 'Security', icon: 'ShieldCheckIcon' },
+  ];
 
-  // const handleSavePersonalInfo = (data: any) => {
-  //   console.log('Saving personal info:', data);
-  //   alert('Personal information updated successfully!');
-  // };
+  const handleSavePersonalInfo = (data: any) => {
+    console.log('Saving personal info:', data);
+    alert('Personal information updated successfully!');
+  };
 
   const handleReorder = (orderId: string) => {
     console.log('Reordering:', orderId);
@@ -243,10 +243,10 @@ const CustomerProfileInteractive = ({
   return (
     <div className="space-y-6">
       <ProfileHeader userData={userData} onImageChange={handleImageChange} />
-      {/* <ProfileTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} /> */}
+      <ProfileTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
 
       <div className="min-h-[400px]">
-        {/* {activeTab === 'personal' && (
+        {activeTab === 'personal' && (
           <PersonalInfoTab
             initialData={{
               firstName: userData.name.split(' ')[0] || '',
@@ -257,7 +257,7 @@ const CustomerProfileInteractive = ({
             }}
             onSave={handleSavePersonalInfo}
           />
-        )} */}
+        )}
 
         {activeTab === 'orders' && (
           <OrderHistoryTab

@@ -8,7 +8,7 @@ import Footer from '@/components/common/Footer';
 export const metadata: Metadata = {
   title: 'Our Products - BakeryBliss',
   description:
-    'Discover our complete range of premium bakery products. From freshly baked breads and pastries to custom cakes and desserts. Browse by category, apply filters, and find your perfect treat.',
+    'Discover our complete range of premium bakery products. From cupcakes and pastries to custom cakes and desserts. Browse by category, apply filters, and find your perfect treat.',
 };
 
 export default function ProductsPage() {

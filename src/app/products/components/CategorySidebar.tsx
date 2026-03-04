@@ -66,7 +66,7 @@ export default function CategorySidebar({
               <Icon
                 name={
                   category.id === 'all' ? 'Squares2X2Icon' :
-                  category.id === 'breads' ? 'CubeIcon' :
+                  category.id === 'cup cakes' ? 'CakeIcon' :
                   category.id === 'pastries' ? 'HeartIcon' :
                   category.id === 'cakes' ? 'GiftIcon' :
                   category.id === 'cookies' ? 'RectangleStackIcon' :
@@ -105,7 +105,7 @@ export default function CategorySidebar({
               <Icon
                 name={
                   category.id === 'all' ? 'Squares2X2Icon' :
-                  category.id === 'breads' ? 'CubeIcon' :
+                  category.id === 'cup cakes' ? 'CakeIcon' :
                   category.id === 'pastries' ? 'HeartIcon' :
                   category.id === 'cakes' ? 'GiftIcon' :
                   category.id === 'cookies' ? 'RectangleStackIcon' :

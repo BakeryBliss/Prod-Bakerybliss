@@ -71,7 +71,7 @@ const PromotionalBanners = ({ className = '' }: PromotionalBannersProps) => {
         <div className="mt-8 relative h-[300px] rounded-lg overflow-hidden shadow-warm-md group">
           <AppImage
             src="https://images.unsplash.com/photo-1697524924083-bc9988a49bfb"
-            alt="Freshly baked artisan bread loaves on wooden bakery display"
+            alt="Beautifully decorated cupcakes with colorful frosting on bakery display"
             className="w-full h-full object-cover group-hover:scale-105 transition-smooth" />
 
           <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/70 to-transparent" />
@@ -82,16 +82,16 @@ const PromotionalBanners = ({ className = '' }: PromotionalBannersProps) => {
                 <span>New Arrival</span>
               </div>
               <h3 className="font-heading text-3xl lg:text-5xl font-bold text-foreground">
-                Fresh Artisan Breads Daily
+                Fresh Cup Cakes Daily
               </h3>
               <p className="text-lg text-muted-foreground">
-                Experience the authentic taste of traditional European breads, baked fresh every morning using time-honored techniques.
+                Indulge in our delightful cupcakes, freshly baked every morning with premium ingredients and creative designs.
               </p>
               <Link
-                href="/product-details?category=breads"
+                href="/product-details?category=cup cakes"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 transition-smooth focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2">
 
-                <span>Shop Breads</span>
+                <span>Shop Cup Cakes</span>
                 <Icon name="ArrowRightIcon" size={18} />
               </Link>
             </div>

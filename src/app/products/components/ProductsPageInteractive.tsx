@@ -80,6 +80,7 @@ export default function ProductsPageInteractive() {
   // Dynamic categories based on loaded products
   const categories = useMemo(() => [
     { id: 'all', name: 'All Products', count: products.length },
+    { id: 'cup cakes', name: 'Cup Cakes', count: products.filter(p => belongsToCategory(p, 'cup cakes')).length },
     { id: 'jar cakes', name: 'Jar Cakes', count: products.filter(p => belongsToCategory(p, 'jar cakes')).length },
     { id: 'pastries', name: 'Pastries', count: products.filter(p => belongsToCategory(p, 'pastries')).length },
     { id: 'cakes', name: 'Cakes', count: products.filter(p => belongsToCategory(p, 'cakes')).length },

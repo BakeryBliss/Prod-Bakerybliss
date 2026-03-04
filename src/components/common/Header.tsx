@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import Icon from '@/components/ui/AppIcon';
 import CartIndicator from '@/components/common/CartIndicator';
@@ -64,29 +65,18 @@ const Header = ({ className = '' }: HeaderProps) => {
             className="flex items-center gap-3 transition-smooth hover:opacity-80 focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2 rounded-md"
           >
             <div className="relative w-12 h-12 lg:w-14 lg:h-14">
-              <svg
-                viewBox="0 0 56 56"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-full h-full"
-              >
-                <circle cx="28" cy="28" r="28" fill="var(--color-primary)" />
-                <path
-                  d="M28 12C28 12 20 16 20 24C20 28 22 30 24 32C26 34 28 36 28 40C28 36 30 34 32 32C34 30 36 28 36 24C36 16 28 12 28 12Z"
-                  fill="var(--color-background)"
-                />
-                <ellipse cx="28" cy="42" rx="8" ry="3" fill="var(--color-accent)" />
-                <path
-                  d="M24 26C24 26 25 24 28 24C31 24 32 26 32 26"
-                  stroke="var(--color-primary)"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
+              <Image
+                src="/assets/images/logo.png"
+                alt="Bliss Bakery Logo"
+                width={64}
+                height={64}
+                className="w-full h-full object-contain rounded-full"
+                priority
+              />
             </div>
             <div className="flex flex-col">
               <span className="font-heading font-semibold text-xl lg:text-2xl text-primary">
-                BakeryBliss
+                Bliss Bakery
               </span>
               <span className="caption text-muted-foreground text-xs hidden sm:block">
                 Artisan Baked Goods

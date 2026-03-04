@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import Icon from '@/components/ui/AppIcon';
 
 interface FooterProps {
@@ -49,32 +50,20 @@ const Footer = ({ className = '' }: FooterProps) => {
           <div className="lg:col-span-2 space-y-4">
             <Link href="/" className="flex items-center gap-3 group">
               <div className="relative w-12 h-12">
-                <svg
-                  viewBox="0 0 56 56"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-full h-full"
-                >
-                  <circle cx="28" cy="28" r="28" fill="var(--color-primary)" />
-                  <path
-                    d="M28 12C28 12 20 16 20 24C20 28 22 30 24 32C26 34 28 36 28 40C28 36 30 34 32 32C34 30 36 28 36 24C36 16 28 12 28 12Z"
-                    fill="var(--color-background)"
-                  />
-                  <ellipse cx="28" cy="42" rx="8" ry="3" fill="var(--color-accent)" />
-                  <path
-                    d="M24 26C24 26 25 24 28 24C31 24 32 26 32 26"
-                    stroke="var(--color-primary)"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </svg>
+                <Image
+                  src="/assets/images/logo.png"
+                  alt="Bliss Bakery Logo"
+                  width={48}
+                  height={48}
+                  className="w-full h-full object-contain rounded-full"
+                />
               </div>
               <div className="flex flex-col">
                 <span className="font-heading font-semibold text-xl text-primary">
-                  BakeryBliss
+                  Bliss Bakery
                 </span>
                 <span className="caption text-muted-foreground text-xs">
-                  Artisan Baked Goods
+                  Est. 2026
                 </span>
               </div>
             </Link>

@@ -19,7 +19,7 @@ const CTASection = ({ className = '' }: CTASectionProps) => {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link
-              href="/product-details"
+              href="/products"
               className="inline-flex items-center gap-2 px-8 py-4 bg-background text-foreground rounded-lg font-heading font-semibold text-lg hover:bg-background/90 transition-smooth shadow-warm-md hover:shadow-warm-lg focus:outline-none focus:ring-3 focus:ring-background focus:ring-offset-2 focus:ring-offset-primary"
             >
               <Icon name="ShoppingBagIcon" size={24} />
@@ -41,21 +41,21 @@ const CTASection = ({ className = '' }: CTASectionProps) => {
                 <Icon name="ClockIcon" size={24} className="text-primary-foreground" />
               </div>
               <p className="font-heading text-primary-foreground mb-1">Open Daily</p>
-              <p className="caption text-primary-foreground/80">7:00 AM - 8:00 PM</p>
+              <p className="caption text-primary-foreground/80">11:00 AM - 11:00 PM</p>
             </div>
             <div className="text-center">
               <div className="w-12 h-12 bg-primary-foreground/20 rounded-full flex items-center justify-center mx-auto mb-3">
                 <Icon name="PhoneIcon" size={24} className="text-primary-foreground" />
               </div>
               <p className="font-heading text-primary-foreground mb-1">Call Us</p>
-              <p className="caption text-primary-foreground/80">(555) 123-4567</p>
+              <p className="caption text-primary-foreground/80">+91 92118 18676</p>
             </div>
             <div className="text-center">
               <div className="w-12 h-12 bg-primary-foreground/20 rounded-full flex items-center justify-center mx-auto mb-3">
                 <Icon name="EnvelopeIcon" size={24} className="text-primary-foreground" />
               </div>
               <p className="font-heading text-primary-foreground mb-1">Email Us</p>
-              <p className="caption text-primary-foreground/80">hello@bakerybliss.com</p>
+              <p className="caption text-primary-foreground/80">bakeryblissindia@gmail.com</p>
             </div>
           </div>
         </div>

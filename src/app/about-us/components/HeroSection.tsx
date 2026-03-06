@@ -20,7 +20,7 @@ const HeroSection = ({ className = '' }: HeroSectionProps) => {
             <p className="text-lg text-muted-foreground leading-relaxed">
               What started as a small family kitchen has blossomed into BakeryBliss, where traditional baking techniques meet modern flavors. Every creation tells a story of passion, dedication, and the pure joy of bringing smiles through artisan baked goods.
             </p>
-            <div className="flex flex-wrap gap-8 pt-4">
+            {/* <div className="flex flex-wrap gap-8 pt-4">
               <div>
                 <p className="text-3xl font-heading text-primary font-semibold">10,000+</p>
                 <p className="caption text-muted-foreground mt-1">Happy Customers</p>
@@ -32,8 +32,8 @@ const HeroSection = ({ className = '' }: HeroSectionProps) => {
               <div>
                 <p className="text-3xl font-heading text-primary font-semibold">15+</p>
                 <p className="caption text-muted-foreground mt-1">Awards Won</p>
-              </div>
-            </div>
+              </div> */}
+            {/* </div> */}
           </div>
 
           {/* Hero Image */}
@@ -49,7 +49,7 @@ const HeroSection = ({ className = '' }: HeroSectionProps) => {
               <p className="font-heading text-xl text-foreground mb-2">
                 "Baking is love made edible"
               </p>
-              <p className="caption text-muted-foreground">- Sarah Mitchell, Founder</p>
+              <p className="caption text-muted-foreground">- Pallavi, Founder</p>
             </div>
           </div>
         </div>

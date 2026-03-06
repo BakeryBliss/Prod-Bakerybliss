@@ -7,9 +7,43 @@ import type { Product } from './ProductsPageInteractive';
 
 interface ProductGridProps {
   products: Product[];
+  isLoading?: boolean;
 }
 
-export default function ProductGrid({ products }: ProductGridProps) {
+export default function ProductGrid({ products, isLoading }: ProductGridProps) {
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {[...Array(8)].map((_, i) => (
+          <div
+            key={i}
+            className="bg-card rounded-lg overflow-hidden shadow-warm-sm animate-pulse-blur"
+            style={{ animationDelay: `${i * 0.15}s` }}
+          >
+            <div className="aspect-square bg-muted" />
+            <div className="p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="h-3 w-16 bg-muted rounded" />
+                <div className="flex gap-1">
+                  {[...Array(5)].map((_, j) => (
+                    <div key={j} className="w-3.5 h-3.5 bg-muted rounded-full" />
+                  ))}
+                </div>
+              </div>
+              <div className="h-4 w-3/4 bg-muted rounded" />
+              <div className="h-3 w-full bg-muted rounded" />
+              <div className="h-3 w-2/3 bg-muted rounded" />
+              <div className="flex gap-1">
+                <div className="h-5 w-14 bg-muted rounded-full" />
+                <div className="h-5 w-14 bg-muted rounded-full" />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   if (products.length === 0) {
     return (
       <div className="text-center py-16">

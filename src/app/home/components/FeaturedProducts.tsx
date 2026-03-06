@@ -96,7 +96,34 @@ const FeaturedProducts = ({ className = '' }: FeaturedProductsProps) => {
 
         <div className="relative">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {visibleProducts.map((product) =>
+            {isLoading ? (
+              [...Array(3)].map((_, i) => (
+                <div
+                  key={i}
+                  className="bg-card rounded-lg overflow-hidden shadow-warm border border-border animate-pulse-blur"
+                  style={{ animationDelay: `${i * 0.25}s` }}
+                >
+                  <div className="relative h-64 bg-muted" />
+                  <div className="p-6 space-y-4">
+                    <div>
+                      <div className="h-3 w-16 bg-muted rounded mb-2" />
+                      <div className="h-5 w-3/4 bg-muted rounded" />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="flex gap-1">
+                        {[...Array(5)].map((_, j) => (
+                          <div key={j} className="w-4 h-4 bg-muted rounded-full" />
+                        ))}
+                      </div>
+                      <div className="h-3 w-12 bg-muted rounded" />
+                    </div>
+                    <div className="pt-2">
+                      <div className="h-6 w-20 bg-muted rounded" />
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : visibleProducts.map((product) =>
             <Link
               key={product.id}
               href={`/product-details?id=${product.id}`}

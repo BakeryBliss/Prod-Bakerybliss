@@ -135,6 +135,10 @@ module.exports = {
             '0%': { transform: 'scale(1.05)', opacity: '0.8' },
             '100%': { transform: 'scale(1)', opacity: '1' },
           },
+          'pulse-blur': {
+            '0%, 100%': { filter: 'blur(8px)', opacity: '0.6' },
+            '50%': { filter: 'blur(4px)', opacity: '0.8' },
+          },
         },
         animation: {
           'fade-in': 'fade-in 250ms cubic-bezier(0.4, 0, 0.2, 1)',
@@ -144,6 +148,7 @@ module.exports = {
           'slide-in-from-right': 'slide-in-from-right 250ms cubic-bezier(0.4, 0, 0.2, 1)',
           'shimmer': 'shimmer 2s infinite linear',
           'zoom-in': 'zoom-in 1.2s ease-out',
+          'pulse-blur': 'pulse-blur 1.8s ease-in-out infinite',
         },
         zIndex: {
           'dropdown': '50',

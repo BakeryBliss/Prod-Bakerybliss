@@ -167,12 +167,76 @@ const ProductDetailsInteractive = () => {
     setTimeout(() => setShowSuccessModal(false), 3000);
   };
   
+  // Shimmer bar component for loading skeleton
+  const ShimmerBar = ({ className = '' }: { className?: string }) => (
+    <div
+      className={`rounded bg-gradient-to-r from-muted via-muted-foreground/10 to-muted bg-[length:1000px_100%] animate-shimmer ${className}`}
+    />
+  );
+
   if (!isHydrated || isLoading || allProducts.length === 0 || !currentProduct) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <Icon name="ArrowPathIcon" size={48} className="text-primary animate-spin mx-auto mb-4" />
-          <p className="text-muted-foreground">Loading product details...</p>
+      <div className="space-y-8 lg:space-y-12">
+        {/* Main Product Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+          {/* Image gallery skeleton */}
+          <div className="space-y-4">
+            <ShimmerBar className="aspect-square rounded-lg" />
+            <div className="flex gap-3">
+              {[...Array(4)].map((_, i) => (
+                <ShimmerBar key={i} className="w-20 h-20 rounded-md" />
+              ))}
+            </div>
+          </div>
+          {/* Product info skeleton */}
+          <div className="space-y-6">
+            <div className="space-y-3">
+              <ShimmerBar className="h-4 w-24" />
+              <ShimmerBar className="h-8 w-3/4" />
+              <div className="flex items-center gap-2">
+                <div className="flex gap-1">
+                  {[...Array(5)].map((_, i) => (
+                    <ShimmerBar key={i} className="w-4 h-4 rounded-full" />
+                  ))}
+                </div>
+                <ShimmerBar className="h-4 w-20" />
+              </div>
+              <ShimmerBar className="h-7 w-28" />
+            </div>
+            <div className="space-y-2">
+              <ShimmerBar className="h-4 w-full" />
+              <ShimmerBar className="h-4 w-full" />
+              <ShimmerBar className="h-4 w-2/3" />
+            </div>
+            <div className="space-y-3 pt-4">
+              <ShimmerBar className="h-5 w-16" />
+              <div className="flex gap-3">
+                {[...Array(3)].map((_, i) => (
+                  <ShimmerBar key={i} className="h-10 w-24 rounded-md" />
+                ))}
+              </div>
+              <ShimmerBar className="h-5 w-16 mt-4" />
+              <div className="flex gap-3">
+                {[...Array(3)].map((_, i) => (
+                  <ShimmerBar key={i} className="h-10 w-24 rounded-md" />
+                ))}
+              </div>
+            </div>
+            <ShimmerBar className="h-12 w-full rounded-md mt-6" />
+          </div>
+        </div>
+        {/* Tabs skeleton */}
+        <div>
+          <div className="flex gap-4 border-b border-border pb-3 mb-6">
+            {[...Array(3)].map((_, i) => (
+              <ShimmerBar key={i} className="h-5 w-24" />
+            ))}
+          </div>
+          <div className="space-y-3">
+            <ShimmerBar className="h-4 w-full" />
+            <ShimmerBar className="h-4 w-full" />
+            <ShimmerBar className="h-4 w-3/4" />
+          </div>
         </div>
       </div>);
 

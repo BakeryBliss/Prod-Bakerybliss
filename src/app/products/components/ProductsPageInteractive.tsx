@@ -173,18 +173,6 @@ export default function ProductsPageInteractive() {
     );
   };
 
-  // Show loading state while fetching products
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-center">
-          <Icon name="ArrowPathIcon" size={48} className="text-primary animate-spin mx-auto mb-4" />
-          <p className="text-muted-foreground">Loading products...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="flex flex-col lg:flex-row gap-8">
       {/* Mobile Filter Toggle */}
@@ -203,7 +191,10 @@ export default function ProductsPageInteractive() {
         <CategorySidebar
           categories={categories}
           selectedCategory={selectedCategory}
-          onCategoryChange={setSelectedCategory}
+          onCategoryChange={(category) => {
+            setSelectedCategory(category);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
         />
       </div>
 
@@ -222,7 +213,7 @@ export default function ProductsPageInteractive() {
         />
 
         {/* Product Grid */}
-        <ProductGrid products={filteredAndSortedProducts} />
+        <ProductGrid products={filteredAndSortedProducts} isLoading={isLoading} />
       </div>
     </div>
   );

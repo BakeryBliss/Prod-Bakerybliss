@@ -22,7 +22,7 @@ export default function HomePage() {
         <HeroSection />
         <FeaturedProducts />
         {/* <PromotionalBanners /> */}
-        <TestimonialsSlider />
+        {/* <TestimonialsSlider /> */}
         <InstagramFeed />
         {/* <NewsletterSignup /> */}
       </main>

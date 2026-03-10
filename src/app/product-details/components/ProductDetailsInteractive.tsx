@@ -6,7 +6,7 @@ import ProductImageGallery from './ProductImageGallery';
 import ProductInfo from './ProductInfo';
 import ProductCustomization from './ProductCustomization';
 import ProductTabs from './ProductTabs';
-import CustomerReviews from './CustomerReviews';
+// import CustomerReviews from './CustomerReviews';
 import RelatedProducts from './RelatedProducts';
 import SocialShare from './SocialShare';
 import Icon from '@/components/ui/AppIcon';
@@ -279,11 +279,11 @@ const ProductDetailsInteractive = () => {
 
 
         {/* Customer Reviews */}
-        <CustomerReviews
+        {/* <CustomerReviews
           reviews={mockReviews}
           averageRating={currentProduct.rating}
           totalReviews={currentProduct.reviewCount}
-          ratingDistribution={ratingDistribution} />
+          ratingDistribution={ratingDistribution} /> */}
 
 
         {/* Related Products */}

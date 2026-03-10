@@ -44,7 +44,7 @@ export default function AboutUsPage() {
         <GallerySection />
 
         {/* Testimonials Section */}
-        <TestimonialsSection />
+        {/* <TestimonialsSection /> */}
 
         {/* CTA Section */}
         <CTASection />

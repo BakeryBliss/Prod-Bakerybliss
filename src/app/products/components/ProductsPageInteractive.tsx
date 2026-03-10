@@ -87,7 +87,7 @@ export default function ProductsPageInteractive() {
     { id: 'cheesecakes', name: 'Cheesecakes', count: products.filter(p => belongsToCategory(p, 'cheesecakes')).length },
     { id: 'brownie', name: 'Brownie', count: products.filter(p => belongsToCategory(p, 'brownie')).length },
     { id: 'cookies', name: 'Cookies', count: products.filter(p => belongsToCategory(p, 'cookies')).length },
-    { id: 'cakes', name: 'Tea Cakes', count: products.filter(p => belongsToCategory(p, 'cookies')).length }
+    { id: 'tea cakes', name: 'Tea Cakes', count: products.filter(p => belongsToCategory(p, 'tea cakes')).length }
   ], [products]);
 
   // Update selectedCategory when URL parameter changes

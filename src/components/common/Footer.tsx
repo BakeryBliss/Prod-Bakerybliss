@@ -11,9 +11,14 @@ const Footer = ({ className = '' }: FooterProps) => {
   const footerLinks = {
     shop: [
       { label: 'All Products', href: '/products' },
-      { label: 'Cakes', href: '/products?category=cakes' },
+      { label: 'Cup Cakes', href: '/products?category=cup cakes' },
+      { label: 'Jar Cakes', href: '/products?category=jar cakes' },
       { label: 'Pastries', href: '/products?category=pastries' },
-      { label: 'Breads', href: '/products?category=breads' },
+      { label: 'Cakes', href: '/products?category=cakes' },
+      { label: 'Cheesecakes', href: '/products?category=cheesecakes' },
+      { label: 'Brownie', href: '/products?category=brownie' },
+      { label: 'Cookies', href: '/products?category=cookies' },
+      { label: 'Tea Cakes', href: '/products?category=tea cakes' },
     ],
     company: [
       { label: 'About Us', href: '/about-us' },
@@ -21,23 +26,23 @@ const Footer = ({ className = '' }: FooterProps) => {
       // { label: 'Careers', href: '/about-us#careers' },
       // { label: 'Contact', href: '/about-us#contact' },
     ],
-    // support: [
-    //   { label: 'My Account', href: '/customer-profile' },
-    //   { label: 'Order History', href: '/order-confirmation' },
+    support: [
+      { label: 'My Account', href: '/customer-profile' },
+      { label: 'Order History', href: '/customer-profile?tab=orders' },
     //   { label: 'Shopping Cart', href: '/shopping-cart' },
     //   { label: 'FAQs', href: '/about-us#faq' },
-    // ],
-    // legal: [
-    //   { label: 'Privacy Policy', href: '/privacy-policy' },
-    //   { label: 'Terms & Conditions', href: '/terms-conditions' },
-    //   { label: 'Cookie Policy', href: '/cookie-policy' },
-    //   { label: 'Refund Policy', href: '/refund-policy' },
-    // ],
+    ],
+    legal: [
+      { label: 'Privacy Policy', href: '/legal/privacy-policy' },
+      { label: 'Terms & Conditions', href: '/legal/terms-conditions' },
+      { label: 'Cookie Policy', href: '/legal/cookie-policy' },
+      { label: 'Refund Policy', href: '/legal/refund-policy' },
+    ],
   };
 
   const socialLinks = [
     { name: 'Facebook', icon: 'ShareIcon', href: 'https://facebook.com/bakerybliss' },
-    { name: 'Instagram', icon: 'CameraIcon', href: 'https://instagram.com/bakerybliss' },
+    { name: 'Instagram', icon: 'CameraIcon', href: 'https://instagram.com/blissbakeryindia' },
     { name: 'Twitter', icon: 'ChatBubbleLeftRightIcon', href: 'https://twitter.com/bakerybliss' },
     { name: 'Pinterest', icon: 'PhotoIcon', href: 'https://pinterest.com/bakerybliss' },
   ];
@@ -97,9 +102,9 @@ const Footer = ({ className = '' }: FooterProps) => {
             </div>
           </div>
 
-          <div>
+          <div className="lg:col-span-2">
             <h3 className="font-heading font-semibold text-foreground mb-4">Shop</h3>
-            <ul className="space-y-3">
+            <ul className="grid grid-cols-2 gap-x-6 gap-y-3">
               {footerLinks.shop.map((link) => (
                 <li key={link.href}>
                   <Link
@@ -114,7 +119,21 @@ const Footer = ({ className = '' }: FooterProps) => {
           </div>
 
           <div>
-            <h3 className="font-heading font-semibold text-foreground mb-4">Company</h3>
+            <h3 className="font-heading font-semibold text-foreground mb-4">Support</h3>
+            <ul className="space-y-3">
+              {footerLinks.support.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-muted-foreground hover:text-primary transition-smooth focus:outline-none focus:text-primary"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            <h3 className="font-heading font-semibold text-foreground mb-4 mt-6">Company</h3>
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.href}>
@@ -129,23 +148,7 @@ const Footer = ({ className = '' }: FooterProps) => {
             </ul>
           </div>
 
-          {/* <div>
-            <h3 className="font-heading font-semibold text-foreground mb-4">Support</h3>
-            <ul className="space-y-3">
-              {footerLinks.support.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-muted-foreground hover:text-primary transition-smooth focus:outline-none focus:text-primary"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div> */}
-
-          {/* <div>
+          <div>
             <h3 className="font-heading font-semibold text-foreground mb-4">Legal</h3>
             <ul className="space-y-3">
               {footerLinks.legal.map((link) => (
@@ -159,7 +162,7 @@ const Footer = ({ className = '' }: FooterProps) => {
                 </li>
               ))}
             </ul>
-          </div> */}
+          </div>
         </div>
 
         <div className="mt-12 pt-8 border-t border-border">

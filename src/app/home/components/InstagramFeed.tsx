@@ -14,46 +14,92 @@ interface InstagramFeedProps {
 }
 
 const InstagramFeed = ({ className = '' }: InstagramFeedProps) => {
+  // Original Instagram fetch images - commented out as we don't have live Instagram images yet
+  // const posts: InstagramPost[] = [
+  // {
+  //   id: '1',
+  //   image: "https://images.unsplash.com/photo-1561702856-b4ec96854ed8",
+  //   alt: 'Elegant three-tier wedding cake with white fondant and pink roses',
+  //   likes: 342,
+  //   comments: 28
+  // },
+  // {
+  //   id: '2',
+  //   image: "https://images.unsplash.com/photo-1620129214122-1fe83e80747f",
+  //   alt: 'Golden flaky croissants arranged on marble surface',
+  //   likes: 289,
+  //   comments: 15
+  // },
+  // {
+  //   id: '3',
+  //   image: "https://img.rocket.new/generatedImages/rocket_gen_img_166497f71-1767136322607.png",
+  //   alt: 'Colorful macarons in various flavors on white plate',
+  //   likes: 421,
+  //   comments: 34
+  // },
+  // {
+  //   id: '4',
+  //   image: "https://images.unsplash.com/photo-1473447547337-5770a453122d",
+  //   alt: 'Rustic sourdough bread with crispy crust on wooden board',
+  //   likes: 267,
+  //   comments: 19
+  // },
+  // {
+  //   id: '5',
+  //   image: "https://images.unsplash.com/photo-1662687923931-18c60d75b2fe",
+  //   alt: 'Chocolate layer cake with ganache frosting and berries',
+  //   likes: 398,
+  //   comments: 42
+  // },
+  // {
+  //   id: '6',
+  //   image: "https://images.unsplash.com/photo-1679582398746-a1ef88942cb3",
+  //   alt: 'Fresh blueberry muffins with sugar topping in basket',
+  //   likes: 312,
+  //   comments: 21
+  // }];
+
+  // Using popular product images
   const posts: InstagramPost[] = [
   {
     id: '1',
-    image: "https://images.unsplash.com/photo-1561702856-b4ec96854ed8",
-    alt: 'Elegant three-tier wedding cake with white fondant and pink roses',
+    image: 'https://lkylfnhhevpafyboenub.supabase.co/storage/v1/object/public/product-images/cakes/Choco-Ferrero-Birthday-Drip-Cake.jpg',
+    alt: 'Choco Ferrero Birthday Drip Cake',
     likes: 342,
     comments: 28
   },
   {
     id: '2',
-    image: "https://images.unsplash.com/photo-1620129214122-1fe83e80747f",
-    alt: 'Golden flaky croissants arranged on marble surface',
+    image: 'https://lkylfnhhevpafyboenub.supabase.co/storage/v1/object/public/product-images/brownie/sq-roasted-classic-choco-delish-brownie.jpeg',
+    alt: 'Choco Delish Walnut Brownie',
     likes: 289,
     comments: 15
   },
   {
     id: '3',
-    image: "https://img.rocket.new/generatedImages/rocket_gen_img_166497f71-1767136322607.png",
-    alt: 'Colorful macarons in various flavors on white plate',
+    image: 'https://lkylfnhhevpafyboenub.supabase.co/storage/v1/object/public/product-images/cheesecakes/viscous-blueberry-cheesecake-cake.jpeg',
+    alt: 'Blueberry Cheesecake',
     likes: 421,
     comments: 34
   },
   {
     id: '4',
-    image: "https://images.unsplash.com/photo-1473447547337-5770a453122d",
-    alt: 'Rustic sourdough bread with crispy crust on wooden board',
+    image: 'https://lkylfnhhevpafyboenub.supabase.co/storage/v1/object/public/product-images/cakes/KitKat-Bars-Cake.jpg',
+    alt: 'KitKat Bars Cake',
     likes: 267,
     comments: 19
   },
   {
     id: '5',
-    image: "https://images.unsplash.com/photo-1662687923931-18c60d75b2fe",
-    alt: 'Chocolate layer cake with ganache frosting and berries',
+    image: 'https://lkylfnhhevpafyboenub.supabase.co/storage/v1/object/public/product-images/cookies/crumbly-choco-chip-cookies.jpeg',
+    alt: 'Chocolate Chip Cookies',
     likes: 398,
     comments: 42
   },
   {
     id: '6',
-    image: "https://images.unsplash.com/photo-1679582398746-a1ef88942cb3",
-    alt: 'Fresh blueberry muffins with sugar topping in basket',
+    image: 'https://lkylfnhhevpafyboenub.supabase.co/storage/v1/object/public/product-images/jar%20cakes/Nutella-Hazelnut-Jar.jpg',
+    alt: 'Nutella Hazelnut Jar Cake',
     likes: 312,
     comments: 21
   }];
@@ -73,12 +119,12 @@ const InstagramFeed = ({ className = '' }: InstagramFeedProps) => {
             Get inspired by our daily creations and behind-the-scenes moments
           </p>
           <a
-            href="https://instagram.com/bakerybliss"
+            href="https://instagram.com/blissbakeryindia"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 mt-4 text-primary hover:text-primary/80 transition-smooth font-medium">
 
-            <span>@bakerybliss</span>
+            <span>@blissbakeryindia</span>
             <Icon name="ArrowTopRightOnSquareIcon" size={18} />
           </a>
         </div>
@@ -87,7 +133,7 @@ const InstagramFeed = ({ className = '' }: InstagramFeedProps) => {
           {posts.map((post) =>
           <a
             key={post.id}
-            href="https://instagram.com/bakerybliss"
+            href="https://instagram.com/blissbakeryindia"
             target="_blank"
             rel="noopener noreferrer"
             className="group relative aspect-square rounded-lg overflow-hidden shadow-warm hover:shadow-warm-lg transition-smooth">
@@ -115,7 +161,7 @@ const InstagramFeed = ({ className = '' }: InstagramFeedProps) => {
 
         <div className="text-center mt-8">
           <a
-            href="https://instagram.com/bakerybliss"
+            href="https://instagram.com/blissbakeryindia"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 transition-smooth focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2">

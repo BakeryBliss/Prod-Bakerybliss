@@ -14,7 +14,7 @@ const NextStepsSection = () => {
       title: 'Continue Shopping',
       description: 'Explore more delicious treats',
       icon: 'ShoppingBagIcon',
-      href: '/product-details',
+      href: '/products',
       color: 'bg-accent/10 text-accent',
     },
     {

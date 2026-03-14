@@ -28,16 +28,16 @@ const Footer = ({ className = '' }: FooterProps) => {
     ],
     support: [
       { label: 'My Account', href: '/customer-profile' },
-      { label: 'Order History', href: '/customer-profile?tab=orders' },
+      // { label: 'Order History', href: '/customer-profile?tab=orders' },
     //   { label: 'Shopping Cart', href: '/shopping-cart' },
     //   { label: 'FAQs', href: '/about-us#faq' },
     ],
-    legal: [
-      { label: 'Privacy Policy', href: '/legal/privacy-policy' },
-      { label: 'Terms & Conditions', href: '/legal/terms-conditions' },
-      { label: 'Cookie Policy', href: '/legal/cookie-policy' },
-      { label: 'Refund Policy', href: '/legal/refund-policy' },
-    ],
+    // legal: [
+    //   { label: 'Privacy Policy', href: '/legal/privacy-policy' },
+    //   { label: 'Terms & Conditions', href: '/legal/terms-conditions' },
+      // { label: 'Cookie Policy', href: '/legal/cookie-policy' },
+      // { label: 'Refund Policy', href: '/legal/refund-policy' },
+    // ],
   };
 
   const socialLinks = [
@@ -132,8 +132,10 @@ const Footer = ({ className = '' }: FooterProps) => {
                 </li>
               ))}
             </ul>
+          </div>
 
-            <h3 className="font-heading font-semibold text-foreground mb-4 mt-6">Company</h3>
+          <div>
+            <h3 className="font-heading font-semibold text-foreground mb-4">Company</h3>
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.href}>
@@ -148,7 +150,7 @@ const Footer = ({ className = '' }: FooterProps) => {
             </ul>
           </div>
 
-          <div>
+          {/* <div>
             <h3 className="font-heading font-semibold text-foreground mb-4">Legal</h3>
             <ul className="space-y-3">
               {footerLinks.legal.map((link) => (
@@ -162,7 +164,7 @@ const Footer = ({ className = '' }: FooterProps) => {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
         </div>
 
         <div className="mt-12 pt-8 border-t border-border">

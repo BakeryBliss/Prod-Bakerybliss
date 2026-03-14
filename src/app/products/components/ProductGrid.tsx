@@ -107,38 +107,39 @@ function ProductCard({ product }: { product: Product }) {
     setTimeout(() => setAddedToCart(false), 2000);
   };
 
-  const renderStars = (rating: number) => {
-    const stars = [];
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 !== 0;
+  // const renderStars = (rating: number) => {
+  //   const stars = [];
+  //   const fullStars = Math.floor(rating);
+  //   const hasHalfStar = rating % 1 !== 0;
 
-    for (let i = 0; i < fullStars; i++) {
-      stars.push(
-        <Icon key={i} name="StarIcon" size={16} className="text-yellow-500 fill-current" />
-      );
-    }
+  //   for (let i = 0; i < fullStars; i++) {
+  //     stars.push(
+  //       <Icon key={i} name="StarIcon" size={16} className="text-yellow-500 fill-current" />
+  //     );
+  //   }
 
-    if (hasHalfStar) {
-      stars.push(
-        <Icon key="half" name="StarIcon" size={16} className="text-yellow-500 fill-current opacity-50" />
-      );
-    }
+  //   if (hasHalfStar) {
+  //     stars.push(
+  //       <Icon key="half" name="StarIcon" size={16} className="text-yellow-500 fill-current opacity-50" />
+  //     );
+  //   }
 
-    const emptyStars = 5 - Math.ceil(rating);
-    for (let i = 0; i < emptyStars; i++) {
-      stars.push(
-        <Icon key={`empty-${i}`} name="StarIcon" size={16} className="text-gray-300" />
-      );
-    }
+  //   const emptyStars = 5 - Math.ceil(rating);
+  //   for (let i = 0; i < emptyStars; i++) {
+  //     stars.push(
+  //       <Icon key={`empty-${i}`} name="StarIcon" size={16} className="text-gray-300" />
+  //     );
+  //   }
 
-    return stars;
-  };
+  //   return stars;
+  // };
 
   return (
-    <Link
-      href={`/product-details?id=${product.id}`}
-      target="_blank"
-      rel="noopener noreferrer"
+    <div
+    // <Link
+    //   href={`/product-details?id=${product.id}`}
+    //   target="_blank"
+    //   rel="noopener noreferrer"
       className="group bg-card rounded-lg shadow-warm-sm hover:shadow-warm-md transition-all duration-300 overflow-hidden hover:-translate-y-1"
     >
       <div className="relative aspect-square overflow-hidden">
@@ -188,14 +189,14 @@ function ProductCard({ product }: { product: Product }) {
             {Array.isArray(product.category) ? product.category.join(', ') : product.category}
           </span>
           {/* Rating */}
-          <div className="flex items-center gap-1">
+          {/* <div className="flex items-center gap-1">
             <div className="flex">
               {renderStars(product.rating)}
             </div>
             <span className="text-xs text-muted-foreground">
               ({product.reviewCount})
             </span>
-          </div>
+          </div> */}
         </div>
 
         {/* Product Name */}
@@ -252,6 +253,6 @@ function ProductCard({ product }: { product: Product }) {
           </button> */}
         </div>
       </div>
-    </Link>
+    </div>
   );
 }

@@ -75,7 +75,7 @@ const OrderHistoryTab = ({ orders, onReorder, onViewDetails, onDownloadReceipt }
         <h3 className="text-xl font-heading font-semibold text-foreground mb-2">No Orders Yet</h3>
         <p className="text-muted-foreground mb-6">Start shopping to see your order history here</p>
         <a
-          href="/product-details"
+          href="/products"
           className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 transition-smooth focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2"
         >
           <Icon name="ShoppingBagIcon" size={20} />

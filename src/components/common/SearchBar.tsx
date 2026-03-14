@@ -99,7 +99,7 @@ const SearchBar = ({ className = '' }: SearchBarProps) => {
     } else if (e.key === 'Enter') {
       e.preventDefault();
       if (selectedIndex >= 0 && suggestions[selectedIndex]) {
-        router.push(`/product-details?id=${encodeURIComponent(suggestions[selectedIndex].id)}`);
+        handleSearch(suggestions[selectedIndex].name);
         setIsExpanded(false);
         setShowSuggestions(false);
         setSearchQuery('');
@@ -110,7 +110,7 @@ const SearchBar = ({ className = '' }: SearchBarProps) => {
   };
 
   const handleSuggestionClick = (suggestion: SearchSuggestion) => {
-    router.push(`/product-details?id=${encodeURIComponent(suggestion.id)}`);
+    handleSearch(suggestion.name);
     setIsExpanded(false);
     setShowSuggestions(false);
     setSearchQuery('');

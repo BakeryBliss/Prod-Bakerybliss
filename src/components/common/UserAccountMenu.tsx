@@ -54,7 +54,7 @@ const UserAccountMenu = ({ className = '' }: UserAccountMenuProps) => {
   const menuItems = isLoggedIn
     ? [
         { label: 'My Profile', href: '/customer-profile', icon: 'UserIcon' },
-        { label: 'Order History', href: '/order-confirmation', icon: 'ClipboardDocumentListIcon' },
+        // { label: 'Order History', href: '/order-confirmation', icon: 'ClipboardDocumentListIcon' },
       ]
     : [];
 

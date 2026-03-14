@@ -124,11 +124,11 @@ const FeaturedProducts = ({ className = '' }: FeaturedProductsProps) => {
                 </div>
               ))
             ) : visibleProducts.map((product) =>
-            <Link
+            <div
               key={product.id}
-              href={`/product-details?id=${product.id}`}
-              target="_blank"
-              rel = "noopener noreferrer"
+              // href={`/product-details?id=${product.id}`}
+              // target="_blank"
+              // rel = "noopener noreferrer"
               className="group bg-card rounded-lg overflow-hidden shadow-warm hover:shadow-warm-lg transition-smooth border border-border block">
 
                 <div className="relative h-64 overflow-hidden">
@@ -152,7 +152,7 @@ const FeaturedProducts = ({ className = '' }: FeaturedProductsProps) => {
                     </h3>
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  {/* <div className="flex items-center gap-2">
                     <div className="flex items-center gap-1">
                       {[...Array(5)].map((_, i) =>
                     <Icon
@@ -169,7 +169,7 @@ const FeaturedProducts = ({ className = '' }: FeaturedProductsProps) => {
                     <span className="caption text-muted-foreground">
                       {product.rating} ({product.reviews})
                     </span>
-                  </div>
+                  </div> */}
 
                   <div className="flex items-center justify-between pt-2">
                     {/* <span className="data-text text-2xl font-bold text-primary">
@@ -188,7 +188,7 @@ const FeaturedProducts = ({ className = '' }: FeaturedProductsProps) => {
                     </button> */}
                   </div>
                 </div>
-              </Link>
+              </div>
             )}
           </div>
 

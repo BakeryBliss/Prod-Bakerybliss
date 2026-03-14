@@ -38,7 +38,7 @@ const HeroSection = ({ className = '' }: HeroSectionProps) => {
 
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
-              href="/product-details"
+              href="/products"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-primary to-primary/80 text-primary-foreground rounded-lg font-bold text-lg hover:shadow-warm-lg hover:-translate-y-1 transition-all duration-300 focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2 shadow-warm-md hover:from-primary/90">
 
               <span>Explore Our Menu</span>

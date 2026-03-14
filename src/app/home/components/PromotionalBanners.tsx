@@ -30,7 +30,7 @@ const PromotionalBanners = ({ className = '' }: PromotionalBannersProps) => {
                 Make your celebrations unforgettable with our personalized cake designs. From weddings to birthdays, we bring your vision to life.
               </p>
               <Link
-                href="/product-details?category=custom"
+                href="/products?category=custom"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 transition-smooth focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2">
 
                 <span>Order Custom Cake</span>
@@ -58,7 +58,7 @@ const PromotionalBanners = ({ className = '' }: PromotionalBannersProps) => {
                 Discover our rotating selection of seasonal treats made with fresh, locally-sourced ingredients. Available for a limited time only.
               </p>
               <Link
-                href="/product-details?category=seasonal"
+                href="/products?category=seasonal"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 transition-smooth focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2">
 
                 <span>Explore Seasonal Items</span>
@@ -88,7 +88,7 @@ const PromotionalBanners = ({ className = '' }: PromotionalBannersProps) => {
                 Indulge in our delightful cupcakes, freshly baked every morning with premium ingredients and creative designs.
               </p>
               <Link
-                href="/product-details?category=cup cakes"
+                href="/products?category=cup cakes"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 transition-smooth focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2">
 
                 <span>Shop Cup Cakes</span>

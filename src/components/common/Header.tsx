@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Icon from '@/components/ui/AppIcon';
-import CartIndicator from '@/components/common/CartIndicator';
+// import CartIndicator from '@/components/common/CartIndicator';
 import UserAccountMenu from '@/components/common/UserAccountMenu';
 import SearchBar from '@/components/common/SearchBar';
 
@@ -119,7 +119,7 @@ const Header = ({ className = '' }: HeaderProps) => {
             </div>
 
             {/* Cart Indicator */}
-            <CartIndicator />
+            {/* <CartIndicator /> */}
 
             {/* User Account Menu */}
             <UserAccountMenu />

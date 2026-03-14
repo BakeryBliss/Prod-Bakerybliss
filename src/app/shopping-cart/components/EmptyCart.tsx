@@ -33,7 +33,7 @@ const EmptyCart = ({ suggestedProducts }: EmptyCartProps) => {
       </p>
 
       <Link
-        href="/product-details"
+        href="/products"
         className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-md font-heading font-semibold text-lg hover:bg-primary/90 transition-smooth focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2"
       >
         <Icon name="ShoppingBagIcon" size={20} />
@@ -49,10 +49,10 @@ const EmptyCart = ({ suggestedProducts }: EmptyCartProps) => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {suggestedProducts.map((product) => (
-              <Link
+              <div
                 key={product.id}
-                href={`/product-details?id=${product.id}`}
-                target="_blank"
+                // href={`/product-details?id=${product.id}`}
+                // target="_blank"
                 className="bg-card rounded-md border border-border overflow-hidden transition-smooth hover:shadow-warm-lg focus:outline-none focus:ring-2 focus:ring-ring group"
               >
                 <div className="relative w-full h-48 bg-muted overflow-hidden">
@@ -72,7 +72,7 @@ const EmptyCart = ({ suggestedProducts }: EmptyCartProps) => {
                     ₹{product.price.toFixed(2)}
                   </p> */}
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         </div>

@@ -172,7 +172,7 @@ const Footer = ({ className = '' }: FooterProps) => {
             <p className="caption text-muted-foreground text-center md:text-left">
               &copy; {currentYear} BakeryBliss. All rights reserved.
             </p>
-            <div className="flex items-center gap-6">
+            {/* <div className="flex items-center gap-6">
               <div className="flex items-center gap-2 text-muted-foreground">
                 <Icon name="ShieldCheckIcon" size={20} />
                 <span className="caption">Secure Payments</span>
@@ -181,7 +181,7 @@ const Footer = ({ className = '' }: FooterProps) => {
                 <Icon name="TruckIcon" size={20} />
                 <span className="caption">Fast Delivery</span>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

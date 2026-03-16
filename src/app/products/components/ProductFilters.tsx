@@ -48,6 +48,15 @@ export default function ProductFilters({
     onPriceRangeChange(newRange);
   };
 
+  const handleAdvancedTagToggle = (tag: string) => {
+    const isAlreadySelected = selectedTags.includes(tag);
+    onTagToggle(tag);
+
+    if (!isAlreadySelected) {
+      setShowAdvancedFilters(false);
+    }
+  };
+
   return (
     <div className="bg-card rounded-lg shadow-warm-sm p-6 mb-8">
       {/* Header */}
@@ -82,7 +91,7 @@ export default function ProductFilters({
       </div>
 
       {/* Price Range Filter */}
-      <div className="mb-6">
+      {/* <div className="mb-6">
         <div className="flex items-center justify-between mb-3">
           <label className="text-sm font-medium text-foreground">
             Price Range: ₹{priceRange[0]} - ₹{priceRange[1]}
@@ -124,7 +133,7 @@ export default function ProductFilters({
             />
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Advanced Filters Toggle */}
       <div className="mb-4">
@@ -148,7 +157,7 @@ export default function ProductFilters({
             {allTags.map((tag) => (
               <button
                 key={tag}
-                onClick={() => onTagToggle(tag)}
+                onClick={() => handleAdvancedTagToggle(tag)}
                 className={`px-3 py-1 text-xs rounded-full border transition-colors ${
                   selectedTags.includes(tag)
                     ? 'bg-primary text-primary-foreground border-primary'

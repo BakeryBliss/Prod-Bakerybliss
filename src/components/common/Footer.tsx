@@ -43,8 +43,8 @@ const Footer = ({ className = '' }: FooterProps) => {
   const socialLinks = [
     { name: 'Facebook', icon: 'ShareIcon', href: 'https://facebook.com/bakerybliss' },
     { name: 'Instagram', icon: 'CameraIcon', href: 'https://instagram.com/blissbakeryindia' },
-    { name: 'Twitter', icon: 'ChatBubbleLeftRightIcon', href: 'https://twitter.com/bakerybliss' },
-    { name: 'Pinterest', icon: 'PhotoIcon', href: 'https://pinterest.com/bakerybliss' },
+    // { name: 'Twitter', icon: 'ChatBubbleLeftRightIcon', href: 'https://twitter.com/bakerybliss' },
+    // { name: 'Pinterest', icon: 'PhotoIcon', href: 'https://pinterest.com/bakerybliss' },
   ];
 
   return (
@@ -118,7 +118,7 @@ const Footer = ({ className = '' }: FooterProps) => {
             </ul>
           </div>
 
-          <div>
+          {/* <div>
             <h3 className="font-heading font-semibold text-foreground mb-4">Support</h3>
             <ul className="space-y-3">
               {footerLinks.support.map((link) => (
@@ -132,7 +132,7 @@ const Footer = ({ className = '' }: FooterProps) => {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
 
           <div>
             <h3 className="font-heading font-semibold text-foreground mb-4">Company</h3>

@@ -35,13 +35,13 @@ export default function AboutUsPage() {
         {/* <StorySection /> */}
 
         {/* Mission & Values Section */}
-        <MissionValuesSection />
+        {/* <MissionValuesSection /> */}
 
         {/* Team Section */}
         {/* <TeamSection /> */}
 
         {/* Gallery Section */}
-        <GallerySection />
+        {/* <GallerySection /> */}
 
         {/* Testimonials Section */}
         {/* <TestimonialsSection /> */}

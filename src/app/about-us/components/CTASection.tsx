@@ -26,13 +26,13 @@ const CTASection = ({ className = '' }: CTASectionProps) => {
               <span>Shop Now</span>
             </Link>
 
-            <Link
+            {/* <Link
               href="/home"
               className="inline-flex items-center gap-2 px-8 py-4 bg-transparent border-2 border-primary-foreground text-primary-foreground rounded-lg font-heading font-semibold text-lg hover:bg-primary-foreground/10 transition-smooth focus:outline-none focus:ring-3 focus:ring-primary-foreground focus:ring-offset-2 focus:ring-offset-primary"
             >
               <Icon name="MapPinIcon" size={24} />
               <span>Visit Us</span>
-            </Link>
+            </Link> */}
           </div>
 
           <div className="mt-12 grid sm:grid-cols-3 gap-8">

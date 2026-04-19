@@ -172,7 +172,7 @@ const FeaturedProducts = ({ className = '' }: FeaturedProductsProps) => {
                   </div>
 
                   <div className="flex items-center justify-between pt-2">
-                    {/* <span className="data-text text-2xl font-bold text-primary">
+                    <span className="data-text text-2xl font-bold text-primary">
                       ₹{product.price.toFixed(2)}
                     </span>
                     <button
@@ -185,7 +185,7 @@ const FeaturedProducts = ({ className = '' }: FeaturedProductsProps) => {
 
                       <Icon name={addedToCart === product.id ? 'CheckIcon' : 'ShoppingCartIcon'} size={18} />
                       <span>{addedToCart === product.id ? 'Added!' : 'Add'}</span>
-                    </button> */}
+                    </button>
                   </div>
                 </div>
               </Link>

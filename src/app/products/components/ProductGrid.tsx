@@ -170,14 +170,14 @@ function ProductCard({ product }: { product: Product }) {
         </div>
 
         {/* Quick Actions */}
-        {/* <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <button
             className="p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-sm hover:bg-white transition-colors"
             aria-label="Add to favorites"
           >
             <Icon name="HeartIcon" size={16} className="text-gray-600" />
           </button>
-        </div> */}
+        </div>
       </div>
 
       {/* Product Info */}
@@ -227,7 +227,7 @@ function ProductCard({ product }: { product: Product }) {
 
         {/* Price */}
         <div className="flex items-center justify-between">
-          {/* <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
             <span className="text-lg font-semibold text-foreground">
               ₹{product.price.toFixed(0)}
             </span>
@@ -236,10 +236,10 @@ function ProductCard({ product }: { product: Product }) {
                 ₹{product.originalPrice.toFixed(0)}
               </span>
             )}
-          </div> */}
+          </div>
 
           {/* Add to Cart Button */}
-          {/* <button
+          <button
             onClick={handleAddToCart}
             className={`p-2 rounded-full transition-all ${
               addedToCart 
@@ -249,7 +249,7 @@ function ProductCard({ product }: { product: Product }) {
             aria-label={addedToCart ? 'Added to cart' : 'Add to cart'}
           >
             <Icon name={addedToCart ? 'CheckIcon' : 'ShoppingBagIcon'} size={16} />
-          </button> */}
+          </button>
         </div>
       </div>
     </Link>

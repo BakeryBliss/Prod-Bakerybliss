@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import Icon from '@/components/ui/AppIcon';
 
 interface CartItemData {
@@ -48,7 +48,23 @@ const OrderSummary = ({ summary, cartItems, onApplyCoupon, onProceedToCheckout }
   const [orderSubmitting, setOrderSubmitting] = useState(false);
   const [orderError, setOrderError] = useState('');
   const [orderSuccess, setOrderSuccess] = useState(false);
+  const [orderNumber, setOrderNumber] = useState('');
+  const [paymentId, setPaymentId] = useState('');
   const dialogRef = useRef<HTMLDivElement>(null);
+  const razorpayLoaded = useRef(false);
+
+  // Load Razorpay checkout script
+  useEffect(() => {
+    if (razorpayLoaded.current) return;
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.async = true;
+    script.onload = () => { razorpayLoaded.current = true; };
+    document.body.appendChild(script);
+    return () => {
+      // Don't remove — Razorpay may still be needed
+    };
+  }, []);
 
   // Close dialog on escape key
   useEffect(() => {
@@ -80,37 +96,96 @@ const OrderSummary = ({ summary, cartItems, onApplyCoupon, onProceedToCheckout }
     setOrderError('');
 
     try {
-      const response = await fetch('/api/orders', {
+      // Validate form fields
+      if (!orderFormData.customerName.trim()) throw new Error('Name is required');
+      if (!orderFormData.phoneNumber.trim()) throw new Error('Phone number is required');
+      if (!orderFormData.address.trim()) throw new Error('Delivery address is required');
+
+      // Step 1: Create a Razorpay order on the server
+      const orderRes = await fetch('/api/razorpay/order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ...orderFormData,
-          cartItems,
-          summary
-        })
+          amount: summary.total,
+          receipt: `bb_${Date.now()}`,
+          notes: {
+            customerName: orderFormData.customerName,
+            phone: orderFormData.phoneNumber,
+          },
+        }),
       });
 
-      const data = await response.json();
+      const orderData = await orderRes.json();
+      if (!orderRes.ok) throw new Error(orderData.error || 'Could not create payment order');
 
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to submit order');
-      }
+      // Step 2: Open Razorpay checkout popup
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount: orderData.amount,
+        currency: orderData.currency,
+        name: 'BakeryBliss',
+        description: `Order — ${cartItems.length} item${cartItems.length > 1 ? 's' : ''}`,
+        order_id: orderData.orderId,
+        handler: async (response: { razorpay_order_id: string; razorpay_payment_id: string; razorpay_signature: string }) => {
+          try {
+            // Step 3: Verify payment on the server
+            const verifyRes = await fetch('/api/razorpay/verify', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                orderDetails: {
+                  ...orderFormData,
+                  cartItems,
+                  summary,
+                },
+              }),
+            });
 
-      setOrderSuccess(true);
-      // Clear cart after successful order
-      localStorage.removeItem('cart');
-      // Reset form
-      setOrderFormData({
-        customerName: '',
-        phoneNumber: '',
-        email: '',
-        address: '',
-        deliveryDate: '',
-        additionalNotes: ''
+            const verifyData = await verifyRes.json();
+            if (!verifyRes.ok) throw new Error(verifyData.error || 'Payment verification failed');
+
+            // Success!
+            setOrderNumber(verifyData.orderNumber);
+            setPaymentId(verifyData.paymentId);
+            setOrderSuccess(true);
+            localStorage.removeItem('cart');
+            window.dispatchEvent(new Event('cartUpdated'));
+          } catch (err) {
+            setOrderError(err instanceof Error ? err.message : 'Payment verification failed');
+          }
+        },
+        prefill: {
+          name: orderFormData.customerName,
+          email: orderFormData.email || undefined,
+          contact: orderFormData.phoneNumber,
+        },
+        theme: {
+          color: '#8B4513',
+        },
+        modal: {
+          ondismiss: () => {
+            setOrderSubmitting(false);
+          },
+        },
+      };
+
+      const rzp = new (window as any).Razorpay(options);
+      rzp.on('payment.failed', (response: any) => {
+        setOrderError(
+          response.error?.description || 'Payment failed. Please try again.'
+        );
+        setOrderSubmitting(false);
       });
+      rzp.open();
+
+      // Don't setOrderSubmitting(false) here — the popup is still open.
+      // It's set in ondismiss and payment.failed callbacks.
+      return;
     } catch (err) {
       setOrderError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
-    } finally {
       setOrderSubmitting(false);
     }
   };
@@ -229,16 +304,16 @@ const OrderSummary = ({ summary, cartItems, onApplyCoupon, onProceedToCheckout }
         <Icon name="ArrowRightIcon" size={20} />
       </button> */}
 
-      {/* Place Order Button */}
+      {/* Pay & Place Order Button */}
       <button
         onClick={() => setShowOrderForm(true)}
         className="w-full px-6 py-4 bg-primary text-primary-foreground rounded-md font-heading font-semibold text-lg hover:bg-primary/90 transition-smooth focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2 flex items-center justify-center gap-2"
       >
-        <Icon name="EnvelopeIcon" size={20} />
-        Place Order
+        <Icon name="CreditCardIcon" size={20} />
+        Pay & Place Order
       </button>
       <p className="text-center text-muted-foreground text-sm mt-2">
-        We'll confirm your order and payment details via email
+        Secure payment via Razorpay (UPI, Cards, Net Banking)
       </p>
 
       {/* Security Badge */}
@@ -279,10 +354,20 @@ const OrderSummary = ({ summary, cartItems, onApplyCoupon, onProceedToCheckout }
                     <Icon name="CheckCircleIcon" size={36} className="text-success" />
                   </div>
                   <h4 className="font-heading font-semibold text-xl text-foreground mb-2">
-                    Thank You!
+                    Payment Successful!
                   </h4>
+                  {orderNumber && (
+                    <p className="text-foreground font-medium text-sm mb-1">
+                      Order #{orderNumber}
+                    </p>
+                  )}
+                  {paymentId && (
+                    <p className="text-muted-foreground text-xs mb-4">
+                      Payment ID: {paymentId}
+                    </p>
+                  )}
                   <p className="text-muted-foreground text-sm mb-6">
-                    We've received your order and will contact you shortly to confirm details and arrange payment.
+                    Your payment has been received and your order is confirmed. We'll contact you with delivery details.
                   </p>
                   <button
                     onClick={closeOrderForm}
@@ -426,17 +511,20 @@ const OrderSummary = ({ summary, cartItems, onApplyCoupon, onProceedToCheckout }
                       {orderSubmitting ? (
                         <>
                           <Icon name="ArrowPathIcon" size={18} className="animate-spin" />
-                          Sending...
+                          Processing...
                         </>
                       ) : (
-                        'Submit Order'
+                        <>
+                          <Icon name="CreditCardIcon" size={18} />
+                          Pay ₹{summary.total.toFixed(2)}
+                        </>
                       )}
                     </button>
                   </div>
 
                   {/* Footer Note */}
                   <p className="text-center text-muted-foreground text-xs pt-1">
-                    We'll call you to confirm your order and payment
+                    Razorpay secure checkout — UPI, Cards, NetBanking & Wallets
                   </p>
                 </form>
               )}

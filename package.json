@@ -63,6 +63,7 @@
         "chalk": "4.1.2",
         "next": "15.1.11",
         "nodemailer": "^7.0.12",
+        "razorpay": "^2.9.6",
         "react": "19.0.3",
         "react-dom": "19.0.3",
         "recharts": "^2.15.2",

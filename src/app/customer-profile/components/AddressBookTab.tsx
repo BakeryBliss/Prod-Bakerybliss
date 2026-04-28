@@ -9,12 +9,12 @@ interface Address {
   name: string;
   street: string;
   city: string;
-  state: string;
+  state?: string;
   zipCode: string;
-  phone: string;
+  phone?: string;
   isDefault: boolean;
-  lat: number;
-  lng: number;
+  lat?: number;
+  lng?: number;
 }
 
 interface AddressBookTabProps {
@@ -111,13 +111,15 @@ const AddressBookTab = ({
                       <span>Set Default</span>
                     </button>
                   )}
-                  <button
-                    onClick={() => setExpandedAddress(expandedAddress === address.id ? null : address.id)}
-                    className="flex items-center gap-2 px-3 py-2 text-sm bg-muted text-foreground rounded-md hover:bg-muted/80 transition-smooth focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2"
-                  >
-                    <Icon name="MapIcon" size={14} />
-                    <span>View Map</span>
-                  </button>
+                  {typeof address.lat === 'number' && typeof address.lng === 'number' && (
+                    <button
+                      onClick={() => setExpandedAddress(expandedAddress === address.id ? null : address.id)}
+                      className="flex items-center gap-2 px-3 py-2 text-sm bg-muted text-foreground rounded-md hover:bg-muted/80 transition-smooth focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2"
+                    >
+                      <Icon name="MapIcon" size={14} />
+                      <span>View Map</span>
+                    </button>
+                  )}
                   <button
                     onClick={() => onEditAddress(address.id)}
                     className="flex items-center gap-2 px-3 py-2 text-sm bg-muted text-foreground rounded-md hover:bg-muted/80 transition-smooth focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2"
@@ -134,7 +136,7 @@ const AddressBookTab = ({
                   </button>
                 </div>
 
-                {expandedAddress === address.id && (
+                {expandedAddress === address.id && typeof address.lat === 'number' && typeof address.lng === 'number' && (
                   <div className="mt-4 border-t border-border pt-4">
                     <div className="w-full h-48 rounded-md overflow-hidden">
                       <iframe

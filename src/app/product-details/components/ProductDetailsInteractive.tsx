@@ -11,12 +11,13 @@ import RelatedProducts from './RelatedProducts';
 import SocialShare from './SocialShare';
 import Icon from '@/components/ui/AppIcon';
 import { useProducts } from '@/hooks/useProducts';
+import { getReviewCardsForProduct } from '@/services/reviews';
 
 interface Review {
   id: string;
   customerName: string;
-  customerImage: string;
-  customerImageAlt: string;
+  customerImage?: string | null;
+  customerImageAlt?: string | null;
   rating: number;
   date: string;
   comment: string;
@@ -52,55 +53,7 @@ const ProductDetailsInteractive = () => {
   const allProducts = fetchedProducts;
 
 
-  const mockReviews: Review[] = [
-  {
-    id: 'rev1',
-    customerName: 'Sarah Johnson',
-    customerImage: "https://img.rocket.new/generatedImages/rocket_gen_img_1a9e8814c-1763296696290.png",
-    customerImageAlt: 'Professional woman with brown hair smiling at camera in business attire',
-    rating: 5,
-    date: '01/08/2026',
-    comment:
-    'Absolutely divine! The croissant was perfectly flaky and the chocolate filling was rich without being overly sweet. Best croissant I have had outside of Paris!',
-    verified: true,
-    helpful: 24
-  },
-  {
-    id: 'rev2',
-    customerName: 'Michael Chen',
-    customerImage: "https://img.rocket.new/generatedImages/rocket_gen_img_1cd09ec58-1763296862264.png",
-    customerImageAlt: 'Asian man with glasses smiling in casual blue shirt',
-    rating: 5,
-    date: '01/05/2026',
-    comment:
-    'I order these every week! The quality is consistently excellent and they are always fresh. The dark chocolate option is my favorite.',
-    verified: true,
-    helpful: 18
-  },
-  {
-    id: 'rev3',
-    customerName: 'Emily Rodriguez',
-    customerImage: "https://img.rocket.new/generatedImages/rocket_gen_img_19c3040c9-1763301128250.png",
-    customerImageAlt: 'Hispanic woman with long dark hair smiling outdoors',
-    rating: 4,
-    date: '01/02/2026',
-    comment:
-    'Really good croissant! The only reason I am not giving 5 stars is because I wish there was a bit more chocolate filling. Otherwise perfect!',
-    verified: true,
-    helpful: 12
-  },
-  {
-    id: 'rev4',
-    customerName: 'David Thompson',
-    customerImage: "https://img.rocket.new/generatedImages/rocket_gen_img_10353cce4-1763296509172.png",
-    customerImageAlt: 'Caucasian man with beard smiling in casual attire',
-    rating: 5,
-    date: '12/28/2025',
-    comment:
-    'These croissants are worth every penny. The buttery layers and quality chocolate make them stand out from any other bakery in town.',
-    verified: false,
-    helpful: 9
-  }];
+  const [reviews, setReviews] = useState<Review[]>([]);
 
   const ratingDistribution = [
   { stars: 5, count: 89, percentage: 70 },
@@ -115,6 +68,16 @@ const ProductDetailsInteractive = () => {
   const currentUrl = isHydrated ?
   `${window.location.origin}/product-details?id=${productId}` :
   '';
+
+  useEffect(() => {
+    const loadReviews = async () => {
+      if (!currentProduct?.id) return;
+      const reviewCards = await getReviewCardsForProduct(currentProduct.id);
+      setReviews(reviewCards);
+    };
+
+    loadReviews();
+  }, [currentProduct?.id]);
 
   // Update page title with product name
   useEffect(() => {
@@ -280,7 +243,7 @@ const ProductDetailsInteractive = () => {
 
         {/* Customer Reviews */}
         <CustomerReviews
-          reviews={mockReviews}
+          reviews={reviews}
           averageRating={currentProduct.rating}
           totalReviews={currentProduct.reviewCount}
           ratingDistribution={ratingDistribution} />

@@ -7,8 +7,8 @@ import AppImage from '@/components/ui/AppImage';
 interface Review {
   id: string;
   customerName: string;
-  customerImage: string;
-  customerImageAlt: string;
+  customerImage?: string | null;
+  customerImageAlt?: string | null;
   rating: number;
   date: string;
   comment: string;
@@ -86,10 +86,14 @@ const CustomerReviews = ({
                 <Icon name="StarIcon" size={16} variant="solid" className="text-warning" />
               </div>
               <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-warning"
-                  style={{ width: `${dist.percentage}%` }}
-                />
+                <div className="flex h-full gap-0.5">
+                  {Array.from({ length: 20 }).map((_, index) => (
+                    <span
+                      key={index}
+                      className={`h-full flex-1 rounded-full ${index < Math.round(dist.percentage / 5) ? 'bg-warning' : 'bg-transparent'}`}
+                    />
+                  ))}
+                </div>
               </div>
               <span className="caption text-muted-foreground min-w-[60px] text-right">
                 {dist.count} ({dist.percentage}%)
@@ -141,12 +145,16 @@ const CustomerReviews = ({
         {sortedReviews.map((review) => (
           <div key={review.id} className="p-6 bg-background rounded-lg">
             <div className="flex items-start gap-4 mb-4">
-              <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
-                <AppImage
-                  src={review.customerImage}
-                  alt={review.customerImageAlt}
-                  className="w-full h-full object-cover"
-                />
+              <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-muted flex items-center justify-center">
+                {review.customerImage ? (
+                  <AppImage
+                    src={review.customerImage}
+                    alt={review.customerImageAlt || review.customerName}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <Icon name="UserCircleIcon" size={32} className="text-muted-foreground" />
+                )}
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">

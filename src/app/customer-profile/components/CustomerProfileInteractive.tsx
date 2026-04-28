@@ -12,7 +12,10 @@ import PaymentMethodsTab from './PaymentMethodsTab';
 import NotificationPreferencesTab from './NotificationPreferencesTab';
 import SecurityTab from './SecurityTab';
 import { useAuth } from '@/hooks/useAuth';
-import { supabase } from '@/lib/supabase';
+import { getCustomerById } from '@/services/customers';
+import { getAddressesByCustomer } from '@/services/addresses';
+import { getOrdersByCustomer } from '@/services/orders';
+import type { CustomerAddress, Order } from '@/types/database';
 
 interface CustomerProfileInteractiveProps {
   initialUserData: any;
@@ -40,33 +43,25 @@ const CustomerProfileInteractive = ({
 
   useEffect(() => {
     if (!isLoading && isLoggedIn && user) {
-      // Fetch user profile from Supabase
       const fetchUserProfile = async () => {
         try {
-          const { data: profile, error } = await supabase
-            .from('profiles')
-            .select('*')
-            .eq('id', user.id)
-            .single();
-
-          if (error && error.code !== 'PGRST116') {
-            // PGRST116 = no rows returned, which is fine for new users
-            console.error('Error fetching profile:', error);
-            return;
-          }
+          const [profile, profileAddresses, profileOrders] = await Promise.all([
+            getCustomerById(user.id),
+            getAddressesByCustomer(user.id),
+            getOrdersByCustomer(user.id),
+          ]);
 
           if (profile) {
             setUserData({
-              name: profile.full_name || '',
+              name: profile.full_name || user.user_metadata?.full_name || '',
               email: user.email || '',
               phone: profile.phone_number || '',
               memberSince: new Date(user.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long' }),
               loyaltyPoints: 0,
-              image: profile.avatar_url || '',
+              image: profile.avatar_url || user.user_metadata?.avatar_url || '',
               alt: 'User profile picture'
             });
           } else {
-            // New user - set basic info from auth user
             setUserData({
               name: user.user_metadata?.full_name || '',
               email: user.email || '',
@@ -77,6 +72,33 @@ const CustomerProfileInteractive = ({
               alt: 'User profile picture'
             });
           }
+
+          setAddresses(
+            profileAddresses.map((address: CustomerAddress) => ({
+              id: address.id,
+              label: address.label || 'Address',
+              name: profile?.full_name || user.user_metadata?.full_name || 'Customer',
+              street: address.street_address,
+              city: address.city,
+              state: '',
+              zipCode: address.postal_code,
+              phone: profile?.phone_number || user.user_metadata?.phone_number || '',
+              isDefault: !!address.is_default,
+              lat: 0,
+              lng: 0,
+            }))
+          );
+
+          setOrders(
+            profileOrders.map((order: Order) => ({
+              id: order.id,
+              orderNumber: order.id.slice(0, 8).toUpperCase(),
+              date: order.created_at ? new Date(order.created_at).toLocaleDateString('en-US') : '',
+              status: order.status === 'delivered' ? 'Delivered' : order.status === 'cancelled' ? 'Cancelled' : order.status === 'out_for_delivery' ? 'Out for Delivery' : 'Received',
+              items: [],
+              total: Number(order.total_amount || 0),
+            }))
+          );
         } catch (error) {
           console.error('Error fetching user profile:', error);
         }
@@ -86,19 +108,19 @@ const CustomerProfileInteractive = ({
     }
   }, [isLoggedIn, isLoading, user]);
 
-  // const tabs = [
-  //   { id: 'personal', label: 'Personal Info', icon: 'UserIcon' },
-  //   { id: 'orders', label: 'Order History', icon: 'ClipboardDocumentListIcon' },
-  //   { id: 'addresses', label: 'Addresses', icon: 'MapPinIcon' },
-  //   { id: 'payments', label: 'Payments', icon: 'CreditCardIcon' },
-  //   { id: 'notifications', label: 'Notifications', icon: 'BellIcon' },
-  //   { id: 'security', label: 'Security', icon: 'ShieldCheckIcon' },
-  // ];
+  const tabs = [
+    { id: 'personal', label: 'Personal Info', icon: 'UserIcon' },
+    { id: 'orders', label: 'Order History', icon: 'ClipboardDocumentListIcon' },
+    { id: 'addresses', label: 'Addresses', icon: 'MapPinIcon' },
+    { id: 'payments', label: 'Payments', icon: 'CreditCardIcon' },
+    // { id: 'notifications', label: 'Notifications', icon: 'BellIcon' },
+    // { id: 'security', label: 'Security', icon: 'ShieldCheckIcon' },
+  ];
 
-  // const handleSavePersonalInfo = (data: any) => {
-  //   console.log('Saving personal info:', data);
-  //   alert('Personal information updated successfully!');
-  // };
+  const handleSavePersonalInfo = (data: any) => {
+    console.log('Saving personal info:', data);
+    alert('Personal information updated successfully!');
+  };
 
   const handleReorder = (orderId: string) => {
     console.log('Reordering:', orderId);
@@ -243,10 +265,10 @@ const CustomerProfileInteractive = ({
   return (
     <div className="space-y-6">
       <ProfileHeader userData={userData} onImageChange={handleImageChange} />
-      {/* <ProfileTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} /> */}
+      <ProfileTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
 
       <div className="min-h-[400px]">
-        {/* {activeTab === 'personal' && (
+        {activeTab === 'personal' && (
           <PersonalInfoTab
             initialData={{
               firstName: userData.name.split(' ')[0] || '',
@@ -257,7 +279,7 @@ const CustomerProfileInteractive = ({
             }}
             onSave={handleSavePersonalInfo}
           />
-        )} */}
+        )}
 
         {activeTab === 'orders' && (
           <OrderHistoryTab
@@ -287,20 +309,20 @@ const CustomerProfileInteractive = ({
           />
         )}
 
-        {activeTab === 'notifications' && (
+        {/* {activeTab === 'notifications' && (
           <NotificationPreferencesTab
             preferences={notificationPreferences}
             onSave={handleSaveNotificationPreferences}
           />
-        )}
+        )} */}
 
-        {activeTab === 'security' && (
+        {/* {activeTab === 'security' && (
           <SecurityTab
             onChangePassword={handleChangePassword}
             onDeleteAccount={handleDeleteAccount}
             onExportData={handleExportData}
           />
-        )}
+        )} */}
       </div>
     </div>
   );

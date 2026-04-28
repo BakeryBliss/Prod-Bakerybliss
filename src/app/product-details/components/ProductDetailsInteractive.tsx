@@ -9,6 +9,7 @@ import ProductTabs from './ProductTabs';
 import CustomerReviews from './CustomerReviews';
 import RelatedProducts from './RelatedProducts';
 import SocialShare from './SocialShare';
+import AddReviewDialog from './AddReviewDialog';
 import Icon from '@/components/ui/AppIcon';
 import { useProducts } from '@/hooks/useProducts';
 import { getReviewCardsForProduct } from '@/services/reviews';
@@ -41,6 +42,7 @@ const ProductDetailsInteractive = () => {
   const searchParams = useSearchParams();
   const [isHydrated, setIsHydrated] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showAddReviewDialog, setShowAddReviewDialog] = useState(false);
   
   // Fetch products from database
   const { products: fetchedProducts, isLoading } = useProducts();
@@ -78,6 +80,14 @@ const ProductDetailsInteractive = () => {
 
     loadReviews();
   }, [currentProduct?.id]);
+
+  const handleReviewAdded = async () => {
+    // Reload reviews after a new one is added
+    if (currentProduct?.id) {
+      const reviewCards = await getReviewCardsForProduct(currentProduct.id);
+      setReviews(reviewCards);
+    }
+  };
 
   // Update page title with product name
   useEffect(() => {
@@ -246,7 +256,8 @@ const ProductDetailsInteractive = () => {
           reviews={reviews}
           averageRating={currentProduct.rating}
           totalReviews={currentProduct.reviewCount}
-          ratingDistribution={ratingDistribution} />
+          ratingDistribution={ratingDistribution}
+          onAddReviewClick={() => setShowAddReviewDialog(true)} />
 
 
         {/* Related Products */}
@@ -283,6 +294,14 @@ const ProductDetailsInteractive = () => {
           </div>
         </div>
       }
+
+      {/* Add Review Dialog */}
+      <AddReviewDialog
+        productId={currentProduct.id}
+        isOpen={showAddReviewDialog}
+        onClose={() => setShowAddReviewDialog(false)}
+        onReviewAdded={handleReviewAdded}
+      />
     </>);
 
 };

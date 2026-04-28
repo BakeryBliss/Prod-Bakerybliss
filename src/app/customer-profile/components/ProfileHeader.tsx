@@ -14,10 +14,9 @@ interface ProfileHeaderProps {
     image: string;
     alt: string;
   };
-  onImageChange: () => void;
 }
 
-const ProfileHeader = ({ userData, onImageChange }: ProfileHeaderProps) => {
+const ProfileHeader = ({ userData }: ProfileHeaderProps) => {
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
@@ -51,13 +50,6 @@ const ProfileHeader = ({ userData, onImageChange }: ProfileHeaderProps) => {
               className="w-full h-full object-cover"
             />
           </div>
-          <button
-            onClick={onImageChange}
-            className="absolute bottom-0 right-0 p-2 bg-primary text-primary-foreground rounded-full shadow-warm hover:bg-primary/90 transition-smooth focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2"
-            aria-label="Change profile picture"
-          >
-            <Icon name="CameraIcon" size={16} />
-          </button>
         </div>
 
         <div className="flex-1 text-center lg:text-left">

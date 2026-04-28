@@ -84,7 +84,7 @@ const MissionValuesSection = ({ className = '' }: MissionValuesSectionProps) => 
             </div>
           </div>
 
-          {/* Certifications
+          Certifications
           <div className="mt-16 bg-card rounded-xl p-8 shadow-warm-md">
             <h3 className="font-heading text-2xl text-foreground text-center mb-8">
               Certifications & Awards
@@ -108,7 +108,7 @@ const MissionValuesSection = ({ className = '' }: MissionValuesSectionProps) => 
                 </div>
               ))}
             </div>
-          </div> */}
+          </div>
         </div>
       </div>
     </section>

@@ -13,28 +13,6 @@ const SocialShare = ({ productName, productUrl }: SocialShareProps) => {
 
   const shareLinks = [
     {
-      name: 'Facebook',
-      icon: 'ShareIcon',
-      color: 'hover:text-[#1877F2]',
-      url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(productUrl)}`,
-    },
-    {
-      name: 'Twitter',
-      icon: 'ShareIcon',
-      color: 'hover:text-[#1DA1F2]',
-      url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-        productName
-      )}&url=${encodeURIComponent(productUrl)}`,
-    },
-    {
-      name: 'Pinterest',
-      icon: 'ShareIcon',
-      color: 'hover:text-[#E60023]',
-      url: `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(
-        productUrl
-      )}&description=${encodeURIComponent(productName)}`,
-    },
-    {
       name: 'WhatsApp',
       icon: 'ChatBubbleLeftRightIcon',
       color: 'hover:text-[#25D366]',

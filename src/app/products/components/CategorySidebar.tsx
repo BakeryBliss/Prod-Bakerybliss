@@ -14,12 +14,14 @@ interface CategorySidebarProps {
   categories: Category[];
   selectedCategory: string;
   onCategoryChange: (category: string) => void;
+  onClose?: () => void;
 }
 
 export default function CategorySidebar({
   categories,
   selectedCategory,
-  onCategoryChange
+  onCategoryChange,
+  onClose
 }: CategorySidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isContactDialogOpen, setIsContactDialogOpen] = useState(false);
@@ -35,10 +37,23 @@ export default function CategorySidebar({
             Categories
           </h3>
         )}
+        {/* Mobile Close Button */}
+        <button
+          onClick={onClose}
+          className="lg:hidden rounded-md hover:bg-muted transition-colors flex-shrink-0 p-2"
+          aria-label="Close filters"
+        >
+          <Icon
+            name="XMarkIcon"
+            size={20}
+            className="text-foreground"
+          />
+        </button>
+        {/* Desktop Collapse Button */}
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className={`rounded-md hover:bg-muted transition-colors flex-shrink-0 ${
-            isCollapsed ? 'p-2 w-full flex justify-center' : 'p-2'
+          className={`hidden lg:flex rounded-md hover:bg-muted transition-colors flex-shrink-0 ${
+            isCollapsed ? 'p-2 w-full justify-center' : 'p-2'
           }`}
           aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >

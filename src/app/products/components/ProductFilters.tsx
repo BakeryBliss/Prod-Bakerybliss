@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Icon from '@/components/ui/AppIcon';
 
 interface ProductFiltersProps {
@@ -25,6 +25,27 @@ export default function ProductFilters({
   totalProducts
 }: ProductFiltersProps) {
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
+  const [minPriceInput, setMinPriceInput] = useState(priceRange[0].toString());
+  const [maxPriceInput, setMaxPriceInput] = useState(priceRange[1].toString());
+  const resetMinTimeout = useRef<NodeJS.Timeout>();
+  const resetMaxTimeout = useRef<NodeJS.Timeout>();
+
+  // Sync input values when priceRange changes externally
+  useEffect(() => {
+    setMinPriceInput(priceRange[0].toString());
+  }, [priceRange[0]]);
+
+  useEffect(() => {
+    setMaxPriceInput(priceRange[1].toString());
+  }, [priceRange[1]]);
+
+  // Cleanup timeouts on unmount
+  useEffect(() => {
+    return () => {
+      if (resetMinTimeout.current) clearTimeout(resetMinTimeout.current);
+      if (resetMaxTimeout.current) clearTimeout(resetMaxTimeout.current);
+    };
+  }, []);
 
   const sortOptions = [
     { value: 'name', label: 'Name (A-Z)' },
@@ -70,7 +91,7 @@ export default function ProductFilters({
             id="sort"
             value={sortBy}
             onChange={(e) => onSortChange(e.target.value)}
-            className="px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-3 focus:ring-ring focus:border-primary"
+            className="px-4 py-2 border border-border rounded-md bg-card text-foreground shadow-warm-sm hover:shadow-warm-md transition-all focus:outline-none focus:ring-3 focus:ring-ring focus:border-primary cursor-pointer"
           >
             {sortOptions.map((option) => (
               <option key={option.value} value={option.value}>
@@ -104,9 +125,27 @@ export default function ProductFilters({
               type="number"
               min="0"
               max="4200"
-              value={priceRange[0]}
-              onChange={(e) => handlePriceChange(0, parseInt(e.target.value) || 0)}
-              className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-3 focus:ring-ring focus:border-primary"
+              value={minPriceInput}
+              onChange={(e) => {
+                const value = e.target.value;
+                setMinPriceInput(value);
+
+                // Clear any existing timeout
+                if (resetMinTimeout.current) clearTimeout(resetMinTimeout.current);
+
+                if (value !== '') {
+                  const parsed = parseInt(value);
+                  if (!isNaN(parsed)) {
+                    handlePriceChange(0, parsed);
+                  } else if (value === '0') {
+                    // Allow 0 temporarily, reset after 3 seconds if not changed
+                    resetMinTimeout.current = setTimeout(() => {
+                      setMinPriceInput(priceRange[0].toString());
+                    }, 3000);
+                  }
+                }
+              }}
+              className="w-full px-3 py-2 border border-border rounded-md bg-card text-foreground shadow-warm-sm focus:outline-none focus:ring-3 focus:ring-ring focus:border-primary transition-all"
             />
           </div>
           <div>
@@ -118,9 +157,27 @@ export default function ProductFilters({
               type="number"
               min="0"
               max="4200"
-              value={priceRange[1]}
-              onChange={(e) => handlePriceChange(1, parseInt(e.target.value) || 4200)}
-              className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-3 focus:ring-ring focus:border-primary"
+              value={maxPriceInput}
+              onChange={(e) => {
+                const value = e.target.value;
+                setMaxPriceInput(value);
+
+                // Clear any existing timeout
+                if (resetMaxTimeout.current) clearTimeout(resetMaxTimeout.current);
+
+                if (value !== '') {
+                  const parsed = parseInt(value);
+                  if (!isNaN(parsed)) {
+                    handlePriceChange(1, parsed);
+                  } else if (value === '0') {
+                    // Allow 0 temporarily, reset after 3 seconds if not changed
+                    resetMaxTimeout.current = setTimeout(() => {
+                      setMaxPriceInput(priceRange[1].toString());
+                    }, 3000);
+                  }
+                }
+              }}
+              className="w-full px-3 py-2 border border-border rounded-md bg-card text-foreground shadow-warm-sm focus:outline-none focus:ring-3 focus:ring-ring focus:border-primary transition-all"
             />
           </div>
         </div>

@@ -15,6 +15,12 @@ export interface ReviewCard {
   helpful: number;
 }
 
+export interface RatingStats {
+  averageRating: number;
+  totalReviews: number;
+  distribution: { stars: number; count: number; percentage: number }[];
+}
+
 export async function addReview(review: Partial<Review>): Promise<Review | null> {
   // If profile_id is provided, fetch customer name and image to denormalize
   let enrichedReview = { ...review };
@@ -92,4 +98,37 @@ export async function deleteReview(id: string): Promise<boolean> {
   return true;
 }
 
-export default { addReview, getReviewsForProduct, getReviewCardsForProduct, updateReview, deleteReview };
+export function calculateRatingStats(reviews: Review[]): RatingStats {
+  if (reviews.length === 0) {
+    return {
+      averageRating: 0,
+      totalReviews: 0,
+      distribution: [
+        { stars: 5, count: 0, percentage: 0 },
+        { stars: 4, count: 0, percentage: 0 },
+        { stars: 3, count: 0, percentage: 0 },
+        { stars: 2, count: 0, percentage: 0 },
+        { stars: 1, count: 0, percentage: 0 },
+      ],
+    };
+  }
+
+  // Calculate average rating
+  const sum = reviews.reduce((acc, review) => acc + (review.rating || 0), 0);
+  const averageRating = sum / reviews.length;
+
+  // Calculate distribution
+  const distribution = [5, 4, 3, 2, 1].map((stars) => {
+    const count = reviews.filter((r) => r.rating === stars).length;
+    const percentage = Math.round((count / reviews.length) * 100);
+    return { stars, count, percentage };
+  });
+
+  return {
+    averageRating: Math.round(averageRating * 10) / 10, // Round to 1 decimal
+    totalReviews: reviews.length,
+    distribution,
+  };
+}
+
+export default { addReview, getReviewsForProduct, getReviewCardsForProduct, updateReview, deleteReview, calculateRatingStats };

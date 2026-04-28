@@ -1,12 +1,14 @@
 'use client';
 
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/ui/AppIcon';
-import { products } from '@/data/products';
+import { useSearchProducts } from '@/hooks/useProducts';
 
 interface SearchBarProps {
   className?: string;
+  defaultExpanded?: boolean;
+  enableSuggestions?: boolean;
 }
 
 interface SearchSuggestion {
@@ -15,25 +17,20 @@ interface SearchSuggestion {
   category: string | string[];
 }
 
-const SearchBar = ({ className = '' }: SearchBarProps) => {
+const SearchBar = ({
+  className = '',
+  defaultExpanded = false,
+  enableSuggestions = true,
+}: SearchBarProps) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(defaultExpanded);
   const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
-
-  const allProducts = useMemo(
-    () =>
-      products.map((product) => ({
-        id: product.id,
-        name: product.name,
-        category: product.category,
-      })),
-    []
-  );
+  const { products: searchResults } = useSearchProducts(searchQuery);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -63,22 +60,23 @@ const SearchBar = ({ className = '' }: SearchBarProps) => {
   useEffect(() => {
     const normalizedQuery = searchQuery.trim().toLowerCase();
     if (normalizedQuery.length > 0) {
-      const filtered = allProducts.filter(
-        (item) => {
-          const matchesName = item.name.toLowerCase().includes(normalizedQuery);
-          const categories = Array.isArray(item.category) ? item.category : [item.category];
-          const matchesCategory = categories.some(cat => cat.toLowerCase().includes(normalizedQuery));
-          return matchesName || matchesCategory;
-        }
+      setSuggestions(
+        searchResults
+          .filter((item) => {
+            const matchesName = item.name.toLowerCase().includes(normalizedQuery);
+            const categories = Array.isArray(item.category) ? item.category : [item.category];
+            const matchesCategory = categories.some((cat) => cat.toLowerCase().includes(normalizedQuery));
+            return matchesName || matchesCategory;
+          })
+          .slice(0, 8)
       );
-      setSuggestions(filtered.slice(0, 8));
       setShowSuggestions(true);
     } else {
       setSuggestions([]);
       setShowSuggestions(false);
     }
     setSelectedIndex(-1);
-  }, [allProducts, searchQuery]);
+  }, [searchQuery, searchResults]);
 
   const handleSearch = (query: string) => {
     if (query.trim()) {
@@ -116,10 +114,12 @@ const SearchBar = ({ className = '' }: SearchBarProps) => {
     setSearchQuery('');
   };
 
+  const shouldShowSuggestions = enableSuggestions && showSuggestions && suggestions.length > 0;
+
   return (
     <div ref={searchRef} className={`relative ${className}`}>
       <div
-        className={`flex items-center gap-2 bg-input border border-border rounded-md transition-smooth ${
+          className={`flex items-center gap-2 bg-input border border-border rounded-md transition-smooth ${
           isExpanded ? 'w-full lg:w-80' : 'w-10 lg:w-64'
         }`}
       >
@@ -159,7 +159,7 @@ const SearchBar = ({ className = '' }: SearchBarProps) => {
         )}
       </div>
 
-      {showSuggestions && suggestions.length > 0 && (
+      {shouldShowSuggestions && (
         <div className="absolute top-full left-0 right-0 mt-2 bg-popover rounded-md shadow-warm-lg border border-border overflow-hidden z-dropdown animate-slide-in-from-top max-h-80 overflow-y-auto scrollbar-warm">
           <div className="py-2">
             {suggestions.map((suggestion, index) => (

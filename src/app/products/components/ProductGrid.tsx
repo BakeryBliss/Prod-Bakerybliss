@@ -170,14 +170,14 @@ function ProductCard({ product }: { product: Product }) {
         </div>
 
         {/* Quick Actions */}
-        <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        {/* <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <button
             className="p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-sm hover:bg-white transition-colors"
             aria-label="Add to favorites"
           >
             <Icon name="HeartIcon" size={16} className="text-gray-600" />
           </button>
-        </div>
+        </div> */}
       </div>
 
       {/* Product Info */}

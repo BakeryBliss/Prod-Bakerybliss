@@ -12,9 +12,10 @@ import SocialShare from './SocialShare';
 import AddReviewDialog from './AddReviewDialog';
 import Icon from '@/components/ui/AppIcon';
 import { useProducts } from '@/hooks/useProducts';
-import { getReviewCardsForProduct } from '@/services/reviews';
+import { getReviewCardsForProduct, getReviewsForProduct, calculateRatingStats } from '@/services/reviews';
+import type { Review as DatabaseReview } from '@/types/database';
 
-interface Review {
+interface ReviewCardType {
   id: string;
   customerName: string;
   customerImage?: string | null;
@@ -43,6 +44,7 @@ const ProductDetailsInteractive = () => {
   const [isHydrated, setIsHydrated] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showAddReviewDialog, setShowAddReviewDialog] = useState(false);
+  const [showMobileShareLinks, setShowMobileShareLinks] = useState(false);
   
   // Fetch products from database
   const { products: fetchedProducts, isLoading } = useProducts();
@@ -55,14 +57,18 @@ const ProductDetailsInteractive = () => {
   const allProducts = fetchedProducts;
 
 
-  const [reviews, setReviews] = useState<Review[]>([]);
-
-  const ratingDistribution = [
-  { stars: 5, count: 89, percentage: 70 },
-  { stars: 4, count: 28, percentage: 22 },
-  { stars: 3, count: 7, percentage: 6 },
-  { stars: 2, count: 2, percentage: 1 },
-  { stars: 1, count: 1, percentage: 1 }];
+  const [reviews, setReviews] = useState<DatabaseReview[]>([]);
+  const [ratingStats, setRatingStats] = useState({
+    averageRating: 0,
+    totalReviews: 0,
+    distribution: [
+      { stars: 5, count: 0, percentage: 0 },
+      { stars: 4, count: 0, percentage: 0 },
+      { stars: 3, count: 0, percentage: 0 },
+      { stars: 2, count: 0, percentage: 0 },
+      { stars: 1, count: 0, percentage: 0 },
+    ],
+  });
 
 
   const productId = isHydrated ? searchParams.get('id') || '1' : '1';
@@ -71,11 +77,42 @@ const ProductDetailsInteractive = () => {
   `${window.location.origin}/product-details?id=${productId}` :
   '';
 
+  const shareLinks = currentProduct
+    ? [
+        {
+          name: 'WhatsApp',
+          icon: 'ChatBubbleLeftRightIcon',
+          color: 'hover:text-[#25D366]',
+          url: `https://wa.me/?text=${encodeURIComponent(`${currentProduct.name} - ${currentUrl}`)}`,
+        },
+      ]
+    : [];
+
+  const handleShare = (url: string) => {
+    window.open(url, '_blank', 'width=600,height=400');
+    setShowMobileShareLinks(false);
+  };
+
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(currentUrl);
+      setShowMobileShareLinks(false);
+    } catch (err) {
+      console.error('Failed to copy link:', err);
+    }
+  };
+
   useEffect(() => {
     const loadReviews = async () => {
       if (!currentProduct?.id) return;
-      const reviewCards = await getReviewCardsForProduct(currentProduct.id);
-      setReviews(reviewCards);
+      
+      // Fetch raw reviews to calculate stats
+      const rawReviews = await getReviewsForProduct(currentProduct.id);
+      setReviews(rawReviews);
+      
+      // Calculate rating stats from raw reviews
+      const stats = calculateRatingStats(rawReviews);
+      setRatingStats(stats);
     };
 
     loadReviews();
@@ -84,8 +121,10 @@ const ProductDetailsInteractive = () => {
   const handleReviewAdded = async () => {
     // Reload reviews after a new one is added
     if (currentProduct?.id) {
-      const reviewCards = await getReviewCardsForProduct(currentProduct.id);
-      setReviews(reviewCards);
+      const rawReviews = await getReviewsForProduct(currentProduct.id);
+      setReviews(rawReviews);
+      const stats = calculateRatingStats(rawReviews);
+      setRatingStats(stats);
     }
   };
 
@@ -220,9 +259,48 @@ const ProductDetailsInteractive = () => {
       <div className="space-y-8 lg:space-y-12">
         {/* Main Product Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-          <div className="space-y-6 sticky top-20 h-fit">
-            <ProductImageGallery images={currentProduct.images} productName={currentProduct.name} />
-            <SocialShare productName={currentProduct.name} productUrl={currentUrl} />
+          <div className="space-y-6 lg:sticky lg:top-20 h-fit">
+            <div className="relative">
+              <div className="absolute left-3 top-3 z-20 lg:hidden">
+                <div className="flex items-center gap-2 rounded-full bg-background/90 p-2 shadow-warm-md backdrop-blur-sm">
+                  <button
+                    type="button"
+                    onClick={() => setShowMobileShareLinks((prev) => !prev)}
+                    className="w-10 h-10 flex items-center justify-center rounded-full border border-border bg-card text-foreground shadow-sm transition-smooth focus:outline-none focus:ring-2 focus:ring-ring"
+                    aria-label="Share product"
+                  >
+                    <Icon name="ShareIcon" size={18} className="text-primary" />
+                  </button>
+                  {showMobileShareLinks && (
+                    <div className="flex items-center gap-2">
+                      {shareLinks.map((link) => (
+                        <button
+                          key={link.name}
+                          type="button"
+                          onClick={() => handleShare(link.url)}
+                          className={`w-10 h-10 flex items-center justify-center rounded-full border border-border bg-card transition-smooth focus:outline-none focus:ring-2 focus:ring-ring ${link.color}`}
+                          aria-label={`Share on ${link.name}`}
+                        >
+                          <Icon name={link.icon as any} size={18} />
+                        </button>
+                      ))}
+                      <button
+                        type="button"
+                        onClick={handleCopyLink}
+                        className="w-10 h-10 flex items-center justify-center rounded-full border border-border bg-card text-foreground transition-smooth focus:outline-none focus:ring-2 focus:ring-ring hover:text-primary"
+                        aria-label="Copy product link"
+                      >
+                        <Icon name="LinkIcon" size={18} />
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <ProductImageGallery images={currentProduct.images} productName={currentProduct.name} />
+            </div>
+            <div className="hidden lg:block">
+              <SocialShare productName={currentProduct.name} productUrl={currentUrl} />
+            </div>
           </div>
           <div className="space-y-6">
             <ProductInfo
@@ -252,12 +330,29 @@ const ProductDetailsInteractive = () => {
 
 
         {/* Customer Reviews */}
-        <CustomerReviews
-          reviews={reviews}
-          averageRating={currentProduct.rating}
-          totalReviews={currentProduct.reviewCount}
-          ratingDistribution={ratingDistribution}
-          onAddReviewClick={() => setShowAddReviewDialog(true)} />
+        {(() => {
+          // Convert raw reviews to ReviewCard format
+          const reviewCards: ReviewCardType[] = reviews.map((review) => ({
+            id: review.id,
+            customerName: review.customer_name || 'Verified Customer',
+            customerImage: review.customer_image_url || null,
+            customerImageAlt: review.customer_name ? `${review.customer_name} profile picture` : null,
+            rating: review.rating || 0,
+            date: review.created_at ? new Date(review.created_at).toLocaleDateString('en-US') : '',
+            comment: review.comment || '',
+            verified: Boolean(review.profile_id),
+            helpful: 0,
+          }));
+
+          return (
+            <CustomerReviews
+              reviews={reviewCards}
+              averageRating={ratingStats.averageRating}
+              totalReviews={ratingStats.totalReviews}
+              ratingDistribution={ratingStats.distribution}
+              onAddReviewClick={() => setShowAddReviewDialog(true)} />
+          );
+        })()}
 
 
         {/* Related Products */}

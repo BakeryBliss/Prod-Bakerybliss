@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import CategorySidebar from './CategorySidebar';
 import ProductFilters from './ProductFilters';
 import ProductGrid from './ProductGrid';
@@ -42,6 +42,7 @@ const sortOptions = [
 ];
 
 export default function ProductsPageInteractive() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || 'all');
   const [searchTerm, setSearchTerm] = useState(searchParams.get('search') || '');
@@ -49,6 +50,7 @@ export default function ProductsPageInteractive() {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 4200]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [showFilters, setShowFilters] = useState(false);
+  const [showSearchSuggestions, setShowSearchSuggestions] = useState(false);
 
   // Fetch products from database
   const { products: fetchedProducts, isLoading } = useProducts();
@@ -109,6 +111,25 @@ export default function ProductsPageInteractive() {
     });
     return Array.from(tags).sort();
   }, [products]);
+
+  const searchSuggestions = useMemo(() => {
+    const normalizedSearch = searchTerm.trim().toLowerCase();
+
+    if (!normalizedSearch) {
+      return [];
+    }
+
+    return products
+      .filter((product) => {
+        const inName = product.name.toLowerCase().includes(normalizedSearch);
+        const categories = Array.isArray(product.category) ? product.category : [product.category];
+        const inCategory = categories.some((cat) => cat.toLowerCase().includes(normalizedSearch));
+        const inSubcategory = product.subcategory?.toLowerCase().includes(normalizedSearch);
+        const inTags = product.tags.some((tag) => tag.toLowerCase().includes(normalizedSearch));
+        return inName || inCategory || inSubcategory || inTags;
+      })
+      .slice(0, 5);
+  }, [products, searchTerm]);
 
   // Filter and sort products
   const filteredAndSortedProducts = useMemo(() => {
@@ -174,17 +195,81 @@ export default function ProductsPageInteractive() {
     );
   };
 
+  const handleSearchSubmit = () => {
+    const firstMatch = searchSuggestions[0];
+
+    if (firstMatch) {
+      router.push(`/product-details?id=${encodeURIComponent(firstMatch.id)}`);
+      return;
+    }
+
+    const trimmedSearch = searchTerm.trim();
+    if (trimmedSearch) {
+      setShowSearchSuggestions(false);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="flex flex-col lg:flex-row gap-8">
-      {/* Mobile Filter Toggle */}
-      <div className="lg:hidden">
+      {/* Mobile Filter Toggle + Search */}
+      <div className="lg:hidden flex items-center gap-3 mb-1 w-full">
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors shrink-0"
         >
           <Icon name="FunnelIcon" size={20} />
           Filters
         </button>
+        <div className="relative flex-1 min-w-0">
+          <Icon
+            name="MagnifyingGlassIcon"
+            size={18}
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+          />
+          <input
+            type="search"
+            value={searchTerm}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              setShowSearchSuggestions(true);
+            }}
+            onFocus={() => setShowSearchSuggestions(true)}
+            onBlur={() => {
+              window.setTimeout(() => setShowSearchSuggestions(false), 150);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                handleSearchSubmit();
+              }
+            }}
+            placeholder="Search products"
+            className="w-full h-10 pl-10 pr-3 border border-border rounded-md bg-card text-foreground shadow-warm-sm focus:outline-none focus:ring-3 focus:ring-ring focus:border-primary transition-all"
+          />
+          {showSearchSuggestions && searchTerm.trim() && searchSuggestions.length > 0 && (
+            <div className="absolute left-0 right-0 top-full mt-2 z-20 overflow-hidden rounded-md border border-border bg-popover shadow-warm-lg">
+              {searchSuggestions.map((product) => (
+                <button
+                  key={product.id}
+                  type="button"
+                  onClick={() => router.push(`/product-details?id=${encodeURIComponent(product.id)}`)}
+                  className="flex w-full items-center gap-3 px-3 py-3 text-left transition-colors hover:bg-primary/5 focus:outline-none focus:bg-primary/5"
+                >
+                  <div className="h-10 w-10 flex-shrink-0 overflow-hidden rounded-md bg-muted">
+                    {product.image ? (
+                      <img src={product.image} alt={product.alt} className="h-full w-full object-cover" />
+                    ) : null}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm font-medium text-foreground">{product.name}</p>
+                    <p className="truncate text-xs text-muted-foreground">{product.subcategory || product.category}</p>
+                  </div>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Sidebar */}
@@ -194,8 +279,10 @@ export default function ProductsPageInteractive() {
           selectedCategory={selectedCategory}
           onCategoryChange={(category) => {
             setSelectedCategory(category);
+            setShowFilters(false);
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
+          onClose={() => setShowFilters(false)}
         />
       </div>
 

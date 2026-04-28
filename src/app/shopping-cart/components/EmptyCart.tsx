@@ -33,7 +33,7 @@ const EmptyCart = ({ suggestedProducts }: EmptyCartProps) => {
       </p>
 
       <Link
-        href="/product-details"
+        href="/products"
         className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-md font-heading font-semibold text-lg hover:bg-primary/90 transition-smooth focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2"
       >
         <Icon name="ShoppingBagIcon" size={20} />

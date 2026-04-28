@@ -479,6 +479,7 @@ export interface Database {
           street_address: string;
           city: string;
           postal_code: string;
+          phone_number: string | null;
           is_default: boolean | null;
         };
         Insert: {
@@ -488,6 +489,7 @@ export interface Database {
           street_address: string;
           city: string;
           postal_code: string;
+          phone_number?: string | null;
           is_default?: boolean | null;
         };
         Update: {
@@ -497,6 +499,7 @@ export interface Database {
           street_address?: string;
           city?: string;
           postal_code?: string;
+          phone_number?: string | null;
           is_default?: boolean | null;
         };
       };

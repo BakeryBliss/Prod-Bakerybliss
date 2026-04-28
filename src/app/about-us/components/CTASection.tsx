@@ -27,7 +27,7 @@ const CTASection = ({ className = '' }: CTASectionProps) => {
             </Link>
 
             <Link
-              href="/home"
+              href="https://maps.app.goo.gl/eYn2CJTTYLHmVELM6"
               className="inline-flex items-center gap-2 px-8 py-4 bg-transparent border-2 border-primary-foreground text-primary-foreground rounded-lg font-heading font-semibold text-lg hover:bg-primary-foreground/10 transition-smooth focus:outline-none focus:ring-3 focus:ring-primary-foreground focus:ring-offset-2 focus:ring-offset-primary"
             >
               <Icon name="MapPinIcon" size={24} />
@@ -48,7 +48,7 @@ const CTASection = ({ className = '' }: CTASectionProps) => {
                 <Icon name="PhoneIcon" size={24} className="text-primary-foreground" />
               </div>
               <p className="font-heading text-primary-foreground mb-1">Call Us</p>
-              <p className="caption text-primary-foreground/80">+91 92118 18676</p>
+              <p className="caption text-primary-foreground/80">+91 70182 27783</p>
             </div>
             <div className="text-center">
               <div className="w-12 h-12 bg-primary-foreground/20 rounded-full flex items-center justify-center mx-auto mb-3">

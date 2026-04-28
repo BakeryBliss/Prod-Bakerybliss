@@ -12,9 +12,10 @@ import SocialShare from './SocialShare';
 import AddReviewDialog from './AddReviewDialog';
 import Icon from '@/components/ui/AppIcon';
 import { useProducts } from '@/hooks/useProducts';
-import { getReviewCardsForProduct } from '@/services/reviews';
+import { getReviewCardsForProduct, getReviewsForProduct, calculateRatingStats } from '@/services/reviews';
+import type { Review as DatabaseReview } from '@/types/database';
 
-interface Review {
+interface ReviewCardType {
   id: string;
   customerName: string;
   customerImage?: string | null;
@@ -55,14 +56,18 @@ const ProductDetailsInteractive = () => {
   const allProducts = fetchedProducts;
 
 
-  const [reviews, setReviews] = useState<Review[]>([]);
-
-  const ratingDistribution = [
-  { stars: 5, count: 89, percentage: 70 },
-  { stars: 4, count: 28, percentage: 22 },
-  { stars: 3, count: 7, percentage: 6 },
-  { stars: 2, count: 2, percentage: 1 },
-  { stars: 1, count: 1, percentage: 1 }];
+  const [reviews, setReviews] = useState<DatabaseReview[]>([]);
+  const [ratingStats, setRatingStats] = useState({
+    averageRating: 0,
+    totalReviews: 0,
+    distribution: [
+      { stars: 5, count: 0, percentage: 0 },
+      { stars: 4, count: 0, percentage: 0 },
+      { stars: 3, count: 0, percentage: 0 },
+      { stars: 2, count: 0, percentage: 0 },
+      { stars: 1, count: 0, percentage: 0 },
+    ],
+  });
 
 
   const productId = isHydrated ? searchParams.get('id') || '1' : '1';
@@ -74,8 +79,14 @@ const ProductDetailsInteractive = () => {
   useEffect(() => {
     const loadReviews = async () => {
       if (!currentProduct?.id) return;
-      const reviewCards = await getReviewCardsForProduct(currentProduct.id);
-      setReviews(reviewCards);
+      
+      // Fetch raw reviews to calculate stats
+      const rawReviews = await getReviewsForProduct(currentProduct.id);
+      setReviews(rawReviews);
+      
+      // Calculate rating stats from raw reviews
+      const stats = calculateRatingStats(rawReviews);
+      setRatingStats(stats);
     };
 
     loadReviews();
@@ -84,8 +95,10 @@ const ProductDetailsInteractive = () => {
   const handleReviewAdded = async () => {
     // Reload reviews after a new one is added
     if (currentProduct?.id) {
-      const reviewCards = await getReviewCardsForProduct(currentProduct.id);
-      setReviews(reviewCards);
+      const rawReviews = await getReviewsForProduct(currentProduct.id);
+      setReviews(rawReviews);
+      const stats = calculateRatingStats(rawReviews);
+      setRatingStats(stats);
     }
   };
 
@@ -252,12 +265,29 @@ const ProductDetailsInteractive = () => {
 
 
         {/* Customer Reviews */}
-        <CustomerReviews
-          reviews={reviews}
-          averageRating={currentProduct.rating}
-          totalReviews={currentProduct.reviewCount}
-          ratingDistribution={ratingDistribution}
-          onAddReviewClick={() => setShowAddReviewDialog(true)} />
+        {(() => {
+          // Convert raw reviews to ReviewCard format
+          const reviewCards: ReviewCardType[] = reviews.map((review) => ({
+            id: review.id,
+            customerName: review.customer_name || 'Verified Customer',
+            customerImage: review.customer_image_url || null,
+            customerImageAlt: review.customer_name ? `${review.customer_name} profile picture` : null,
+            rating: review.rating || 0,
+            date: review.created_at ? new Date(review.created_at).toLocaleDateString('en-US') : '',
+            comment: review.comment || '',
+            verified: Boolean(review.profile_id),
+            helpful: 0,
+          }));
+
+          return (
+            <CustomerReviews
+              reviews={reviewCards}
+              averageRating={ratingStats.averageRating}
+              totalReviews={ratingStats.totalReviews}
+              ratingDistribution={ratingStats.distribution}
+              onAddReviewClick={() => setShowAddReviewDialog(true)} />
+          );
+        })()}
 
 
         {/* Related Products */}

@@ -14,9 +14,15 @@ interface UserAccountMenuProps {
 const UserAccountMenu = ({ className = '' }: UserAccountMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const { isLoggedIn, isLoading, logout } = useAuth();
+  const { isLoggedIn, isLoading, logout, user } = useAuth();
   const menuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+
+  const avatarUrl =
+    user?.user_metadata?.avatar_url ||
+    user?.user_metadata?.picture ||
+    user?.user_metadata?.image ||
+    null;
 
   useEffect(() => {
     setIsOpen(false);
@@ -53,8 +59,7 @@ const UserAccountMenu = ({ className = '' }: UserAccountMenuProps) => {
 
   const menuItems = isLoggedIn
     ? [
-        { label: 'My Profile', href: '/customer-profile', icon: 'UserIcon' },
-        { label: 'Order History', href: '/order-confirmation', icon: 'ClipboardDocumentListIcon' },
+        { label: 'My Profile', href: '/customer-profile', icon: 'UserCircleIcon' },
       ]
     : [];
 
@@ -64,10 +69,18 @@ const UserAccountMenu = ({ className = '' }: UserAccountMenuProps) => {
         onClick={() => setIsOpen(!isOpen)}
         className="p-2 rounded-md text-foreground hover:bg-primary/10 transition-smooth focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2"
         aria-label="User account menu"
-        aria-expanded={isOpen ? 'true' : 'false'}
         aria-haspopup="true"
       >
-        <Icon name="UserCircleIcon" size={24} />
+        {avatarUrl ? (
+          <img
+            src={avatarUrl}
+            alt="User avatar"
+            className="w-6 h-6 rounded-full object-cover border border-border"
+            referrerPolicy="no-referrer"
+          />
+        ) : (
+          <Icon name="UserCircleIcon" size={24} />
+        )}
       </button>
 
       {isOpen && (

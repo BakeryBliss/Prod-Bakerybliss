@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/ui/AppIcon';
-import { products } from '@/data/products';
+import { useSearchProducts } from '@/hooks/useProducts';
 
 interface SearchBarProps {
   className?: string;
@@ -24,16 +24,7 @@ const SearchBar = ({ className = '' }: SearchBarProps) => {
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
-
-  const allProducts = useMemo(
-    () =>
-      products.map((product) => ({
-        id: product.id,
-        name: product.name,
-        category: product.category,
-      })),
-    []
-  );
+  const { products: searchResults } = useSearchProducts(searchQuery);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -63,22 +54,23 @@ const SearchBar = ({ className = '' }: SearchBarProps) => {
   useEffect(() => {
     const normalizedQuery = searchQuery.trim().toLowerCase();
     if (normalizedQuery.length > 0) {
-      const filtered = allProducts.filter(
-        (item) => {
-          const matchesName = item.name.toLowerCase().includes(normalizedQuery);
-          const categories = Array.isArray(item.category) ? item.category : [item.category];
-          const matchesCategory = categories.some(cat => cat.toLowerCase().includes(normalizedQuery));
-          return matchesName || matchesCategory;
-        }
+      setSuggestions(
+        searchResults
+          .filter((item) => {
+            const matchesName = item.name.toLowerCase().includes(normalizedQuery);
+            const categories = Array.isArray(item.category) ? item.category : [item.category];
+            const matchesCategory = categories.some((cat) => cat.toLowerCase().includes(normalizedQuery));
+            return matchesName || matchesCategory;
+          })
+          .slice(0, 8)
       );
-      setSuggestions(filtered.slice(0, 8));
       setShowSuggestions(true);
     } else {
       setSuggestions([]);
       setShowSuggestions(false);
     }
     setSelectedIndex(-1);
-  }, [allProducts, searchQuery]);
+  }, [searchQuery, searchResults]);
 
   const handleSearch = (query: string) => {
     if (query.trim()) {

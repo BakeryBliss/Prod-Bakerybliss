@@ -44,6 +44,7 @@ const ProductDetailsInteractive = () => {
   const [isHydrated, setIsHydrated] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showAddReviewDialog, setShowAddReviewDialog] = useState(false);
+  const [showMobileShareLinks, setShowMobileShareLinks] = useState(false);
   
   // Fetch products from database
   const { products: fetchedProducts, isLoading } = useProducts();
@@ -75,6 +76,31 @@ const ProductDetailsInteractive = () => {
   const currentUrl = isHydrated ?
   `${window.location.origin}/product-details?id=${productId}` :
   '';
+
+  const shareLinks = currentProduct
+    ? [
+        {
+          name: 'WhatsApp',
+          icon: 'ChatBubbleLeftRightIcon',
+          color: 'hover:text-[#25D366]',
+          url: `https://wa.me/?text=${encodeURIComponent(`${currentProduct.name} - ${currentUrl}`)}`,
+        },
+      ]
+    : [];
+
+  const handleShare = (url: string) => {
+    window.open(url, '_blank', 'width=600,height=400');
+    setShowMobileShareLinks(false);
+  };
+
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(currentUrl);
+      setShowMobileShareLinks(false);
+    } catch (err) {
+      console.error('Failed to copy link:', err);
+    }
+  };
 
   useEffect(() => {
     const loadReviews = async () => {
@@ -233,9 +259,48 @@ const ProductDetailsInteractive = () => {
       <div className="space-y-8 lg:space-y-12">
         {/* Main Product Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-          <div className="space-y-6 sticky top-20 h-fit">
-            <ProductImageGallery images={currentProduct.images} productName={currentProduct.name} />
-            <SocialShare productName={currentProduct.name} productUrl={currentUrl} />
+          <div className="space-y-6 lg:sticky lg:top-20 h-fit">
+            <div className="relative">
+              <div className="absolute left-3 top-3 z-20 lg:hidden">
+                <div className="flex items-center gap-2 rounded-full bg-background/90 p-2 shadow-warm-md backdrop-blur-sm">
+                  <button
+                    type="button"
+                    onClick={() => setShowMobileShareLinks((prev) => !prev)}
+                    className="w-10 h-10 flex items-center justify-center rounded-full border border-border bg-card text-foreground shadow-sm transition-smooth focus:outline-none focus:ring-2 focus:ring-ring"
+                    aria-label="Share product"
+                  >
+                    <Icon name="ShareIcon" size={18} className="text-primary" />
+                  </button>
+                  {showMobileShareLinks && (
+                    <div className="flex items-center gap-2">
+                      {shareLinks.map((link) => (
+                        <button
+                          key={link.name}
+                          type="button"
+                          onClick={() => handleShare(link.url)}
+                          className={`w-10 h-10 flex items-center justify-center rounded-full border border-border bg-card transition-smooth focus:outline-none focus:ring-2 focus:ring-ring ${link.color}`}
+                          aria-label={`Share on ${link.name}`}
+                        >
+                          <Icon name={link.icon as any} size={18} />
+                        </button>
+                      ))}
+                      <button
+                        type="button"
+                        onClick={handleCopyLink}
+                        className="w-10 h-10 flex items-center justify-center rounded-full border border-border bg-card text-foreground transition-smooth focus:outline-none focus:ring-2 focus:ring-ring hover:text-primary"
+                        aria-label="Copy product link"
+                      >
+                        <Icon name="LinkIcon" size={18} />
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <ProductImageGallery images={currentProduct.images} productName={currentProduct.name} />
+            </div>
+            <div className="hidden lg:block">
+              <SocialShare productName={currentProduct.name} productUrl={currentUrl} />
+            </div>
           </div>
           <div className="space-y-6">
             <ProductInfo

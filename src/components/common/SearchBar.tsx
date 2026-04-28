@@ -7,6 +7,8 @@ import { useSearchProducts } from '@/hooks/useProducts';
 
 interface SearchBarProps {
   className?: string;
+  defaultExpanded?: boolean;
+  enableSuggestions?: boolean;
 }
 
 interface SearchSuggestion {
@@ -15,9 +17,13 @@ interface SearchSuggestion {
   category: string | string[];
 }
 
-const SearchBar = ({ className = '' }: SearchBarProps) => {
+const SearchBar = ({
+  className = '',
+  defaultExpanded = false,
+  enableSuggestions = true,
+}: SearchBarProps) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(defaultExpanded);
   const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
@@ -108,10 +114,12 @@ const SearchBar = ({ className = '' }: SearchBarProps) => {
     setSearchQuery('');
   };
 
+  const shouldShowSuggestions = enableSuggestions && showSuggestions && suggestions.length > 0;
+
   return (
     <div ref={searchRef} className={`relative ${className}`}>
       <div
-        className={`flex items-center gap-2 bg-input border border-border rounded-md transition-smooth ${
+          className={`flex items-center gap-2 bg-input border border-border rounded-md transition-smooth ${
           isExpanded ? 'w-full lg:w-80' : 'w-10 lg:w-64'
         }`}
       >
@@ -151,7 +159,7 @@ const SearchBar = ({ className = '' }: SearchBarProps) => {
         )}
       </div>
 
-      {showSuggestions && suggestions.length > 0 && (
+      {shouldShowSuggestions && (
         <div className="absolute top-full left-0 right-0 mt-2 bg-popover rounded-md shadow-warm-lg border border-border overflow-hidden z-dropdown animate-slide-in-from-top max-h-80 overflow-y-auto scrollbar-warm">
           <div className="py-2">
             {suggestions.map((suggestion, index) => (

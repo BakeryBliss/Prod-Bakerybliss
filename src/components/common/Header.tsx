@@ -130,7 +130,6 @@ const Header = ({ className = '' }: HeaderProps) => {
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="lg:hidden p-2 rounded-md text-foreground hover:bg-primary/10 transition-smooth focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2"
               aria-label="Toggle mobile menu"
-              aria-expanded={isMobileMenuOpen}
             >
               <Icon name={isMobileMenuOpen ? 'XMarkIcon' : 'Bars3Icon'} size={24} />
             </button>
@@ -140,29 +139,58 @@ const Header = ({ className = '' }: HeaderProps) => {
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 top-20 bg-card z-navigation lg:hidden animate-slide-in-from-top">
-          <div className="flex flex-col h-full overflow-y-auto scrollbar-warm">
-            {/* Mobile Search */}
-            <div className="p-5 border-b border-border">
-              <SearchBar />
+        <div className="fixed inset-x-0 top-20 bottom-0 z-navigation lg:hidden bg-background animate-fade-in">
+          <div className="flex h-full flex-col overflow-y-auto scrollbar-warm px-5 pb-8 pt-5">
+            <div className="rounded-3xl border border-border bg-muted/30 p-4 shadow-warm-sm">
+              <div className="mb-3 flex items-center gap-2">
+                <Icon name="MagnifyingGlassIcon" size={18} className="text-primary" />
+                <span className="text-sm font-medium text-foreground">Search products</span>
+              </div>
+              <SearchBar className="w-full" defaultExpanded enableSuggestions={false} />
+              <p className="mt-3 text-xs text-muted-foreground">
+                Type a product or category and press Enter to see results.
+              </p>
             </div>
 
-            {/* Mobile Navigation */}
-            <nav className="flex flex-col p-5 gap-2">
+            <nav className="mt-7 space-y-3">
               {navigationItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-3 px-4 py-4 rounded-md transition-smooth font-medium ${
+                  className={`flex items-center justify-between gap-4 rounded-3xl border px-4 py-4 transition-smooth focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2 ${
                     isActive(item.href)
-                      ? 'text-primary bg-primary/10' :'text-foreground hover:text-primary hover:bg-primary/5'
-                  } focus:outline-none focus:ring-3 focus:ring-ring focus:ring-offset-2`}
+                      ? 'border-primary/30 bg-primary/10 text-primary shadow-warm-sm'
+                      : 'border-border bg-background text-foreground hover:border-primary/30 hover:bg-primary/5'
+                  }`}
                 >
-                  <Icon name={item.icon as any} size={24} />
-                  <span className="text-lg">{item.label}</span>
+                  <div className="flex items-center gap-3">
+                    <div className={`flex h-12 w-12 items-center justify-center rounded-2xl transition-smooth ${
+                      isActive(item.href)
+                        ? 'bg-primary text-primary-foreground'
+                        : 'bg-muted text-foreground'
+                    }`}>
+                      <Icon name={item.icon as any} size={22} />
+                    </div>
+                    <div>
+                      <span className="block text-base font-medium">{item.label}</span>
+                      <span className="caption text-muted-foreground">
+                        {item.label === 'Home' && 'Start from the beginning'}
+                        {item.label === 'Products' && 'Browse our full collection'}
+                        {item.label === 'About' && 'Meet the bakery story'}
+                      </span>
+                    </div>
+                  </div>
+                  <Icon name="ChevronRightIcon" size={18} className="text-muted-foreground" />
                 </Link>
               ))}
             </nav>
+
+            <div className="mt-8 rounded-3xl bg-primary/5 px-5 py-4 text-foreground">
+              <p className="text-sm font-medium text-primary">Fresh picks, fast access</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Use the search above or tap one of the three menu options to continue.
+              </p>
+            </div>
           </div>
         </div>
       )}

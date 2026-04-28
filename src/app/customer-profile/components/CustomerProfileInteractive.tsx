@@ -286,11 +286,6 @@ const CustomerProfileInteractive = ({
     alert('Your data export has been initiated. You will receive a download link via email.');
   };
 
-  const handleImageChange = () => {
-    console.log('Changing profile image');
-    alert('Profile image change functionality would open a file picker here');
-  };
-
   if (isLoading) {
     return (
       <div className="space-y-6">
@@ -355,7 +350,7 @@ const CustomerProfileInteractive = ({
           </div>
         )}
 
-        <ProfileHeader userData={userData} onImageChange={handleImageChange} />
+        <ProfileHeader userData={userData} />
         <ProfileTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
 
         <div className="min-h-[400px]">

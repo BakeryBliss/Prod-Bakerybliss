@@ -194,8 +194,10 @@ export default function ProductsPageInteractive() {
           selectedCategory={selectedCategory}
           onCategoryChange={(category) => {
             setSelectedCategory(category);
+            setShowFilters(false);
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
+          onClose={() => setShowFilters(false)}
         />
       </div>
 

@@ -22,7 +22,6 @@ interface CustomerReviewsProps {
   averageRating: number;
   totalReviews: number;
   ratingDistribution: { stars: number; count: number; percentage: number }[];
-  onAddReviewClick?: () => void;
 }
 
 const CustomerReviews = ({
@@ -30,7 +29,6 @@ const CustomerReviews = ({
   averageRating,
   totalReviews,
   ratingDistribution,
-  onAddReviewClick,
 }: CustomerReviewsProps) => {
   const [filterRating, setFilterRating] = useState<number | null>(null);
   const [sortBy, setSortBy] = useState<'recent' | 'helpful'>('recent');
@@ -67,16 +65,6 @@ const CustomerReviews = ({
 
   return (
     <div className="bg-card rounded-lg shadow-warm p-6 lg:p-8">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="font-heading text-2xl text-foreground">Customer Reviews</h2>
-        <button
-          onClick={onAddReviewClick}
-          className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 transition-smooth focus:outline-none focus:ring-2 focus:ring-ring"
-        >
-          <Icon name="PencilSquareIcon" size={18} />
-          Add Review
-        </button>
-      </div>
 
       {/* Rating Summary */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8 pb-8 border-b border-border">

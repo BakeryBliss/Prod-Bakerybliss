@@ -39,7 +39,7 @@ const OrderSummary = ({ summary, cartItems, onApplyCoupon, onProceedToCheckout }
   const [couponSuccess, setCouponSuccess] = useState('');
   
   // User and addresses
-  const { user, isLoggedIn } = useAuth();
+  const { user, isLoggedIn, isLoading } = useAuth();
   const [addresses, setAddresses] = useState<CustomerAddress[]>([]);
   const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
   const [loadingAddresses, setLoadingAddresses] = useState(false);
@@ -141,6 +141,9 @@ const OrderSummary = ({ summary, cartItems, onApplyCoupon, onProceedToCheckout }
     setOrderError('');
 
     try {
+      if (isLoading) throw new Error('Checking your login status. Please try again in a moment.');
+      if (!isLoggedIn || !user?.id) throw new Error('Please log in to place an order and save it to your order history.');
+
       // Validate form fields
       if (!orderFormData.customerName.trim()) throw new Error('Name is required');
       if (!orderFormData.phoneNumber.trim()) throw new Error('Phone number is required');
@@ -173,10 +176,15 @@ const OrderSummary = ({ summary, cartItems, onApplyCoupon, onProceedToCheckout }
         order_id: orderData.orderId,
         handler: async (response: { razorpay_order_id: string; razorpay_payment_id: string; razorpay_signature: string }) => {
           try {
+            const authToken = localStorage.getItem('authToken');
+
             // Step 3: Verify payment on the server
             const verifyRes = await fetch('/api/razorpay/verify', {
               method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
+              headers: {
+                'Content-Type': 'application/json',
+                ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
+              },
               body: JSON.stringify({
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,

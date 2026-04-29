@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 import { createOrder } from '@/services/orders';
-import { supabase } from '@/lib/supabase';
 
 interface CartItem {
   id: string;
@@ -24,6 +23,16 @@ interface OrderSummary {
 
 export async function POST(request: NextRequest) {
   try {
+    if (!process.env.RAZORPAY_KEY_SECRET) {
+      return NextResponse.json(
+        { error: 'Razorpay key secret not configured' },
+        { status: 500 }
+      );
+    }
+
+    const authHeader = request.headers.get('authorization') || request.headers.get('Authorization');
+    const accessToken = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : undefined;
+
     const {
       razorpay_order_id,
       razorpay_payment_id,
@@ -64,38 +73,52 @@ export async function POST(request: NextRequest) {
       addressId,
     } = orderDetails;
 
-    let savedOrderId = '';
-    
-    if (userId) {
-      try {
-        const orderSummary = summary as OrderSummary;
-        
-        // Create order items from cart items
-        const orderItems = (cartItems as CartItem[]).map((item) => ({
-          product_id: item.id,
-          quantity: item.quantity,
-          price_at_purchase: item.price,
-        }));
-
-        // Create order in database
-        const { order, items } = await createOrder(
-          {
-            profile_id: userId,
-            address_id: addressId || undefined,
-            status: 'paid',
-            total_amount: orderSummary.total,
-          },
-          orderItems
-        );
-
-        if (order) {
-          savedOrderId = order.id;
-        }
-      } catch (dbError) {
-        console.error('Database order creation error:', dbError);
-        // Continue with email even if DB fails
-      }
+    if (!userId) {
+      return NextResponse.json(
+        { error: 'Missing user identity for order creation. Please login and retry.' },
+        { status: 400 }
+      );
     }
+
+    const orderSummary = summary as OrderSummary;
+
+    // Create order items from cart items
+    const orderItems = (cartItems as CartItem[]).map((item) => ({
+      product_id: item.id,
+      quantity: item.quantity,
+      price_at_purchase: item.price,
+    }));
+
+    // Create order in database
+    const { order, error: orderCreateError } = await createOrder(
+      {
+        profile_id: userId,
+        address_id: addressId || undefined,
+        status: 'paid',
+        total_amount: orderSummary.total,
+      },
+      orderItems,
+      accessToken
+    );
+
+    if (!order) {
+      console.error('Database order creation failed', {
+        userId,
+        addressId,
+        itemsCount: orderItems.length,
+        orderCreateError,
+      });
+      return NextResponse.json(
+        {
+          error:
+            orderCreateError ||
+            'Payment was verified but order could not be saved. Please contact support with payment ID.',
+        },
+        { status: 500 }
+      );
+    }
+
+    const savedOrderId = order.id;
 
     // --- Step 4: Send order confirmation email ---
 
@@ -122,8 +145,6 @@ export async function POST(request: NextRequest) {
       </tr>`
       )
       .join('');
-
-    const orderSummary = summary as OrderSummary;
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
@@ -195,7 +216,12 @@ export async function POST(request: NextRequest) {
       `,
     };
 
-    await transporter.sendMail(mailOptions);
+    try {
+      await transporter.sendMail(mailOptions);
+    } catch (mailError) {
+      console.error('Order confirmation email failed:', mailError);
+      // Email failure should not mark paid order creation as failed.
+    }
 
     return NextResponse.json({
       success: true,

@@ -9,7 +9,6 @@ import ProductTabs from './ProductTabs';
 import CustomerReviews from './CustomerReviews';
 import RelatedProducts from './RelatedProducts';
 import SocialShare from './SocialShare';
-import AddReviewDialog from './AddReviewDialog';
 import Icon from '@/components/ui/AppIcon';
 import { useProducts } from '@/hooks/useProducts';
 import { getReviewCardsForProduct, getReviewsForProduct, calculateRatingStats } from '@/services/reviews';
@@ -43,7 +42,6 @@ const ProductDetailsInteractive = () => {
   const searchParams = useSearchParams();
   const [isHydrated, setIsHydrated] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [showAddReviewDialog, setShowAddReviewDialog] = useState(false);
   const [showMobileShareLinks, setShowMobileShareLinks] = useState(false);
   
   // Fetch products from database
@@ -117,16 +115,6 @@ const ProductDetailsInteractive = () => {
 
     loadReviews();
   }, [currentProduct?.id]);
-
-  const handleReviewAdded = async () => {
-    // Reload reviews after a new one is added
-    if (currentProduct?.id) {
-      const rawReviews = await getReviewsForProduct(currentProduct.id);
-      setReviews(rawReviews);
-      const stats = calculateRatingStats(rawReviews);
-      setRatingStats(stats);
-    }
-  };
 
   // Update page title with product name
   useEffect(() => {
@@ -349,8 +337,7 @@ const ProductDetailsInteractive = () => {
               reviews={reviewCards}
               averageRating={ratingStats.averageRating}
               totalReviews={ratingStats.totalReviews}
-              ratingDistribution={ratingStats.distribution}
-              onAddReviewClick={() => setShowAddReviewDialog(true)} />
+              ratingDistribution={ratingStats.distribution}/>
           );
         })()}
 
@@ -389,14 +376,6 @@ const ProductDetailsInteractive = () => {
           </div>
         </div>
       }
-
-      {/* Add Review Dialog */}
-      <AddReviewDialog
-        productId={currentProduct.id}
-        isOpen={showAddReviewDialog}
-        onClose={() => setShowAddReviewDialog(false)}
-        onReviewAdded={handleReviewAdded}
-      />
     </>);
 
 };

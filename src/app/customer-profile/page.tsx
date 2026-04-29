@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import Header from '@/components/common/Header';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import CustomerProfileInteractive from './components/CustomerProfileInteractive';
@@ -42,12 +43,20 @@ export default function CustomerProfilePage() {
             </p>
           </div>
 
-          <CustomerProfileInteractive
-            initialUserData={emptyUserData}
-            initialOrders={emptyOrders}
-            initialAddresses={emptyAddresses}
-            initialPaymentMethods={emptyPaymentMethods}
-            initialNotificationPreferences={emptyNotificationPreferences} />
+          <Suspense fallback={
+            <div className="space-y-6 animate-pulse">
+              <div className="h-32 bg-card rounded-lg" />
+              <div className="h-16 bg-card rounded-lg" />
+              <div className="h-96 bg-card rounded-lg" />
+            </div>
+          }>
+            <CustomerProfileInteractive
+              initialUserData={emptyUserData}
+              initialOrders={emptyOrders}
+              initialAddresses={emptyAddresses}
+              initialPaymentMethods={emptyPaymentMethods}
+              initialNotificationPreferences={emptyNotificationPreferences} />
+          </Suspense>
 
         </div>
       </main>

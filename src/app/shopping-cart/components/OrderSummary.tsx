@@ -2,6 +2,9 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import Icon from '@/components/ui/AppIcon';
+import { useAuth } from '@/hooks/useAuth';
+import { getAddressesByCustomer } from '@/services/addresses';
+import type { CustomerAddress } from '@/types/database';
 
 interface CartItemData {
   id: string;
@@ -35,6 +38,12 @@ const OrderSummary = ({ summary, cartItems, onApplyCoupon, onProceedToCheckout }
   const [couponError, setCouponError] = useState('');
   const [couponSuccess, setCouponSuccess] = useState('');
   
+  // User and addresses
+  const { user, isLoggedIn } = useAuth();
+  const [addresses, setAddresses] = useState<CustomerAddress[]>([]);
+  const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
+  const [loadingAddresses, setLoadingAddresses] = useState(false);
+  
   // Order form state
   const [showOrderForm, setShowOrderForm] = useState(false);
   const [orderFormData, setOrderFormData] = useState({
@@ -52,6 +61,29 @@ const OrderSummary = ({ summary, cartItems, onApplyCoupon, onProceedToCheckout }
   const [paymentId, setPaymentId] = useState('');
   const dialogRef = useRef<HTMLDivElement>(null);
   const razorpayLoaded = useRef(false);
+
+  // Fetch addresses when dialog opens
+  useEffect(() => {
+    if (showOrderForm && isLoggedIn && user?.id) {
+      setLoadingAddresses(true);
+      getAddressesByCustomer(user.id)
+        .then((addr) => {
+          setAddresses(addr);
+          if (addr.length > 0) {
+            const defaultAddr = addr.find((a) => a.is_default) || addr[0];
+            setSelectedAddressId(defaultAddr.id);
+            // Auto-populate form from address
+            setOrderFormData((prev) => ({
+              ...prev,
+              customerName: prev.customerName || defaultAddr.label || 'Delivery Address',
+              phoneNumber: prev.phoneNumber || defaultAddr.phone_number || '',
+              address: prev.address || `${defaultAddr.street_address}, ${defaultAddr.city} ${defaultAddr.postal_code}` || '',
+            }));
+          }
+        })
+        .finally(() => setLoadingAddresses(false));
+    }
+  }, [showOrderForm, isLoggedIn, user?.id]);
 
   // Load Razorpay checkout script
   useEffect(() => {
@@ -88,6 +120,19 @@ const OrderSummary = ({ summary, cartItems, onApplyCoupon, onProceedToCheckout }
     const { name, value } = e.target;
     setOrderFormData(prev => ({ ...prev, [name]: value }));
     setOrderError('');
+  };
+
+  const handleAddressChange = (addressId: string) => {
+    setSelectedAddressId(addressId);
+    const selected = addresses.find((a) => a.id === addressId);
+    if (selected) {
+      setOrderFormData((prev) => ({
+        ...prev,
+        customerName: selected.label || prev.customerName,
+        phoneNumber: selected.phone_number || prev.phoneNumber,
+        address: `${selected.street_address}, ${selected.city} ${selected.postal_code}`,
+      }));
+    }
   };
 
   const handleSubmitOrder = async (e: React.FormEvent) => {
@@ -140,6 +185,8 @@ const OrderSummary = ({ summary, cartItems, onApplyCoupon, onProceedToCheckout }
                   ...orderFormData,
                   cartItems,
                   summary,
+                  addressId: selectedAddressId,
+                  userId: user?.id,
                 },
               }),
             });
@@ -388,6 +435,33 @@ const OrderSummary = ({ summary, cartItems, onApplyCoupon, onProceedToCheckout }
                     </div>
                     <p className="font-heading font-bold text-xl text-primary">₹{summary.total.toFixed(2)}</p>
                   </div>
+
+                  {/* Saved Addresses Section */}
+                  {addresses.length > 0 && (
+                    <div className="space-y-3 pb-4 border-b border-border">
+                      <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Saved Addresses</p>
+                      <div className="space-y-2">
+                        {addresses.map((addr) => (
+                          <button
+                            key={addr.id}
+                            type="button"
+                            onClick={() => handleAddressChange(addr.id)}
+                            className={`w-full text-left p-3 rounded-md border-2 transition-colors ${
+                              selectedAddressId === addr.id
+                                ? 'border-primary bg-primary/5'
+                                : 'border-border hover:border-primary/50 bg-muted/20'
+                            }`}
+                          >
+                            <p className="font-medium text-foreground text-sm">{addr.label || 'Address'}</p>
+                            <p className="text-xs text-muted-foreground">{addr.street_address}, {addr.city}</p>
+                            {addr.phone_number && (
+                              <p className="text-xs text-muted-foreground">{addr.phone_number}</p>
+                            )}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
                   {/* Contact Details Section */}
                   <div className="space-y-3">

@@ -76,7 +76,7 @@ export async function getReviewCardsForProduct(productId: string): Promise<Revie
     date: review.created_at ? new Date(review.created_at).toLocaleDateString('en-US') : '',
     comment: review.comment || '',
     verified: Boolean(review.profile_id),
-    helpful: 0,
+    helpful: (review as any).helpful || 0,
   }));
 }
 
@@ -96,6 +96,30 @@ export async function deleteReview(id: string): Promise<boolean> {
     return false;
   }
   return true;
+}
+
+export async function incrementHelpful(id: string): Promise<number | null> {
+  try {
+    const { data: existing, error: selErr } = await customerProfile.from('reviews').select('helpful').eq('id', id).single();
+    if (selErr) {
+      console.error('incrementHelpful: select error', selErr);
+      return null;
+    }
+
+    const current = (existing && (existing as any).helpful) || 0;
+    const newCount = current + 1;
+
+    const { data, error } = await customerProfile.from('reviews').update({ helpful: newCount }).eq('id', id).select().single();
+    if (error) {
+      console.error('incrementHelpful update error', error);
+      return null;
+    }
+
+    return (data as any).helpful ?? newCount;
+  } catch (err) {
+    console.error('incrementHelpful unexpected error', err);
+    return null;
+  }
 }
 
 export function calculateRatingStats(reviews: Review[]): RatingStats {
@@ -131,4 +155,4 @@ export function calculateRatingStats(reviews: Review[]): RatingStats {
   };
 }
 
-export default { addReview, getReviewsForProduct, getReviewCardsForProduct, updateReview, deleteReview, calculateRatingStats };
+export default { addReview, getReviewsForProduct, getReviewCardsForProduct, updateReview, deleteReview, incrementHelpful, calculateRatingStats };

@@ -341,7 +341,7 @@ const ProductDetailsInteractive = () => {
             date: review.created_at ? new Date(review.created_at).toLocaleDateString('en-US') : '',
             comment: review.comment || '',
             verified: Boolean(review.profile_id),
-            helpful: 0,
+            helpful: review.helpful || 0,
           }));
 
           return (

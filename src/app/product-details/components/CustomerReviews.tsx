@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/AppIcon';
 import AppImage from '@/components/ui/AppImage';
+import { incrementHelpful } from '@/services/reviews';
 
 interface Review {
   id: string;
@@ -34,9 +35,15 @@ const CustomerReviews = ({
   const [filterRating, setFilterRating] = useState<number | null>(null);
   const [sortBy, setSortBy] = useState<'recent' | 'helpful'>('recent');
 
+  const [localReviews, setLocalReviews] = useState<Review[]>(reviews);
+
+  useEffect(() => {
+    setLocalReviews(reviews);
+  }, [reviews]);
+
   const filteredReviews = filterRating
-    ? reviews.filter((r) => r.rating === filterRating)
-    : reviews;
+    ? localReviews.filter((r) => r.rating === filterRating)
+    : localReviews;
 
   const sortedReviews = [...filteredReviews].sort((a, b) => {
     if (sortBy === 'helpful') {
@@ -44,6 +51,19 @@ const CustomerReviews = ({
     }
     return new Date(b.date).getTime() - new Date(a.date).getTime();
   });
+
+  const handleHelpfulClick = async (reviewId: string) => {
+    // Optimistic update: increment locally first
+    setLocalReviews((prev) => prev.map((r) => r.id === reviewId ? { ...r, helpful: r.helpful + 1 } : r));
+
+    const updated = await incrementHelpful(reviewId);
+    if (updated === null) {
+      // Revert optimistic update if API failed
+      setLocalReviews((prev) => prev.map((r) => r.id === reviewId ? { ...r, helpful: Math.max(0, r.helpful - 1) } : r));
+    } else {
+      setLocalReviews((prev) => prev.map((r) => r.id === reviewId ? { ...r, helpful: updated } : r));
+    }
+  };
 
   return (
     <div className="bg-card rounded-lg shadow-warm p-6 lg:p-8">
@@ -197,7 +217,7 @@ const CustomerReviews = ({
             </div>
             <p className="text-foreground leading-relaxed mb-4">{review.comment}</p>
             <div className="flex items-center gap-4">
-              <button className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-smooth focus:outline-none">
+              <button onClick={() => handleHelpfulClick(review.id)} className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-smooth focus:outline-none">
                 <Icon name="HandThumbUpIcon" size={18} />
                 <span className="caption">Helpful ({review.helpful})</span>
               </button>

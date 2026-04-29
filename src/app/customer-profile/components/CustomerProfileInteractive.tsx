@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import ProfileHeader from './ProfileHeader';
 import ProfileTabs from './ProfileTabs';
@@ -14,8 +14,9 @@ import SecurityTab from './SecurityTab';
 import { useAuth } from '@/hooks/useAuth';
 import { getCustomerById } from '@/services/customers';
 import { addAddress, getAddressesByCustomer, updateAddress } from '@/services/addresses';
-import { getOrdersByCustomer } from '@/services/orders';
-import type { CustomerAddress, Order } from '@/types/database';
+import { getOrdersByCustomer, getOrderById } from '@/services/orders';
+import { fetchProductById } from '@/services/products';
+import type { CustomerAddress, Order, OrderItem } from '@/types/database';
 
 interface CustomerProfileInteractiveProps {
   initialUserData: any;
@@ -33,8 +34,14 @@ const CustomerProfileInteractive = ({
   initialNotificationPreferences,
 }: CustomerProfileInteractiveProps) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { isLoggedIn, isLoading, user } = useAuth();
-  const [activeTab, setActiveTab] = useState('personal');
+  
+  // Initialize activeTab from query parameter, default to 'personal'
+  const [activeTab, setActiveTab] = useState(() => {
+    const tabParam = searchParams.get('tab');
+    return tabParam || 'personal';
+  });
   const [userData, setUserData] = useState(initialUserData);
   const [orders, setOrders] = useState(initialOrders);
   const [addresses, setAddresses] = useState(initialAddresses);
@@ -121,14 +128,49 @@ const CustomerProfileInteractive = ({
           );
 
           setOrders(
-            profileOrders.map((order: Order) => ({
-              id: order.id,
-              orderNumber: order.id.slice(0, 8).toUpperCase(),
-              date: order.created_at ? new Date(order.created_at).toLocaleDateString('en-US') : '',
-              status: order.status === 'delivered' ? 'Delivered' : order.status === 'cancelled' ? 'Cancelled' : order.status === 'out_for_delivery' ? 'Out for Delivery' : 'Received',
-              items: [],
-              total: Number(order.total_amount || 0),
-            }))
+            await Promise.all(
+              profileOrders.map(async (order: Order) => {
+                const { items } = await getOrderById(order.id);
+                
+                // Fetch product details for each item
+                const itemsWithProducts = await Promise.all(
+                  items.map(async (item: OrderItem) => {
+                    let productName = `Product ${item.product_id}`;
+                    let productImage = '/assets/images/placeholder.jpg';
+                    
+                    if (item.product_id) {
+                      try {
+                        const product = await fetchProductById(item.product_id);
+                        if (product) {
+                          productName = product.name;
+                          productImage = product.images?.[0]?.url || '/assets/images/placeholder.jpg';
+                        }
+                      } catch (err) {
+                        console.error('Error fetching product:', err);
+                      }
+                    }
+                    
+                    return {
+                      id: item.id,
+                      name: productName,
+                      quantity: item.quantity || 0,
+                      price: item.price_at_purchase || 0,
+                      image: productImage,
+                      alt: productName,
+                    };
+                  })
+                );
+                
+                return {
+                  id: order.id,
+                  orderNumber: order.id.slice(0, 8).toUpperCase(),
+                  date: order.created_at ? new Date(order.created_at).toLocaleDateString('en-US') : '',
+                  status: order.status === 'delivered' ? 'Delivered' : order.status === 'cancelled' ? 'Cancelled' : order.status === 'out_for_delivery' ? 'Out for Delivery' : order.status === 'paid' ? 'Received' : 'Received',
+                  items: itemsWithProducts,
+                  total: Number(order.total_amount || 0),
+                };
+              })
+            )
           );
         } catch (error) {
           console.error('Error fetching user profile:', error);

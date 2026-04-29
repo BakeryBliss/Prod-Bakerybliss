@@ -275,6 +275,31 @@ export async function fetchAllProducts(): Promise<Product[]> {
     productCategoryMap.get(pc.product_id)!.push(pc.category_id);
   });
 
+  // Fetch review stats (count and average rating) for these products from the reviews table
+  // Reviews are stored in the `customer_profile.reviews` table/schema
+  const reviewsResult = await supabase
+    .from('customer_profile.reviews')
+    .select('product_id, rating')
+    .in('product_id', productIds);
+
+  const reviewsData = (reviewsResult.data || []) as { product_id: string; rating: number }[];
+  const reviewStatsMap = new Map<string, { count: number; average: number }>();
+  if (reviewsData.length > 0) {
+    const tempMap = new Map<string, { sum: number; count: number }>();
+    for (const r of reviewsData) {
+      const id = r.product_id;
+      if (!tempMap.has(id)) tempMap.set(id, { sum: r.rating || 0, count: 1 });
+      else {
+        const cur = tempMap.get(id)!;
+        cur.sum += r.rating || 0;
+        cur.count += 1;
+      }
+    }
+    for (const [id, { sum, count }] of tempMap.entries()) {
+      reviewStatsMap.set(id, { count, average: Math.round((sum / count) * 10) / 10 });
+    }
+  }
+
   // Transform products
   return products.map((product) => {
     const categoryIds = productCategoryMap.get(product.id) || [];
@@ -293,7 +318,7 @@ export async function fetchAllProducts(): Promise<Product[]> {
       }
     });
 
-    return transformProduct(
+    const transformed = transformProduct(
       product,
       imagesMap.get(product.id) || [],
       sizesMap.get(product.id) || [],
@@ -305,6 +330,15 @@ export async function fetchAllProducts(): Promise<Product[]> {
       productCategories,
       parentCategoriesMap
     );
+
+    // Override rating and reviewCount with aggregated values from reviews table when available
+    const stats = reviewStatsMap.get(product.id);
+    if (stats) {
+      transformed.rating = stats.average;
+      transformed.reviewCount = stats.count;
+    }
+
+    return transformed;
   });
 }
 

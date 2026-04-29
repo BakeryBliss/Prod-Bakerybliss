@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import nodemailer from 'nodemailer';
+import { createOrder } from '@/services/orders';
+import { supabase } from '@/lib/supabase';
 
 interface CartItem {
   id: string;
@@ -48,7 +50,7 @@ export async function POST(request: NextRequest) {
     // --- Step 2: Payment is verified, generate order number ---
     const orderNumber = `BB-${Date.now().toString(36).toUpperCase()}`;
 
-    // --- Step 3: Send order confirmation email ---
+    // --- Step 3: Create order in database ---
     const {
       customerName,
       phoneNumber,
@@ -58,7 +60,44 @@ export async function POST(request: NextRequest) {
       cartItems,
       summary,
       additionalNotes,
+      userId,
+      addressId,
     } = orderDetails;
+
+    let savedOrderId = '';
+    
+    if (userId) {
+      try {
+        const orderSummary = summary as OrderSummary;
+        
+        // Create order items from cart items
+        const orderItems = (cartItems as CartItem[]).map((item) => ({
+          product_id: item.id,
+          quantity: item.quantity,
+          price_at_purchase: item.price,
+        }));
+
+        // Create order in database
+        const { order, items } = await createOrder(
+          {
+            profile_id: userId,
+            address_id: addressId || undefined,
+            status: 'paid',
+            total_amount: orderSummary.total,
+          },
+          orderItems
+        );
+
+        if (order) {
+          savedOrderId = order.id;
+        }
+      } catch (dbError) {
+        console.error('Database order creation error:', dbError);
+        // Continue with email even if DB fails
+      }
+    }
+
+    // --- Step 4: Send order confirmation email ---
 
     const transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -163,6 +202,7 @@ export async function POST(request: NextRequest) {
       message: 'Payment verified and order confirmed!',
       orderNumber,
       paymentId: razorpay_payment_id,
+      orderId: savedOrderId,
     });
   } catch (error) {
     console.error('Payment verification error:', error);

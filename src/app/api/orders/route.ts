@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import { createServerClient } from '@/lib/supabase';
+import { createClient } from '@supabase/supabase-js';
+import type { Database } from '@/types/database';
 
 interface CartItem {
   id: string;
@@ -17,6 +20,85 @@ interface OrderSummary {
   deliveryFee: number;
   discount: number;
   total: number;
+}
+
+export async function GET(request: NextRequest) {
+  try {
+    const url = new URL(request.url);
+    const orderId = url.searchParams.get('orderId');
+    const profileId = url.searchParams.get('profileId');
+    const authHeader = request.headers.get('authorization') || request.headers.get('Authorization');
+    const accessToken = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : undefined;
+
+    if (!orderId) {
+      return NextResponse.json({ error: 'orderId is required' }, { status: 400 });
+    }
+
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    const serviceRoleAvailable = !!process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+    const customerProfile = serviceRoleAvailable
+      ? createServerClient().schema('customer_profile')
+      : (accessToken && supabaseUrl && supabaseAnonKey
+          ? createClient<Database>(supabaseUrl, supabaseAnonKey, {
+              global: {
+                headers: {
+                  Authorization: `Bearer ${accessToken}`,
+                },
+              },
+              auth: {
+                persistSession: false,
+                autoRefreshToken: false,
+              },
+            }).schema('customer_profile')
+          : createServerClient().schema('customer_profile'));
+
+    const { data: order, error: orderError } = await customerProfile
+      .from('orders')
+      .select('*')
+      .eq('id', orderId)
+      .single();
+
+    if (orderError || !order) {
+      console.error('GET /api/orders order lookup failed', { orderId, profileId, hasAccessToken: !!accessToken, serviceRoleAvailable, orderError });
+      return NextResponse.json(
+        { error: 'Could not load order details' },
+        { status: 404 }
+      );
+    }
+
+    if (profileId && order.profile_id !== profileId) {
+      console.error('GET /api/orders profile mismatch', { orderId, profileId, actualProfileId: order.profile_id, hasAccessToken: !!accessToken, serviceRoleAvailable });
+      return NextResponse.json(
+        { error: 'You do not have access to this order' },
+        { status: 403 }
+      );
+    }
+
+    const { data: items, error: itemsError } = await customerProfile
+      .from('order_items')
+      .select('*')
+      .eq('order_id', orderId);
+
+    if (itemsError) {
+      console.error('GET /api/orders items lookup failed', { orderId, profileId, hasAccessToken: !!accessToken, serviceRoleAvailable, itemsError });
+      return NextResponse.json(
+        { error: 'Could not load order items', order, items: [] },
+        { status: 500 }
+      );
+    }
+
+    console.debug('GET /api/orders success', { orderId, profileId, hasAccessToken: !!accessToken, serviceRoleAvailable, itemsCount: items?.length || 0 });
+
+    return NextResponse.json({ order, items: items || [] });
+  } catch (error) {
+    console.error('GET /api/orders unexpected error', error);
+    return NextResponse.json(
+      { error: 'Failed to load order details' },
+      { status: 500 }
+    );
+  }
 }
 
 export async function POST(request: NextRequest) {

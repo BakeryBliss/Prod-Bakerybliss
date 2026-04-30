@@ -18,6 +18,24 @@ import { getOrdersByCustomer, getOrderById } from '@/services/orders';
 import { fetchProductById } from '@/services/products';
 import type { CustomerAddress, Order, OrderItem } from '@/types/database';
 
+interface OrderHistoryItemView {
+  id: string;
+  name: string;
+  quantity: number;
+  price: number;
+  image: string;
+  alt: string;
+}
+
+interface OrderHistoryView {
+  id: string;
+  orderNumber: string;
+  date: string;
+  status: 'Delivered' | 'Out for Delivery' | 'Baking' | 'Received' | 'Cancelled';
+  items: OrderHistoryItemView[];
+  total: number;
+}
+
 interface CustomerProfileInteractiveProps {
   initialUserData: any;
   initialOrders: any[];
@@ -51,6 +69,8 @@ const CustomerProfileInteractive = ({
   const [isAddAddressOpen, setIsAddAddressOpen] = useState(false);
   const [isEditAddressOpen, setIsEditAddressOpen] = useState(false);
   const [editingAddressId, setEditingAddressId] = useState<string | null>(null);
+  const [selectedOrder, setSelectedOrder] = useState<OrderHistoryView | null>(null);
+  const [isOrderDetailsOpen, setIsOrderDetailsOpen] = useState(false);
   const [addressForm, setAddressForm] = useState({
     label: '',
     street_address: '',
@@ -130,7 +150,22 @@ const CustomerProfileInteractive = ({
           setOrders(
             await Promise.all(
               profileOrders.map(async (order: Order) => {
-                const { items } = await getOrderById(order.id);
+                const authToken = localStorage.getItem('authToken');
+                const orderDetailsResponse = await fetch(`/api/orders?orderId=${encodeURIComponent(order.id)}&profileId=${encodeURIComponent(user.id)}`, {
+                  headers: {
+                    ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
+                  },
+                });
+                const orderDetailsData = orderDetailsResponse.ok ? await orderDetailsResponse.json() : null;
+                const items = Array.isArray(orderDetailsData?.items) ? orderDetailsData.items : [];
+
+                if (!orderDetailsResponse.ok) {
+                  console.error('Order details API failed', {
+                    orderId: order.id,
+                    status: orderDetailsResponse.status,
+                    response: orderDetailsData,
+                  });
+                }
                 
                 // Fetch product details for each item
                 const itemsWithProducts = await Promise.all(
@@ -195,19 +230,102 @@ const CustomerProfileInteractive = ({
     alert('Personal information updated successfully!');
   };
 
+  const findOrderById = (orderId: string) => orders.find((order) => order.id === orderId);
+
   const handleReorder = (orderId: string) => {
-    console.log('Reordering:', orderId);
-    alert(`Reordering items from order #${orderId}`);
+    const order = findOrderById(orderId);
+
+    if (!order) {
+      alert('Could not find that order to reorder.');
+      return;
+    }
+
+    const reorderCart = order.items.map((item: OrderHistoryItemView) => ({
+      id: item.id,
+      name: item.name,
+      image: item.image,
+      alt: item.alt,
+      price: item.price,
+      quantity: item.quantity,
+    }));
+
+    localStorage.setItem('cart', JSON.stringify(reorderCart));
+    window.dispatchEvent(new Event('cartUpdated'));
+    router.push('/shopping-cart');
   };
 
   const handleViewOrderDetails = (orderId: string) => {
-    console.log('Viewing order details:', orderId);
-    alert(`Viewing details for order #${orderId}`);
+    const order = findOrderById(orderId);
+
+    if (!order) {
+      alert('Could not load the selected order.');
+      return;
+    }
+
+    setSelectedOrder(order);
+    setIsOrderDetailsOpen(true);
   };
 
   const handleDownloadReceipt = (orderId: string) => {
-    console.log('Downloading receipt:', orderId);
-    alert(`Downloading receipt for order #${orderId}`);
+    const order = findOrderById(orderId);
+
+    if (!order) {
+      alert('Could not generate a receipt for this order.');
+      return;
+    }
+
+    const receiptWindow = window.open('', '_blank', 'width=900,height=1200');
+
+    if (!receiptWindow) {
+      alert('Please allow popups to download the receipt.');
+      return;
+    }
+
+    const itemRows = order.items
+      .map(
+        (item: OrderHistoryItemView) => `
+          <tr>
+            <td style="padding: 10px 0; border-bottom: 1px solid #eee;">${item.name}</td>
+            <td style="padding: 10px 0; border-bottom: 1px solid #eee; text-align: center;">${item.quantity}</td>
+            <td style="padding: 10px 0; border-bottom: 1px solid #eee; text-align: right;">₹${(item.price * item.quantity).toFixed(2)}</td>
+          </tr>
+        `
+      )
+      .join('');
+
+    receiptWindow.document.write(`
+      <html>
+        <head>
+          <title>Receipt ${order.orderNumber}</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 32px; color: #222; }
+            h1, h2 { color: #8B4513; }
+            table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+            td, th { font-size: 14px; }
+          </style>
+        </head>
+        <body>
+          <h1>BakeryBliss Receipt</h1>
+          <p><strong>Order #:</strong> ${order.orderNumber}</p>
+          <p><strong>Date:</strong> ${order.date}</p>
+          <p><strong>Status:</strong> ${order.status}</p>
+          <h2>Items</h2>
+          <table>
+            <thead>
+              <tr>
+                <th style="text-align:left; padding: 10px 0; border-bottom: 2px solid #ddd;">Item</th>
+                <th style="text-align:center; padding: 10px 0; border-bottom: 2px solid #ddd;">Qty</th>
+                <th style="text-align:right; padding: 10px 0; border-bottom: 2px solid #ddd;">Amount</th>
+              </tr>
+            </thead>
+            <tbody>${itemRows}</tbody>
+          </table>
+          <h2 style="text-align:right; margin-top: 20px;">Total: ₹${order.total.toFixed(2)}</h2>
+          <script>window.onload = () => window.print();</script>
+        </body>
+      </html>
+    `);
+    receiptWindow.document.close();
   };
 
   const handleSaveAddress = async () => {
@@ -464,6 +582,86 @@ const CustomerProfileInteractive = ({
           )} */}
         </div>
       </div>
+
+      {isOrderDetailsOpen && selectedOrder && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <button
+            type="button"
+            aria-label="Close order details"
+            className="absolute inset-0 bg-black/50"
+            onClick={() => {
+              setIsOrderDetailsOpen(false);
+              setSelectedOrder(null);
+            }}
+          />
+          <div className="relative z-10 w-full max-w-2xl rounded-lg bg-card p-6 shadow-warm-xl border border-border max-h-[85vh] overflow-y-auto">
+            <div className="flex items-start justify-between gap-4 mb-6">
+              <div>
+                <h3 className="font-heading text-2xl text-foreground">Order #{selectedOrder.orderNumber}</h3>
+                <p className="caption text-muted-foreground mt-1">Placed on {selectedOrder.date}</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsOrderDetailsOpen(false);
+                  setSelectedOrder(null);
+                }}
+                className="px-3 py-2 rounded-md hover:bg-muted transition-smooth focus:outline-none focus:ring-2 focus:ring-ring"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+              <div className="rounded-md border border-border p-4 bg-muted/30">
+                <p className="caption text-muted-foreground">Status</p>
+                <p className="font-medium text-foreground mt-1">{selectedOrder.status}</p>
+              </div>
+              <div className="rounded-md border border-border p-4 bg-muted/30">
+                <p className="caption text-muted-foreground">Items</p>
+                <p className="font-medium text-foreground mt-1">{selectedOrder.items.length}</p>
+              </div>
+              <div className="rounded-md border border-border p-4 bg-muted/30">
+                <p className="caption text-muted-foreground">Total</p>
+                <p className="font-medium text-foreground mt-1">₹{selectedOrder.total.toFixed(2)}</p>
+              </div>
+            </div>
+
+            <div className="space-y-3 mb-6">
+              <h4 className="font-heading text-lg text-foreground">Items Ordered</h4>
+              {selectedOrder.items.map((item) => (
+                <div key={item.id} className="flex items-center gap-4 rounded-md border border-border p-3">
+                  <div className="w-14 h-14 rounded-md overflow-hidden flex-shrink-0 bg-muted">
+                    <img src={item.image} alt={item.alt} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-foreground truncate">{item.name}</p>
+                    <p className="caption text-muted-foreground">Qty: {item.quantity}</p>
+                  </div>
+                  <p className="font-semibold text-foreground">₹{(item.price * item.quantity).toFixed(2)}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex flex-wrap gap-3 justify-end">
+              <button
+                type="button"
+                onClick={() => selectedOrder && handleDownloadReceipt(selectedOrder.id)}
+                className="px-4 py-2 rounded-md border border-border text-foreground hover:bg-muted transition-smooth"
+              >
+                Receipt
+              </button>
+              <button
+                type="button"
+                onClick={() => selectedOrder && handleReorder(selectedOrder.id)}
+                className="px-4 py-2 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-smooth"
+              >
+                Reorder
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {(isAddAddressOpen || isEditAddressOpen) && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">

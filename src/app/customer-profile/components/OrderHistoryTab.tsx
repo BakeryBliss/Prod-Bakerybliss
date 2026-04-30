@@ -106,7 +106,7 @@ const OrderHistoryTab = ({ orders, onReorder, onViewDetails, onDownloadReceipt }
               </div>
               <div className="text-left lg:text-right">
                 <p className="caption text-muted-foreground mb-1">Total Amount</p>
-                <p className="text-2xl font-bold text-primary">${order.total.toFixed(2)}</p>
+                <p className="text-2xl font-bold text-primary">₹{order.total.toFixed(2)}</p>
               </div>
             </div>
 
@@ -156,7 +156,7 @@ const OrderHistoryTab = ({ orders, onReorder, onViewDetails, onDownloadReceipt }
                       <p className="font-medium text-foreground truncate">{item.name}</p>
                       <p className="caption text-muted-foreground">Quantity: {item.quantity}</p>
                     </div>
-                    <p className="font-semibold text-foreground">${(item.price * item.quantity).toFixed(2)}</p>
+                    <p className="font-semibold text-foreground">₹{(item.price * item.quantity).toFixed(2)}</p>
                   </div>
                 ))}
               </div>
